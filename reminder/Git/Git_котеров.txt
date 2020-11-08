@@ -71,7 +71,8 @@ origin	git@github.com:Sammygun/Django_app.git (push)
 1 git status
 2 git add . # можно и так 
 3 git commit -m "Django_app3_конспект"
-4 git push origin ## yes нажимай
+4 git push origin ## yes нажимай 
+# Или git push ## просто
 ################################################################
     Котеров GIT
 1 коммит это любое изменение которое было зафиксированое в репозитории.
@@ -210,7 +211,7 @@ git branch
 master
 touch blog.txt # создал файл
 git add .  # подготовил
-git coomit -am "Новый файл blog.txt" ## закомитил
+git comit -am "Новый файл blog.txt" ## закомитил
 
 git checkout master ### перешел на ветку master
 touch master.txt ## создал
