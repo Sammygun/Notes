@@ -1,0 +1,149 @@
+#Traceback (выслеживать обратно следы ведут обратно) что было до исключения 
+
+Итого 
+1  TypeError: NoneType object is not iterable!!!! 
+# данный объект не итеруемый !!!!!
+2 Изучай traceback смотри то, что тебя касается, чужой код не трогай из-за него редко Ошибки
+98 % ошибка в тебе
+
+3  Активация виртуального окружения 
+1 python3 -m venv venv 
+2 source venv/bin/activate
+
+
+
+1 for i in some_list:
+    print(i)
+
+Original exception was:
+Traceback (most recent call last):
+  File "utils.py", line 6, in <module> ## 6 линия или строка 
+    for i in some_list:
+NameError: name 'some_list' is not defined ### ошибка связанна с именем имя переменной не определено
+## если не понимаешь переводи последнию строку с переводчиком
+
+
+2 
+def main():
+    for i in some_list:
+        print(i)
+
+
+if __name__ == "__main__":
+    main() # точка входа
+
+
+Traceback (most recent call last):
+  File "utils.py", line 11, in <module> ## идет с самого низа скрипта в вверх начало
+    # снизу вверх
+    main()
+  File "utils.py", line 6, in main ##данная строка выше  находится
+    for i in some_list:
+NameError: name 'some_list' is not defined
+
+
+3 some_list = None
+
+some_list = None # пустота
+
+def main():
+    for i in some_list:
+        print(i)
+
+
+if __name__ == "__main__":
+    main()
+
+Traceback (most recent call last):
+  File "utils.py", line 11, in <module>
+    main()
+  File "utils.py", line 6, in main
+    for i in some_list:
+TypeError: 'NoneType' object is not iterable #### тут поменяется nonetype
+
+
+4 traceback/core.py и импорт
+1 core.py
+def read(some_list):
+    for i in some_list:
+        print(i)
+
+2 traceback/utils.py
+
+from core import read ## c core.py импортирую конкретную функцию read 
+
+some_list = None # пустота
+
+def main():
+    read(some_list) # в функции main вызываю функцию read c core.py
+        
+
+
+if __name__ == "__main__":
+    main()
+
+Traceback (most recent call last):
+  File "utils.py", line 11, in <module> # cнизу вверх скипта utils.py
+    main()
+  File "utils.py", line 6, in main
+    read(some_list) # в функции main вызываю функцию read c core.py
+  File "/home/sam/Рабочий стол/traceback/core.py", line 2, in read # ссылается в самом внизу проблема с импортом
+  # line 2 где проблема откуда делался импорт
+    for i in some_list:
+TypeError: 'NoneType' object is not iterable
+
+Показывает теперь все вызовы во всех модулях utils.py и core.py
+
+
+5 посложней пример
+ Активация виртуального окружения 
+1 python3 -m venv venv ## 
+2 source venv/bin/activate ### рабочий стол запускай 
+3 pip install requests в папке traceback
+
+1 traceback/core.py №
+pip install requests
+
+
+import requests # pip install requests пожключаем библиотеку запросы
+
+
+def make_requests(url):
+    r = requests.get(url) # r переменаня
+    return r  # response
+
+
+def read(some_list):
+    for i in some_list:
+        print(i)
+
+
+
+2 traceback/utils.py
+
+
+from core import make_requests ## core.py импортирую конкретную функцию make_requests с него
+
+url = None # пустота
+
+def main():
+    make_requests(url) # в функции main вызываю функцию read c core.py
+        
+
+
+if __name__ == "__main__":
+    main()
+
+
+Traceback будет гигантский но смотри 
+1 Первые три записи после traceback будут самыми важными также самая последния запись
+где api.py это уже будет чужой код того кто писал библиотеку и там маловероятно что там проблемы
+Скорее всего твой косяк проверь все вызовы которые касаются твоего кода
+
+2 всегда отличай в traceback где твой код и где чужой из импорта и библиотеки помни мало вероятно что 
+в чужом коде есть ошибка скорее всего ошибка у тебя и смотри упоминания своего кода 
+Ошибки приводят к исключению. Всегда ищи свое по путям в traceback оно может быть разбросано. Смотри TypeError!!!!
+
+3 TypeError: NoneType object is not iterable!!!! 
+# данный объект не итеруемый !!!!!
+4 Изучай traceback смотри то, что тебя касается
