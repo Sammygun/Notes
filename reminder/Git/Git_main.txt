@@ -36,11 +36,6 @@ print(sys.version)
 посмотреть версию python в vs code
 
 
-Sammygun
-sam.rybtsov@gmail.com
-Sam3030034
-репозиторий sam
-
 
 1. Remote Repository 
 удаленный репозиторий
