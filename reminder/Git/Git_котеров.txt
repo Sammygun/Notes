@@ -1,0 +1,345 @@
+GIT ПРАКТИКА
+1 GIT
+
+1 git init  ## в папке проекта 
+Initialized empty Git repository in ~/djangogirls/.git/
+2 git config --global user.name "Your Name" ### пользователь
+3 git config --global user.email you@example.com ## почта
+
+ git config --global user.name "Sammygun" ### пользователь
+ git config --global user.email sam.rybtsov@gmail.com ## почта
+
+4 git status ## смотрю какие изменения были
+5 git add --all .   ### может и так git add .
+6  git commit -m "My Django app, first commit" ## закоммитил изменения дал название изменениям
+
+7 .gitignore ## в папке создай такой файл здесь можно указывать исключения 
+
+
+
+
+8 github добавляю на сайте !!!!!!!!!
+(setings там можно удалить или переименовать репозиторий)
+
+1 add new my-first-blog ## на сайте github !!!!!!
+none везде добавляй
+
+2 выбирай https 
+(…or push an existing repository from the command line)
+
+git remote add origin https://github.com/Sammygun/my-first-blog.git
+git branch -M main
+git push -u origin main
+### попросит имя пользователя и пароль введи
+
+9 ЕСЛИ СДЕЛАЛ УЖЕ ИЗМЕНЕНИЯ КАКИЕ НИТЬ на сайте то:
+1 git status ## смотрю что поменялось
+2 git add --all . ## находясь в папке djangogirls
+3 git status ### тут увижу что именно будет загружаться
+4 git commit -m "Changed the HTML for the site." ### коммитим с заметкой
+5 git push ### пушим на gut hub
+
+6 Публикация сайта после изменений на pythoanywhere.com
+1 cd sammygun.pythonanywhere.com/
+2 git pull
+
+=================
+ssh аутефикация на github
+В самом github в проекте = справо code = тут можно выбрать ssh https
+1 ssh-keygen
+2 cd .ssh 
+3 cat id_rsa.pub копирую все ctrl + a просто все копирую
+4 иду на github в правом в верхнем углу user = setings = ssh and gpg keys = new key = название My ssh key = сам ключь вставляй полностью = add new key 
+Пример:
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDAmUQ2aCuaaZJPBUbebh2cdXH92ANRiWK2KjQEnK5loltE9LOS6xCJJ4EcUDu/PD+HOFBhSdjeZLkhvdFHb2vh+ihveSQjDuPoFD+3Cp/OMFa3bRQ4H3MYrpv5zyn2WtvPisYjnqyIOJuaHxc7b/fCXdVStMnCCI2JPDIfsBlKDZhHcmUNbwWzkxqnbKD24CJDtNLAHNqjzwDodUOwruuE1n2oDipH3hSL3I9fst+JZ2vHKmWCcJf1RQVRNyiqQcHtmRD+REv1LW4ajIDmLp7wBv4f+jjOjWcIsKmM+O3VxYJFJD9DoQHXyHIyK3L0VQazcF8G1vK7KEMTiCJxZN343zdhARWpAI+PNtpsWR7agVgY5l9HWl7RgKhR+k648sq0yD2rI2+sYznounnT/ak6lTZoIzqbrgQdpvGC2G7UvHFwH+05NuZUbGYoYJ6W8rXWb1rrTq4c18yjl1qrR5gLhR/FWAvxN+H0BWZIRkenNhN9cz8r6p9nl2FJSzZdKDU= sam@sam-Think
+5 все теперь когда создаю проект выбираю ssh
+
+6 Если проект уже есть и он работает по https то 
+git remote -v # смотрю как проект забрасывается на github
+origin	https://github.com/Sammygun/Django_app.git (fetch) # происходит по https
+origin	https://github.com/Sammygun/Django_app.git (push)
+
+git remote set-url origin git@github.com:Sammygun/Django_app.git ## меняю с https на ssh 
+
+git remote -v # смотрю куда копируется
+origin	git@github.com:Sammygun/Django_app.git (fetch) ## все поменялось на ssh
+origin	git@github.com:Sammygun/Django_app.git (push)
+
+Проверка работы ssh
+
+7 вношу изменения
+1 git status
+2 git add . # можно и так 
+3 git commit -m "Django_app3_конспект"
+4 git push origin ## yes нажимай
+################################################################
+    Котеров GIT
+1 коммит это любое изменение которое было зафиксированое в репозитории.
+
+2 master-ветка является основной веткой с нее осуществляется основное развертывание приложения. Можно делать доп ветки на которых будут разрабатываться различные новые фичи, потом уже объединять с основной веткой master. 
+
+3 sudo apt-get install git ## установка git
+git --version ## смотрю установился ли git и какая версия 
+
+4 Настройка после установки при помощи git config:
+git config --global user.name "Igor Simdyanov"
+git config --global user.email igorsimdyanov@gmail.com
+
+git config --list
+user.name "Igor Simdyanov"
+user.email igorsimdyanov@gmail.com
+
+5 Инициализация репозитория !!!!
+1 git init # в каталоге появиться папка .git где будет храниться информация о всех изменениях
+
+2 git add . ## . точка означает все каталоги и файлы проекта в текущей папке подготовленное состояние
+3 git add index.php ## но можно отдельный файл подготовить
+   git add dir ## отдельная папка для подготовки
+
+4 git commit -am 'Инициализация git-Репозитория' ###мы указываем какие файлы мы хотим отслеживать данной командой первый зафиксированный снимок изменений 
+
+6 Клонирование репозитория 
+1 git clone https://github.com/phpmyadmin/phpmyadmin.git ### клонирую себе проект с  сетефого репозитория себе на локальный комп
+в результате  в каталоге будет созда git репозиторий phpmyadmin 
+2 git clone https://github.com/phpmyadmin/phpmyadmin.git  mysql.dev ## проект git репозитория phpmyadmin в папке mysql.dev
+
+7 Публикация изменений
+1 зафиксированные ####файлы сохранены  в .git каталоге где хранится история изменений ## git commit
+
+2 модифицированные ### файлы в рабочем каталоге были внесены правки но изменения не были зафиксированы, то что было изменено
+
+3 индексированные  ### подготовленные  для фиксации файлы которые войдут в следующий комит  git add 
+
+
+4 git status ## если ничего менять не надо  то покажет nothing commit
+
+5 echo "Additional line" >> README 
+git status ## modified: README какой файл был изменен красный цвет но после add станет зеленый
+
+6 git diff ## если требуются более детальное сведения  об вносимых изменений выведит построчно все файлы где были изменения !!!!!!!!!!
+
+7 git add Readme ### перевожу в индексированное состояния  индексирую все изменения, подготавливаю к commit
+git status ## покажет зеленого цвета 
+
+8 git diff --cached #### посмотрю изменения в уже зеленом цвете в индексированном состоянии
+
+9 git commit -m "Изменения в README-файла" ##### заификсировать, т.е переместить в локальную базу данных в .git каталог, m коментарий  
+
+10 git commit -am "Изменение в README-файле" ## Тоже самое только мы предварительно git add . чтобы не вводить прежде commit !!!!!!!!!!!!!!!!!!!!
+git add .
+git commit -m "Изменение в Readme-файле" ## аналог команды выше am
+
+
+7 История изменений git log 
+git log -n 3 ## количество коммитов будут выведены n 3# 3 комита уижу какий файлы менялись
+
+git log -p # более подробная информация
+
+8 Если нужно файлы которые не комитились были исключения конфиг .gitignore
+в корне проекта выкладывается конфигурационный файл .gitignore  в этом файле прописываются файлы которые попадают в исключения
+/log/* ###игнорируются все файлы в папке log
+~* ##все файлы с названием тильды впереди
+doc/**/*.txt ### все файлы в папке doc формата .txt
+
+9 Откат истории 
+1 git log ## смотрю историю
+git clean -f ## удалить все текущие изменения 
+git checkout -f ## если было уже файлы подгатовленное состояние после git add 
+git reset HEAD # перевести файлы из подготовленного состояния в не подготовленное состояние 
+
+2 Пример
+touch file.txt
+git status  ## покажет файл красным цветом что он был изменен
+git add . ## подготовил 
+git status ### зеленый цвет укажет на файл file.txt
+
+git reset HEAD file.txt ### перевожу в красный цвет
+
+git clean -f ## удаление изменений !!!!
+removing file.txt
+git status  ### покажет что ничего коммитить nothing to commit#
+
+3 git reset HEAD file.txt ### возврат в не в зафиксированное состояние 
+git reset 592f61111 file.txt ## так как каждое изменение имеет свой номер и можно возвращать в красный цвет вот так
+
+4 git reset  Доп флаги
+--mixed ## Откат до коммита без удаления истории изменений история помещается в неподготовленное состояние (красный цвет)  ## Он же по умолчанию устанавливается
+--soft ## откат до коммита без удаления истории изменений история помещается в подготовленном состояние
+-- hard ## откат  до коммита с удалением истории изменений
+
+git reset 7a2b16dc ### по умолчанию будет mixed изменения станут красным цветом !!!!
+git reset --soft 7a2b16dc ### файлы станут зеленого цвета, просто как будто бы отмениться команда commit
+git reset --hard 7a2b16dc ###  удаление произойдет безвозвратно ничего не сохраниться !!!!!
+
+8 Метки
+Для облегчения поиска ключевого коммита стабильной версии предусмотрена система меток или тегов
+git tag ### которая выводит список всех меток
+git tag -1 'RELEASE_3_0_*' ### фильтрую поиск можно воспользоваться шаблоном
+
+git tag -a v1.3.10 -m 'Стабильная состояние проекта' ###создаю свою метку  a это название метки v1.3.10, m комментарий 
+git show v1.3.10 #### выявляю автора метки v1.3.10
+
+ 
+
+9 Ветки 
+1 git branch ## выводит список веток звездочкай отмечена текущая ветка 
+*master ## сразу при создании ветки создается основная ветка master
+
+2 git branch blog ### будет создана новая ветка blog !!!
+git branch 
+*master
+blog ## сейчас в этой ветки нахожусь
+
+3 git checkout blog #  перешел на ветку blog
+    git branch
+*blog 
+master
+
+4 git checkout -b blog  ### создал ветку blog и сразу на нее переместился
+git branch
+*blog
+master
+
+5 после создания новой ветки комиты будут сохраняться в новой ветке master трогать не будут
+потом когда работы завершены могу ветку объединить с Master
+
+ПРИМЕР:
+
+git branch
+*blog
+master
+touch blog.txt # создал файл
+git add .  # подготовил
+git coomit -am "Новый файл blog.txt" ## закомитил
+
+git checkout master ### перешел на ветку master
+touch master.txt ## создал
+git add .  # подготовил
+git coomit -am "Новый файл master.txt" ##
+git merge blog ### объединил blog master
+
+
+10 Так как разработка идет сразу в нескольких ветках очень сложно понять что именно было слито в master
+поэтому можно использовать графический отображение в git hub
+git log --graph # вижу процесс создания и слияния веток в псевдографике
+
+11 Переименование ветки служит команда:
+git branch -m old_name new_name ## переименовал с old в new
+
+12 git branch -D blog ##  Удаление ветки 
+
+13 Разрешение конфликтов
+Пример
+1 ветка master  создадим файл blog.php:
+<?php
+echo "Hello world";
+2 в ветке blog тоже создадим файл blog.php
+<?php
+session_start();
+echo "Hello, world"
+
+3 Переключаюсь в ветку master при помощи команды git checkout master пробую слить изменения в ветке blog c веткой master:
+git merge blog ## объединяю blog с master сразу видим конфликт
+
+git status ## увижу информацию о конфликте
+blog.php станет красным цветом  в самом редакторе кода увижу такую запись
+<?php
+<<<<<<<<<<< HEAD ### то что было в master ветке показывает 
+echo "Hello world";
+===========================
+<?php
+session_start();
+echo "Hello, world"
+>>>>>>>>>> blog  ### это содержимое ветки blog
+
+4 Фиксирую конфликт следующим способом:
+git add .
+git commit -am "Разрешение конфликта"
+git log --graph ## графическое отображение конфликта
+
+14 Удаленный репозиторий git hub
+1 github.com # регись на данном сайте 
+https://github.com/settings/profile  ### ssh key загружаю свой публичный код
+на самой странице + new repository  = назову hello
+
+https://github.com/igorsimdyanov/hello ### 
+Можно развернуть проект с нуля
+Можно подключить сюда проект
+
+1. Инициализация проекта с нуля 
+1 echo "# hello" >> README.md ## создал файл
+2 git init  ## инициализация проекта с нуля 
+3 git add README.md ### добавление файла  подготовка зеленый цвет
+
+4 git commit -m "first commit" ### фиксирую изменения 
+5 git remote add origin git@github.com:igorsimdyanov/hello.git
+данная команда git remote add origin регистрирует проект в .git каталоге в файле .git/config если открыть его там появиться секция origin c адресом удаленного git-репозитория:
+[remote origin]
+url = git@github.com:igorsimdyanov/hello.git
+fetch =.....
+
+6 git push -u origin master ### отправляет содержимое ветки master в удаленный репозиторий origin
+yes
+
+
+git@github.com:igorsimdyanov/hello.git ### фактически является ssh адресом где git имя пользователя на сервере github.com адрес сервера  igorsimdyanov/hello.git путь к  репозиторию на сервере
+scp 508.sh root@hoster.by:root ## :root это путь куда кидать аналогична команде выше
+
+2 Скачивание готового проекта к себе на комп с локального репозитория
+git clone git@github.com:igorsimdyanov/hello.git anotherhello # anotherhello название папки
+проект будет в двух папках hello и anotherhello
+
+cd anotherhello
+echo '<?php echo "Hello world!";' >> index.php
+git add index.php
+git commit -am "Индексный файл проекта"
+git push origin master ## отправил на удаленный сервер в ветку master
+git push ### можно и так если ветка одна и один репозиторий
+В проекте github появится проект hello со всеми папками и файлами
+
+3 Однако если внести изменения на локальном компе еще раз и попробовать запушить 
+git push origin будет ошибка так как в начале попросит вначале скачать измененный проект c удаленного репозитория
+Пример делаю все тоже самое только после push 
+echo '<?php phpinfo();' >> phpinfo.php
+git add .
+git commit -am "Добавление phpinfo.php"
+git push origin master ### failed to push выскочит ошибка, так как вначале надо скачать проект
+
+git pull origin master ## скачать резервную копию с удаленного сервеара 
+git push origin master ###  внес изменения и за pushil
+
+15 Развертывание сетевого git репозитория
+свой сервер
+установить git как в начале закинь свой ключь
+создаю папку hello.git c владельцем git:
+cd ~
+mkdir hello.git
+chown git:git hello.git
+cd hello.git
+git --bare init
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

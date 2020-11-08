@@ -1,0 +1,403 @@
+ssh аутефикация на github
+В самом github в проекте = справл code = тут можно выбрать ssh https
+
+1 ssh-keygen
+2 cd .ssh 
+3 cat id_rsa.pub копирую все
+4 иду на github в правом в верхнем углу user = setings = ssh and gpg keys = new key = название My ssh key = сам ключь вставляй полностью = add new key 
+Пример:
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDAmUQ2aCuaaZJPBUbebh2cdXH92ANRiWK2KjQEnK5loltE9LOS6xCJJ4EcUDu/PD+HOFBhSdjeZLkhvdFHb2vh+ihveSQjDuPoFD+3Cp/OMFa3bRQ4H3MYrpv5zyn2WtvPisYjnqyIOJuaHxc7b/fCXdVStMnCCI2JPDIfsBlKDZhHcmUNbwWzkxqnbKD24CJDtNLAHNqjzwDodUOwruuE1n2oDipH3hSL3I9fst+JZ2vHKmWCcJf1RQVRNyiqQcHtmRD+REv1LW4ajIDmLp7wBv4f+jjOjWcIsKmM+O3VxYJFJD9DoQHXyHIyK3L0VQazcF8G1vK7KEMTiCJxZN343zdhARWpAI+PNtpsWR7agVgY5l9HWl7RgKhR+k648sq0yD2rI2+sYznounnT/ak6lTZoIzqbrgQdpvGC2G7UvHFwH+05NuZUbGYoYJ6W8rXWb1rrTq4c18yjl1qrR5gLhR/FWAvxN+H0BWZIRkenNhN9cz8r6p9nl2FJSzZdKDU= sam@sam-Think
+5 все теперь когда создаю проект выбираю ssh
+
+6 Если проект уже есть и он работает по https то 
+git remote -v # смотрю как проект забрасывается на github
+origin	https://github.com/Sammygun/Django_app.git (fetch) # происходит по https
+origin	https://github.com/Sammygun/Django_app.git (push)
+
+git remote set-url origin git@github.com:Sammygun/Django_app.git ## меняю с https на ssh 
+
+git remote -v
+origin	git@github.com:Sammygun/Django_app.git (fetch) ## все поменялось на ssh
+origin	git@github.com:Sammygun/Django_app.git (push)
+
+Проверка работы ssh
+
+7 вношу изменения
+1 git status
+2 git add . # можно и так 
+3 git commit -m "Django_app3_конспект"
+4 git push origin
+===========================
+Git
+
+git
+import sys
+print(sys.version)
+посмотреть версию python в vs code
+
+
+Sammygun
+sam.rybtsov@gmail.com
+Sam3030034
+репозиторий sam
+
+
+1. Remote Repository 
+удаленный репозиторий
+
+git pull обновить информацию получить последнию версию
+
+git hub #бесплатно публикация в открытом доступе!!!!
+AWS codecommit # 5 бесплатно редкий
+bitbucket !!!!!
+gitlab
+
+ProGIt книга есть на русском языке 500 страниц
+
+2. git #команда проверка есть ли он есть
+  sudo apt install git # установка git
+   git # проверка
+   git --version # проверка версии
+   sudo yum install git # redhat
+-------------------------------------------
+Стандартные команды Git используемые в различных ситуациях:
+
+создание рабочей области (смотрите также: git help tutorial)
+   clone      Клонирование репозитория в новый каталог
+   init       Создание пустого репозитория Git или переинициализация существующего
+
+работа с текущими изменениями (смотрите также: git help everyday)
+   add        Добавление содержимого файла в индекс
+   mv         Перемещение или переименование файла, каталога или символьной ссылки
+   reset      Сброс текущего состояния HEAD на указанное состояние
+   rm         Удаление файлов из рабочего каталога и индекса
+
+просмотр истории и текущего состояния (смотрите также: git help revisions)
+   bisect     Выполнить двоичный поиск изменения, которое вносит ошибку
+   grep       Вывод строк, соответствующих шаблону
+   log        Вывод истории коммитов
+   show       Вывод различных типов объектов
+   status     Вывод состояния рабочего каталога
+
+выращивание, отметка и настройка вашей общей истории
+   branch     Вывод списка веток,  их создание или удаление
+   checkout   Переключение веток или восстановление файлов в рабочем каталоге
+   commit     Запись изменений в репозиторий
+   diff       Вывод разницы между коммитами, коммитом и рабочим каталогом и т.д.
+   merge      Объединение одной или нескольких историй разработки вместе
+   rebase     Повторно применить коммиты над верхушкой другой ветки
+   tag        Создание метки, вывод списка, удаление или проверка метки, подписанной с помощью GPG
+
+совместная работа (смотрите также: git help workflows)
+   fetch      Загрузка объектов и ссылок из другого репозитория
+   pull       Извлечение изменений и объединение с другим репозиторием или локальной веткой
+   push       Обновление внешних ссылок и связанных объектов
+
+«git help -а» и «git help -g» выводит список доступных подкоманд и
+некоторые руководства по темам. Запустите «git help <команда>» или
+---------------------------------------------------------
+3.
+ git config --global user.name "Sam Rybtsov"
+ git config --global user.email "sam.rybtsov@gmail.com" 
+ git config -l # смотрю все конфигурации
+ просто в домашней директории смотрю
+ ll
+ cat .gitconfig
+
+4.
+1.mkdir myproject
+2.cd myproject/
+3.git init . # сделать базу данных в текущей директории
+  git init  /home/sam/myproject # можно и так
+4. .git #  в данной папке создаться папка
+    ll .git #куча файлов
+5.git status # проверка статуса
+6. echo "Source file1" > file1.txt# создали файл уже с
+7. git status # смотрю git уже остлеживает 
+   echo "Source file2" > file2.txt
+   git status # смотрю git уже остлеживает и его
+8. git add * # добавляем файлы stanging status
+   git add file1.txt # можно конкретно что-то
+9.  git commit -m "My Initial commint, this is Version1.0"
+    # после git add можно делать commit типо снимок файла
+10. git status # теперь изменений нету
+11. echo "Source file3" > file3.txt
+    git status # теперь есть файл
+    git add .
+    git add file3.txt # можно так
+12. меняю файл file1.txt  добавлю текст
+13. git status # покажет что новый файл и file1 изменен
+    git add * # всех добавлю опять
+    git status # теперь они оба зеленые
+    git commit -m "Added file3 and updated file1" # m message сообщение что мы поменяли это коментарии
+    git status # все чисто что нету измененных файлов
+14. План
+     0. создал директорию в ней git init .
+     1.создаешь файлы
+     2.добавляешь git add
+     3.git commit делаешь снимок
+Ты всегда сможегь вернуться на нужную тебе версию файла
+Итого план
+git init .
+git add *
+git status
+git commit -m "My initial version"
+
+15. 1.echo "Source file4" > file4.txt # просто создаем файл статус untracked (неотслеживаемый)
+    2. git add file.txt # staged
+    3. git commit -m "Version1" # все сохранили
+    4. git push # отпарвляет файл в git hub repository делает удаленные копии
+16. git log # смотрю все комиты которые были сделаны
+    git log -1 # смотрю последный комит который был сделан
+    git log -1 -p # что конкретно было сделано в последнем p print
+в самом конце смотрю 
++++ b/file3.txt #данную строку
+@@ -0,0 +1 @@
++Source file3
+    1.  echo "aa">> file3.txt # добавил строку
+         echo "aa"> file4.txt # новый файл
+    2. git status 
+    3. git add .
+       git add * # одинаковые команды все добавить
+    4. git commit -m "few changes"
+    5. git log -1 -p # смотрим последние изменения
+-Source file3 # это было удалено
++aa # это было добавлено
++aa
+-------------------------------------------------------
+    1. nano file1.txt  # меняю текст
+    2. git status # показывает чтобы поменял там подсказки есть если нагадил
+   # Изменения, которые не в индексе для коммита:
+  (используйте «git add <файл>…», чтобы добавить файл в индекс)
+  (используйте «git checkout -- <файл>…», чтобы отменить изменения
+    3. git checkout -- file1.txt # вернет все обратно
+--------------------------------------------------------------
+1. echo " sadsdad" > newfile1.txt
+2. git status
+3. git add .
+4. git status 
+5. git diff --staged  # показывает разницу между последним комитом и то что сейчас последния строка зеленого цвета это то что было добавлено
+6. echo "logloglogo" > zzzz.log
+   mkdir logs 
+   cp zzzz.log logs/ # скопировал еще туда
+   echo "blablalbla" > newfile2.txt
+   git status
+        logs/ # то что покажет красным цветом
+    newfile2.txt
+    zzzz.log
+7. nano .gitignore # создаю файл и пишу что я не хочу комитиеть исключения
+*.log # указал формат
+logs/# папку
+file1.txt # указал сам файл
+8. git status
+   git add .  # все добавит кроме файла log и папки и file1.txt
+   git commit -m "asda" # закомитил
+
+Итого git log        смотрю все комиты которые были сделаны
+      git log -p      распечатать print 
+      git log -p -1   print и распечатать
+      git diff --staged показывает разницу между последним комитом 
+      git checkout -- file.txt # отменить изменения после git status
+9. Github git push HTTP
+   на сайте create new repository
+   repository name mysuperproject1
+   галочка README
+   create
+  
+ 2. 1.Зайди в свой репозиторий
+    Помни про сторку clone or download
+  http или ssh копируй ссылку http
+  как только на работе дают доступ у тебя появл. желтый репозиторий
+  нажимай на него clone и копируй ссылку http
+  git clone https://github.com/Sammygun/mysuperproject1.git
+  # копирую себе репозиторий находясь в папке рабочей
+    2. cd mysuperproject1/
+    3. echo "HelloWorld" > file1.txt # сохдаю файл в репозиторий
+       тут уже get init делать не надо уже
+    4. git status 
+    5. git add .
+    6. git commit -m "My First Commit" # сделали снимок
+    7. git push origin  # попросит логин и пароль
+     # все закинет в этот репозиторий на сайте
+  Итого
+  git clone https://github.com/Sammygun/mysuperproject1.git
+  c
+  git add .
+  git commit -m "My First Commit"
+  git push origin
+9.1 Аутификация через ssh ключи !!!!!!!!!!!!!!!!!!!
+   1. Захожу в рут директорию
+   2. ll ~/.ssh/ # смотрю данные файлы
+   3. ssh-keygen # три раза enter
+   4. ll .ssh 
+     id_rsa # появились ключи private and public
+    id_rsa.pub
+   5. cat ~/.ssh/id_rsa.pub # смотрю ключь
+      копирую ключь иду на сайт захожу в юзера
+      setings  SSH and GPG keys
+      new ssh key = My key from Linux=add key # теперь аунтификация не нужна
+   6. Захожу в репозиторий и копирую ключь ssh
+     1. git remote -v # захожу в папку и смотрю соединение http
+origin    https://github.com/Sammygun/mysuperproject1.git (fetch) # вот оно соединение
+origin    https://github.com/Sammygun/mysuperproject1.git (push)
+     2. git remote set-url origin git@github.com:Sammygun/mysuperproject1.git
+      # перенастраиваю на ssh подключение
+     3. git remote -v
+origin    git@github.com:Sammygun/mysuperproject1.git (fetch) # вижу новое подключение
+origin    git@github.com:Sammygun/mysuperproject1.git (push)
+        git status
+     4. echo "dasdad" > file1.txt
+         git add .
+         git commit -m "Added File2 and File1"
+         git push # тут уже ничего спрашивать не будет так есть ssh ключь
+         yes
+         полная автоматизация
+ Итого 
+ git remote -v # смотрю подключение
+ git remote set-url origin git@github.com:Sammygun/mysuperproject1.git # вставляю скопированную с сайта ссылку ssh
+ git clone git@github.com:Sammygun/mysuperproject1.git
+ишу в командной строке и появлеяется папка ссылка взята с git hub
+
+10. windows ssh
+1. при установке ставится Git bash
+ 1.ssh keygen по сути тоже самое
+
+git clone git@github.com:Sammygun/mysuperproject1.git
+копирую ссылку git hub пишу в командной строке и появлеяется папка
+
+11. создание и работа с branch
+есть золотая копия которая не трогается
+нашли ошибку делаем  залили в золотую копию branch удалили
+fix_error version1 version2 version3 version4
+
+Master version1 version2 version3 version4 version 4.x version5.0
+
+version1 version2 version3 version4 version4.x version5.0
+
+1.git init myapp
+2.git status
+3.git branch # ничего не покажет так как нету еще branch
+4. echo "ver1" > index.html
+5.git status
+6. git add .
+7. git commit -m "version1.0"
+8. git branch # покажет master
+9. git log   # смотрю изменения все 
+
+10.echo "ver2" > index.html
+   git status
+   git add .
+   git commit -m "version2.0"
+   git log
+
+11.echo "ver3" > index.html
+   git status
+   git add .
+   git commit -m "version3.0"
+   git log
+
+12. git branch fix_error
+    git branch # покажет уже master и fix_error
+    git checkout fix_error
+    git branch # покажет уже зеленым  fix _error
+
+13. git checkout master # переключился обратно
+    git branch # проверил
+    git branch -d fix_error # удалил
+
+14. git checkout -b denis_fixingerror # срзу создали и перешел на branch
+    echo "ver4" > index.html
+    git add .
+    git commit -m "version4.0" 
+    git log # просматриваю исотрию изменений
+    git branch # смотрю где нахожусь
+    
+15. git checkout master # перехожу обратно на ветку
+    git merge denis_fixingerror # находясь на ветке master я объединился с веткой denis_fixingerror
+    git branch -d denis_fixingerror # все после объединения данная ветка не нужна
+    
+16. git checkout -b test # создали и сразу перешли
+    echo "ddd" > . \index.html
+    git add .
+    git commit -m "version xxx"
+    git checkout master
+    git branch -d test # не даст сразу так как там был commit уже но если хочешь удалить 
+    git bracn -D test # все равно удалит его
+
+17. git checkout -b add_link # создал и переключился на ветку
+      echo "ver4.1" > . \index.html
+      git add .
+      git commit -m "version4.1"
+     
+        
+      echo "ver5.1" > . \index.html
+      git add .
+      git commit -m "version5.1"    
+
+      git checkout master # перешел на золотую ветку
+      git merge add_link # объединился с данной веткой
+      git log # история
+      git branch -d add_link # удалил этот branch
+    
+     
+   Итого
+   git branch # смотрю ветки
+   git branch test # создал ветку  !!!
+   git checkout test #  переход эту ветку !!!
+   git checkout -b test # а это создание и переход на ветку!!!
+   git checkout master # перейдет на ветку master
+   git merge test # объединит с master test
+   git branch -d add_link # просто удалит
+   git branch -D add_link # удалит если сделали commit но не объединили
+  
+
+12. Как переходить на старые версии
+commit эти снимок на который можно вернуться
+  1.git log # копирую код commit 
+  2. git checkout 87bb964512e1f90eecbc5c042e73763842cc89e0   # перехожу
+  3.  git checkout master
+      git commit --amend # чтобы поменять коментарий при комите
+      нажимаю i чтобы коментировать менять текст типо vim вверху в самом это и есть сам коментарий esc :wq 
+   git reset --hard HEAD~ 2 # возврашюсь на две версии обратно
+   git reseе --soft HEAD~3 # замочил три комита 
+
+13. заходим клонируем репозиторий рабочий в git hub
+
+   1. git clone git@github.com:Sammygun/mysuperproject1.git # подключились
+   2. cd mysuperproject1/ 
+   3. git branch
+   4. git checkout -b denis_task009 # создал branch и перешел, master не трогаю
+   5. Теперь меняю файлы изменяю все но не трогаю
+   6. git status
+   7. git add . # добавляю
+      git commit -m "Added lesson5, and made few changes"
+      git branch
+      git push origin # покажет что нету такого branch будет подсказка
+      git push --set-upstream origin denis_task009 # в git hub создаться branch
+    8. open pull request запрос на объединение denis_task009 с master
+       на сайте master = denis_task009 в pull request
+      там укажи что ты сделал
+      merge pull request # кнопка если можешь объединить
+      
+       pull request там в file changed заходил кнопка split 
+       оргинал и изменение, берешь ссылку и направляешь чуваку на проверку
+         
+       git checkout master
+       git checkout -d denis_task009 # удаляю на локальном компе
+       git push origin --delete denis_task009  # удаляю уже то что в сети и на сайте уже было сделано merge выше
+
+  
+   
+
+
+Git pull скачать с сервера
+
+Git commit подготовить отредактированный код
+
+Git push 
+    
+https://www.google.com/amp/s/proglib.io/p/git-cheatsheet/amp/
+Шпаргалка по git
+
+
+    
