@@ -47,8 +47,17 @@ boolean
 5 Ошибка Keyerror # проблема возможна с ключом словаря
 6 Nameerror # проблема с переменной ключом может переменной такой нету 
 7 SyntaxError: invalid syntax # проблема с синтаксисом
-8 TypeError число и строку умножить не можем
+8 TypeError число и строку умножить не можем, также ошибка когда в самой функции один аргумент, def (some_org)
 9 ValueError когда пытаюсь строку преврать в число int(a) (a это строка)
+10 Перевернуть слово
+def test(text):
+	return text[::-1] # слово написал задом наперед перевернул слово
+
+a = test("hello")
+print(a)
+# olleh # перевернуть слово
+11 a = str(text) # мы превратили переменную text в строку
+12 a = int(text) # превращаю в строку в число 
 ======================
 ТИПЫ ДАННЫХ
 
@@ -915,3 +924,164 @@ finally: 					 ## этот блок срабатывает всегда даже
 
 # TypeError:
 # finally
+
+
+
+
+================================
+Функции будем использовать постоянно, будем делить наш код на функции и потом их использовать
+Главная функция из нее ветвями все вырастает
+Часто используемый код завернул в функцию, и потом используешь где тебе нужно
+
+1 
+def test():  # test название нашей функции
+	print("i'm function one")
+
+test() # вызов, используем нашу функцию там где это необходимо в этой функции аргументы не нужны, без вызова ничего не будет test()
+# i'm function one  # вывод произойдет только если вызову свою функцию test()
+
+# Аналог
+# len() # аналог данных функций только тут нужны аргументы
+#sorted() 
+
+2 
+
+def test():  # test название нашей функции
+	print("i'm function one")
+	test_two() 			#вызову вторую функцию test_two внутри первой функции test 
+
+def test_two():
+	print("i'm function two")
+
+
+test() # сработает вызов сразу двух функций test() test_two()
+#i'm function one #вывод
+#i'm function two
+
+3 параметр функции some_arg
+
+def test(some_arg="hi"):  # обязательный параметр c значением hi сработает на вывод в этом примере не повлияет
+# def test(some_arg=0):  #можно и так, но def test(some_arg): будет ошибка
+	print("i'm function one")
+	test_two() 			#вызову вторую функцию test_two внутри первой функции test 
+
+def test_two():
+	print("i'm function two")
+
+
+test()
+# test("hello") вывод будет такой же
+#i'm function one #вывод
+#i'm function two
+
+
+4 аргументы функции
+
+def test(some_arg, two, one):
+	print("i'm function one")
+	test_two() 			
+
+def test_two():
+	print("i'm function two")
+
+
+#test("hello") #будет ошибка так как упущены следующие аргументы 
+#TypeError: test() missing 2 required positional arguments: 'two' and 'one'
+test("hello", 2, 5) # вот теперь все сработает так как вы передали аргументы любые они могут быть
+#i'm function one # вывод
+#i'm function two
+test(some_arg="hello", two=2, one=5) # лучше записывать вот так сразу все будет понятно вывод такой как и выше
+test(some_arg="hello", one=2, two=5) # можно ставить аргументы в любом порядке вывод такой же
+
+4.1
+
+def test(some_arg, two, one=1):
+	print(some_arg, two, one) # передаем сами аргументы для вызова
+	test_two() 			
+
+def test_two():
+	print("i'm function two")
+
+
+test(some_arg="hello", two=2, one=5) # выведит данные значения
+#hello 2 5  ## выведит 5 несмотря на то что для one=1 указали выше
+#i'm function two
+test(some_arg="hello", two=2) # если мы для one ничего не укажем тогда выведит единицу что выше указана
+# hello 2 1
+#i'm function two
+
+def test(one=1, some_arg, two) # такая функция не сработает one = 1 необязательный аргумент при вызове функции test(some_arg="hello", two=2)
+test(some_arg="hello", two=2)  # так как one = 1 необязательный аргумент, она должна быть в конце как в примере выше
+
+
+5 return
+
+
+def test(some_arg, two, one=1):
+	print(some_arg, two, one)
+	test_two()
+	return 2 ## вернуть нам двойку 			
+
+def test_two():
+	print("i'm function two")
+
+
+test(some_arg="hello", two=2)  
+#hello 2 1 # вывод будет стандарный
+#i'm function two
+a = test(some_arg="hello", two=2) ## таким образом вывод уже будет другой и 2 нам выведит 
+print(a) 
+#hello 2 1
+#i'm function two
+#2 ## return вернули двойку
+
+5.1 
+def test(text):
+	return text[::-1] # слово написал задом наперед перевернул слово
+
+a = test("hello")
+
+print(a)
+# olleh # перевернуть слово
+ a = test(1) # так будет ошибка 1 это целое число 
+
+Однако если сделаем вот так то ошибки не будет:
+
+def test(text):
+	a = str(text) # мы превратили переменную text в строку и присвоили значение переменной a
+	return a[::-1] # слово написал задом наперед перевернул слово
+
+a = test("1")
+print(a)
+# 1  вывод 1 
+
+
+5.2 
+def test(text):
+	a = str(text) # мы превратили переменную text в строку и присвоили значение переменной a
+	return a[::-1] # слово написал задом наперед перевернул слово
+
+a = test({"one": 1})
+print(a)
+# }1 :'eno'{ # словарь переобразовал в строку, словари можно преобразовывать в строки
+
+5.3
+
+def test(text):
+	a = str(text) #создали переменную a она доступна только в этой функции
+	return a[::-1] # слово написал задом наперед перевернул слово
+
+print(a)  # однако при вызове глобальной переменной ничего не будет и покажет что она не определена
+# NameError: name 'a' is not defined # переменная не определена
+# a = hello
+# print(a) # тогда выведит 
+
+
+
+
+
+
+
+
+
+
