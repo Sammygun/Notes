@@ -827,8 +827,91 @@ try:
 	a * b
 except (ValueError):
 	print("error")
-except (NameError):
-	print ("NameError")
+except (NameError): # на этом блоке python сработает
+	print ("NameError") # 
 #NameError # вывод так как нету такой переменной  
 
-24: 16 
+4.4
+
+a = "hello"
+b = 0.1 # будет ошибка TypeError так как нелья не int умножать с str строкой ,если не напишу except (TypeError)
+
+try:
+	a * b
+except (ValueError):
+	print("error")
+except (NameError):
+	print ("NameError")
+except (TypeError): # при такой ошибке напечатаем TypeError
+	print("TypeError") 
+
+5 as 
+a = "hello"
+b = 0.1 # будет ошибка TypeError так как нелья не int умножать с str строкой ,если не напишу except (TypeError)
+
+try:
+	a * b
+except Exception as e: ###большое исключение на все ошибки print(e) # распечатать значение
+# даже если except (NameError): ниже есть и другие обрабочтики выйдет этото большое исключение, если оно выше всех
+# прсто код не дойдет до него
+	print(e)
+# can't multiply sequence by non-int of type 'float' # выведит в чем проблема но программа не упадет
+
+5.1 
+a = "hello"
+b = 0.1 # будет ошибка TypeError так как нелья не int умножать с str строкой ,если не напишу except (TypeError)
+
+try:
+	a * b
+except (TypeError): # сработает данное исключение несмотря на то что есть большое исключение ниже, т.к. это выше 
+	print("TypeError") # python остановится на этом блоке
+except Exception as e: ###большое исключение на все ошибки print(e) # распечатать значение
+	print(e)
+except (NameError):
+	print ("NameError")
+# TypeError вывод 
+
+5.2
+# такой обработчик выгодно использовать в конце всех когда ты писал ошибки все которые не знаешь но на случай если появится неизвестная ошибка
+except Exception as e: ###большое исключение на все ошибки print(e) # распечатать значение
+	print(e) 
+
+5.3 Помни строки умножать можно на 2, в отличие от чисел от плавающей точки
+Помни что python идет по блокам и остановится там где указано в условии
+
+a = "hello"
+b = 2 # строки умножать можно на 2 
+
+try:
+	a * b  #python посмтрит увидет что это блок сработает
+except (TypeError):  
+	print("TypeError")
+except Exception as e:
+	print(e)
+except (NameError):
+	print ("NameError")
+else: 					 ## если не один сработчик не сработает то выведит else
+	print("i'm else")
+#finally:             # наконец-то этот блок срабатывает всегда даже если нету или есть ошибки
+#	print("finaly") # выведит наконец -то 
+# i'm else # вывод
+
+5.4 finally повторно
+
+a = "hello"
+b = 0.2 # опять будет ошибка сработает обработчик TypeError 
+
+try:
+	a * b  #python посмтрит увидет что это блок сработает
+except (TypeError):  
+	print("TypeError:")
+except Exception as e:
+	print(e)
+except (NameError):
+	print ("NameError")
+finally: 					 ## этот блок срабатывает всегда даже если нету или есть 
+# закрыть файл, закрыть подключение в базу данных и чтобы оно всегда срабатывала, или настроить логирование
+	print("finally") # выведит finally
+
+# TypeError:
+# finally
