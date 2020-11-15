@@ -1,0 +1,1370 @@
+========================================================================================
+shameless ## denis first
+dynoro in my mind 
+
+
+14 песня
+
+1 http://ru4.hotcharts.xyz/shazam/archive/2020.htm
+музыка
+
+2 https://docs.djangoproject.com/en/1.11/ref/models/fields/#field-types
+
+3 https://docs.djangoproject.com/en/1.11/ref/contrib/admin/
+админка
+
+4 https://docs.djangoproject.com/en/2.0/topics/http/urls/
+urls документация
+
+5 https://www.w3schools.com/
+html css python !!!!!
+
+6 codeacademy верстка
+
+7 https://www.pythonanywhere.com/user/sammygun/consoles/17614694/
+терминал на bash
+
+
+27.10.20
+Запуск виртуального окружения
+1  cd djangogirls 
+
+sudo apt install python3-venv
+## если небыло установлено
+
+2  python3 -m venv myvenv
+
+2.1 source myvenv/bin/activate #### запустил вирт окружение !!!!!!!
+myvenv #### в терминале должно появиться
+
+2.2 python manage.py runserver #### запуск сервера !!!!!
+manage.py позволяет нам это сделать
+http://127.0.0.1:8000/
+
+2.3  python manage.py shell# консоль django после запуска виртуального окружения
+
+
+3 python3 python_intro.py ## запуск скриптов
+
+
+4 if
+elif
+else
+if...elif...else — условными операторами, которые позволяют выполнять код только при определенных условиях;
+
+5 def hi(name):
+    print('Hi ' + name + '!')
+
+girls = ['Rachel', 'Monica', 'Phoebe', 'Ola', 'You']
+for name in girls:
+        hi(name)
+        print('Next girl')
+По здороваемся с каждыи именем
+
+6 from django.conf import settings
+импортирую с конкретного файла конкретную запись чтобы не копировать
+from ... import ...
+
+
+7 python manage.py makemigrations blog ## добавляю модель в базу данных
+
+
+8 python manage.py migrate blog ### сохраняю изменения в базу данных
+
+9 http://127.0.0.1:8000/admin/ ## админка python
+
+10 python manage.py createsuperuser
+создание пользователя админки
+admin ## пользователь
+Admin_3030034 ## пароль
+admin@admin.com ## почта
+
+10.1 vim Копирование python кода
+:set paste, вставляем код, :set nopaste продолжаем работать
+
+11 GIT
+
+1 git init  ## в папке проекта 
+Initialized empty Git repository in ~/djangogirls/.git/
+2 git config --global user.name "Your Name" ### пользователь
+3 git config --global user.email you@example.com ## почта
+4 git status ## смотрю какие изменения были
+5 git add --all .
+6  git commit -m "My Django app, first commit" ## закоммитил изменения дал название изменениям
+
+7 .gitignore ## в папке создай такой файл здесь можно указывать исключения 
+
+
+
+
+8 github добавляю !!!!!!!!!
+(setings там можно удалить или переименовать репозиторий)
+
+1 add new my-first-blog ## на сайте !!!!!!
+none везде добавляй
+
+2 выбирай https 
+(…or push an existing repository from the command line)
+
+git remote add origin https://github.com/Sammygun/my-first-blog.git
+git branch -M main
+git push -u origin main
+### попросит имя пользователя и пароль введи
+
+9 ЕСЛИ СДЕЛАЛ УЖЕ ИЗМЕНЕНИЯ КАКИЕ НИТЬ на сайте то:
+1 git status ## смотрю что поменялось
+2 git add --all . ## находясь в папке djangogirls
+3 git status ### тут увижу что именно будет загружаться
+4 git commit -m "Changed the HTML for the site." ### коммитим с заметкой
+5 git push ### пушим на gut hub
+
+6 Публикация сайта после изменений на pythoanywhere.com
+1 cd sammygun.pythonanywhere.com/
+2 git pull
+
+
+
+
+
+10 Повторно если сделал изменения на закидываю github
+1 git status
+2 git add --all .
+3 git status
+4 git commit -m "Modified templates to display posts from database."
+5 git push
+
+6 PythonAnywhere
+1 cd sammygun.pythonanywhere.com/
+2 git pull
+
+
+11 Повтроной сделал изменения закидываю на github потом на сервер
+1 git status
+2 git add --all .
+3 git status
+4 git commit -m "Added view and template for detailed blog post as well as CSS for the site."
+5 git push
+
+11.1 PythonAnywhere
+1 cd sammygun.pythonanywhere.com/
+2 git pull
+
+===================
+
+
+
+12 PYTHONANYWHERE
+
+1 account = api token = create a new API token
+
+2 потом захожу в console = выбираю bash ## подключаюсь к серверу pythonanywhere серверу
+
+3 pip3.6 install --user pythonanywhere ### установка приложения которое вытянет код с github
+
+4 pa_autoconfigure_django.py https://github.com/Sammygun/my-first-blog.git
+
+5 python manage.py createsuperuser
+
+http://sammygun.pythonanywhere.com/ ## мой сайт
+
+6 Публикация сайта после изменений на pythoanywhere.com
+1 cd sammygun.pythonanywhere.com/
+2 git pull
+====================
+
+13 django терминал
+1 python manage.py shell ### django терминал вызов
+
+2 from blog.models import Post ## импортирую объект с именем POST
+
+3 Post.objects.all() ### смотрю все посты post которые были сделаны на сайте
+
+4 from django.contrib.auth.models import User ### импортирую пользователя 
+
+5  User.objects.all() ## ввожу в терминале смотрю всех пользователей admin будет супер пользователь так как его создавал
+
+<QuerySet [<User: admin>]> ### в примере ola
+
+6 me = User.objects.get(username='admin') ## создаю переменную me
+
+7 Post.objects.create(author=me, title='Interesting text', text='Test') ### создаю пост от пользователя admin в админке он будет
+
+8 Post.objects.all() ### тут могу этот пост увидеть
+
+9 Post.objects.filter(author=me) ## фильтрую по имени пользователя кто когда создавал пост
+
+10 Post.objects.filter(title__contains='title') ### ищу посты по ключевому слову title
+
+11 Получаю инфу уже о публикованных статья
+1 from django.utils import timezone
+
+2 post = Post.objects.get(title="Sample title") ### выбираю запись которую хочу опубликовать
+
+3 post.publish() ### публикуем конкретную статью
+
+4 Post.objects.filter(published_date__lte=timezone.now()) ### смотрю все что опубликовал покажет 
+
+<QuerySet [<Post: Sample title>]> ### вывод показывает то что опубликовано
+
+
+5 Post.objects.order_by('created_date') ## фильтрую по дате публикации начиная с самой первой и последней публикации
+
+6 Post.objects.order_by('-created_date')### c конца сортировка по первой 
+
+7 Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+### комбинирую published date по дате когда было опубликовано и timezone (список опубликованных запросов то что делал publish)запросы
+
+<QuerySet [<Post: Sample title>, <Post: Interesting text>]> ## то что опубликовал и отсортировано по дате и времени
+
+8 exit () ### выйти  
+======================================
+
+14  from .models import Post### текущая директория .models так как данный файл находится там же где models.py
+
+
+
+15 Верстка страниц
+1 подключение bootstrap на странице head прост прописываешь
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+2  Создание css файла
+djangogirls/blog/static/css/blog.css ## именно по такому пути 
+тут прописываю стили css
+
+3 подключение файла css к html blog/static/css/blog.css
+<link rel="stylesheet" href="{% static 'css/blog.css' %}"> ### после botstrap в head!!!!
+путь полностью прописывать не надо достаточно static 'css/blog.css'
+Помни чтобы стили заработали перезагрузи сервер локальный !!!!!!Й
+
+То что в итоге на выходе должно получиться 
+<title>Django Girls blog</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+
+
+4 В самом вверху html документа 
+{% load static %} ## указываем что подключили css файл
+
+5 Расширение шаблона глава называется
+
+1 создаю свой html шаблон который могу вставлять в разные страницы
+djangogirls/blog/templates/blog
+base.html ### сюда закидываю весь html код с страницы post_list.html удаляю то что не надо
+
+
+2 {% block content %} ## всю верстку обхватываю сверху и снизу
+{% endblock %}
+
+3 потомо захожу в post_list.html удаляю все кроме центра то что надо и делаю так 
+{% block content %} !!!!!!!!!
+    {% for post in posts %}
+        <div class="post">
+            <div class="date">
+                {{ post.published_date }}
+            </div>
+            <h1><a href="">{{ post.title }}</a></h1>
+            <p>{{ post.text|linebreaksbr }}</p>
+        </div>
+    {% endfor %}
+{% endblock %} !!!!!!!!!!!!!!!!!
+
+6 Создание безопасных кнопок
+
+   <form method="POST" class="post-form">{% csrf_token %} ### требование django создание безопасных кнопок
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+1 Проблемы 
+1 не запускался локальный сервер
+urls.py 
+from django.conf.urls import include ### вставить строку данную просто добавить
+
+2 не загружалась страница html
+папка templates = blog = post_list.html ## по такому путю надо создавать файл
+
+3 Проблема с css стилями просто перезагрузи сервер локальный
+
+
+========================================================================================================================================
+://docs.python.org/3/library/index.html
+Документация
+
+https://docs.python.org/3.4/tutorial/controlflow.html#for-statements
+документация for
+
+http://django-marcador.keimlink.de/ !!!!!s
+книга по Django
+
+https://docs.djangoproject.com/en/1.11/ref/settings/#language-code
+настройка языков!!!!
+
+https://docs.djangoproject.com/en/1.11/
+!!!!! книга поиск  по формам
+
+
+cmd командная строка python  для ввода команды
+
+в поиске на бери командная строка тоже самое
+shift правая кнопка мыши запускаем командную строку
+/mnt/c/Users/sam/djangogirls$ # в линуксу путь 
+
+git
+import sys
+print(sys.version)
+посмотреть версию python в vs code
+
+Sammygun
+sam.rybtsov@gmail.com
+Sam3030034
+репозиторий sam
+
+https://docs.python.org/3/library/index.html
+Документация
+
+https://docs.python.org/3.4/tutorial/controlflow.html#for-statements
+документация for
+
+http://django-marcador.keimlink.de/ !!!!!s
+книга по Django
+
+https://docs.djangoproject.com/en/1.11/ref/settings/#language-code
+настройка языков!!!!
+
+https://docs.djangoproject.com/en/1.11/
+!!!!! книга поиск  по формам
+
+
+cmd командная строка python  для ввода команды
+
+в поиске на бери командная строка тоже самое
+shift правая кнопка мыши запускаем командную строку
+/mnt/c/Users/sam/djangogirls$ # в линуксу путь 
+
+git
+import sys
+print(sys.version)
+посмотреть версию python в vs code
+
+Sammygun
+sam.rybtsov@gmail.com
+Sam3030034
+репозиторий sam
+
+
+https://www.pythonanywhere.com
+sammygun
+sam.rybtsov@gmail.com
+sam3030034
+
+
+https://ss64.com/  
+# справочник по командам
+
+https://putty.org.ru/articles/unix-linux-ref.html
+# справочник по командам на русском
+
+Your API token
+3030622587581e1e37e88709a1671040b957727f
+(Windows)      (Mac OS / Linux)    Описание    Пример
+exit        exit    Закрыть окно    exit
+cd        cd    изменить каталог    cd test
+cd        pwd    вывести текущий каталог    cd (Windows) или pwd (Mac OS / Linux)
+dir        ls    список каталогов/файлов    dir
+copy        cp    копировать файл    copy c:\test\test.txt c:\windows\test.txt
+move        mv    переместить файл    move c:\test\test.txt c:\windows\test.txt
+mkdir        mkdir    создать новый каталог    mkdir testdirectory
+rmdir (или del)    rm    удалить файл    del c:\test\test.txt
+rmdir /S    rm -r    удалить каталог    rm -r testdirectory
+[CMD] /?    man [CMD]    справка для команды    cd /? (Windows) или man cd (Mac OS / Linux)
+____________________________________________________________________________________
+Basic python
+в командной строке просто ввожу python windows и могу уже кодить 
+Ctrl + Z для Windows или exit (Ctrl + D для Mac/Linux)
+>>> exit()  # выйти
+
+integer 5
+string "" ''
+
+
+>>> 2 ** 3
+8
+
+>>> "Ola"
+'Ola' # Кавычки говорят Python'у, что внутри них находится строка.
+
+>>> "Hi there " + "Ola"
+'Hi there Ola'
+
+
+>>> "Ola" * 3
+'OlaOlaOla'
+
+"Runnin' down the hill" # можно и так писать
+
+>>> 'Runnin\' down the hill'  # можно и так что спраятать запятую лишнию
+"Runnin' down the hill"
+
+>>> "Ola".upper() # метод с большой буквы метод потому что функция только  для строк(объкт) но тоже функция
+'OLA'
+len("Ola") # работает
+
+print(len("Ola")) # для len всех значит функция
+
+'My name is "Ola"'  # так будет работать
+'My name is "Ola" and I \'m programmer' # \ показываем что код не заканчивается
+
+____________________________________
+
+len(304023)  # будет ошибка так как целые числа int не имеют длины
+len("304023") #  так посчитает
+>>> len(str(304023)) # Но так все посчитает так как мы перевили в строку
+
+
+Функция str преобразует объекты в строки
+Функция int преобразует объекты в целые числа
+
+int('hello') # Но так будет ошибка нельзя в целые числа перевести буквы
+
+Error Our friends, type errors
+
+>> name = "Ola"
+>>> "Hi " + name
+'Hi Ola'
+name = "Liz" #поменяется название после присвоения последнего
+"Liz"
+
+name variables must be nice
+
+_______________________________________________________________________________________
+Список
+
+lottery = [1, 2, 3, 4, 5, 6]
+print[lottery]
+[1, 2, 3, 4, 5, 6]
+>>> len(lottery)
+>>> 6       # посчитает количество переменных а не их Id
+>>>l
+
+>>> lottery.sort()  # отсортирует помни про ()
+>>> print(lottery)
+[1, 2, 3, 4, 5, 6]
+
+>>> lottery.reverse() # Обратную сторону
+>>> print(lottery)
+[6, 5, 4, 3, 2, 1]
+>>> lottery.append(100) # добавляю 100
+>>> print(lottery)
+[6, 5, 4, 3, 2, 1, 100]
+
+>>> print(lottery[0]) # вот тут ищем по индекусу 0 значит 6
+6
+
+>>> del lottery [2]
+>>> >>> lottery.pop(2) # можно и так
+>>> print(lottery)
+[6, 5, 3, 2, 1, 100]  # 4 номер удалился
+
+print(lottery[1000])
+IndexError: list index out of range # Индексная ошибка
+
+>>> names = ["Ola", "liz", "Sonya"] # как пример
+>>> print(names)
+['Ola', 'liz', 'Sonya']
+
+>>> mixed = ["Ola", 7, [1, 2, 3, 4, 5]] # намиксованный
+>>> mixed
+['Ola', 7, [1, 2, 3, 4, 5]]
+___________________________________________________________________________
+Словари
+доступ получаем по ключу
+номер телефона мы ищем по имени его телефон это есть ключь
+---------------------------------------------------
+>>> participant = {'name': 'Ola', 'country': 'Poland', 'favorite_numbers': [7, 42, 92]}
+Этой командой ты создала переменную participant с тремя парами ключ/значение:
+
+ключ name, указывающий на значение 'Ola' (объект типа строка),
+ключ country, указывающий на значение 'Poland' (еще одна строка),
+и ключ favorite_numbers, указывающий на значение [7, 42, 92] (объект типа список с тремя числами внутри).
+
+Когда стоит использовать словарь, а когда список? Это хороший вопрос для самостоятельного размышления. Сделай предположение перед тем, как читать дальше.
+
+Тебе нужна упорядоченная последовательность элементов? Список — наш выбор.
+Тебе нужны сочетания ключ/значение, чтобы быстро искать значения (по ключу) в дальнейшем? Словарь отлично подойдет.
+Словари, как и списки, изменяемы, т. е. они могут быть изменены после того как были созданы. Ты можешь добавить новые пары ключ/значение в словарь следующим образом:
+
+command-line
+>>> participant['favorite_language'] = 'Python'
+------------------------------------------------------------------------
+
+phonebook = {'liz' : '44 000000', 'Mary' : '1111111', 'Alice' : '44 222222', 'Maria' : '44112223333'}
+>>> phonebook
+{'liz': '44 000000', 'Mary': '1111111', 'Alice': '44 222222', 'Maria': '44112223333'}
+
+словарь нам нужен для того чтобы по ключу получить доступ к данным полязователя как пример по имени его посмотреть где они живет почта и т.д.
+
+ participant = {'name': 'Ola', 'country': 'Poland', 'favorite_numbers': [7, 42, 92]}
+print(participant['name']) # вместо того чтобы искать по индексу мы ищем по ключу
+
+>>> print(participant['country'])
+Poland
+
+>>> print(participant['age'])
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+KeyError: 'age' #!!!!!!!!!!!!!!! age ошибка нету такого значения
+
+
+participant = {'name': 'Ola', 'name' : 'Liz', 'country': 'Poland', 'favorite_numbers': [7, 42, 92]}
+>>> participant
+{'name': 'Liz', 'country': 'Poland', 'favorite_numbers': [7, 42, 92]} # заменит Ola на liz как и с переменной
+
+>>> participant['favorite_language'] = 'Python' # так можно добавлять в словарь
+>>> participant
+{'name': 'Liz', 'country': 'Poland', 'favorite_numbers': [7, 42, 92], 'favorite_language': 'Python'}
+>>>
+
+>>> len(participant) # находим 4 ключа
+4                            
+
+del paricipant['favorite_language'] # удаляем из словаря обозначения
+participant['country'] = 'Uk'# меняем обзначение poland на uk
+
+Подведём итог
+Шикарно! Теперь ты знаешь немало о программировании. Мы познакомились с:
+
+ошибками — теперь ты знаешь как читать и анализировать ошибки, которые возникают, если Python не понимает твоей команды;
+переменными — именами для объектов, которые упрощают твой код и делают его более читабельным;
+списками — последовательностями объектов в заданном порядке;
+словарями — объектами, хранящими пары ключ/значение.
+____________________________________________________________
+boolean
+
+True # Только так пишутся данные значения true false ошибка
+False 
+
+>>> 5 > 2
+True
+>>> 1 == 1
+True
+
+>>> 5 != 2 #  5 не равно 2 
+True
+SyntaxError:  # ошибке в синтаксисе
+
+>>> 6 >= 6
+True
+
+сначало >< потом равно >=, <=
+
+and true true
+or  true true , или true else
+
+not
+
+Пример
+>>> True and False
+False  # нету двух True
+
+>>> True or False  # или или True
+True
+
+>>> not True
+False
+
+>>> a = True
+>>> a
+True
+>>> a = 2 > 5 # !!!!!1
+>>> a
+False
+
+
+True and True
+False and True
+True or 1 == 1
+1 != 2
+________________________________________________________________________________
+if И сохранение
+в командной строке перейти в место где находится файл через cd и ls
+потом написать python python_intro.py
+
+C:\Users\sam\Desktop>python python_intro.py
+Hello world
+
+if condition:
+    block      # if something do something
+if 3 > 2:
+    print("it works")
+
+
+if 5 > 2:
+    print('5 is indeed greater than 2')  # если true То выполнится, если false то код ниже
+else:                      # если false то код ниже
+    print('5 is not greater than 2')
+-----------------------------------------------------------
+name = "Sonja"
+
+if name == 'Ola':        # false  # после If идет elif если надо еще раз
+    print('Hey Ola!')
+elif name == 'Sonja':           # else if true его напечатает
+    print('Hey Sonja')
+else:
+    print('Hey anonumus')
+-------------------------------------
+
+name = "Sonja"
+age = 21
+
+if age < 18:
+    print("You not allowed to read!") # можно использовать разные переменные разные условия вот это и выведит
+elif name == 'Ola':        # false  # после шf идет elif если надо еще раз
+    print('Hey Ola!')
+elif name == 'Sonja':           # else if true его напечатает
+    print('Hey Sonja')
+else:
+    print('Hey anonumus')
+
+Можно ограничиться и одним пробелом перед print, однако практически все программисты Python используют 4, чтобы код выглядел аккуратно и читабельно. Каждая табуляция также считается за 4 пробела.
+
+elif позволяет добавить дополнительные условия, которые запускаются, если предыдущие не срабатывают.
+Можно использовать сколько угодно elif после первого if
+
+!!!!elif позволяет добавить дополнительные условия, которые запускаются, если предыдущие не срабатывают.!!!!!!!
+______________________________________________________________________________________________________________________________________________________________________________
+Функции
+
+чай (чашка вода чай и все вместе)
+
+def make_tea(cup,teabag,water):          # def говорит питону что мы пишем функцию
+ ...........
+
+def hi():            # writing our function
+    print('Hi there!')
+    print('How are you')
+
+hi()       # активирую данную функцию по ее имени
+
+
+
+Error best friends 
+Traceback (most recent call last):
+  File "python_intro.py", line 8, in <module>  # line 8
+    hi()
+TypeError: hi() missing 1 required positional argument: 'name' # "hi"не имеет значения name
+
+def hi(name):
+    if name == "Ola":
+        print('Hi Ola')
+    elif name == "Sonja":
+        print('Hi Sonja')
+    else:
+        print('Hi anonymous!')
+hi("Ola") 
+Hi Ola
+
+
+def hi(name):
+    print("Hi " + name + "!")
+hi("Sandra")   
+
+Hi Sandra!
+
+def area(side):
+    print(side * side)
+
+area(2)   # вызываем функцию
+area(4)
+
+
+def area(side):
+    return side * side  # return ничего не выводит
+
+print(area(2))  
+
+
+smal_square_area = area(2) # area(2) равно 4
+big_square_are = area(smal_square_area)     # здесь 4
+print(big_square_are) 
+
+ ошибку IndentationError, проверь, что обе строки с вызовом print начинаются с одинакового количества проблелов.
+NameError, то, возможно, ты что-то неправильно ввела, поэтому проверь, что ты использовала одно и то же имя при создании функции в строке def hi(): и при её вызове в строке hi().
+TypeError: hi() missing 1 required positional argument: 'name'
+_________________________________________________________________________________________________________________
+Loop
+Dont repeat yourself   DRY
+
+def hi(name):
+    print('Hi ' + name + '!')
+
+girls = ['Rachel', 'Monica', 'Phoebe', 'Ola', 'You']
+
+hi("Rachel")      # Берем из списка и используем имена в фукнкции hi
+hi("Monica")      # у нас hi(name) мы просто туда подставляем что угодно
+hi("Phoebe")
+hi("Ola")
+_______________________________________________________________
+def hi(name):          # тоже самое только быстрее
+    print('Hi ' + name + '!')
+
+girls = ['Rachel', 'Monica', 'Phoebe', 'Ola', 'You']
+
+for name in girls:        #name берем из списка
+    hi(name)
+
+
+for name in ['Rachel', 'Monica', 'Phoebe', 'Ola', 'You']
+    hi(name)
+#  к каждому значению в списке мы присвоим переменную name и запустим ее
+
+
+for name in 4:
+    print(name)
+Будет ошибка
+
+for ожидает от нас данные из списка и словаря
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+person = {
+    'name' : 'Ola',
+    'height' : 155,
+    'Favorite_language' : 'Python'
+}
+
+for element in person:
+    print(element)
+name            # выведит чисто ключи но не значения
+height
+Favorite_language
+
+for element in person.values():  # .values Но если так писать выведит значения ключей
+    print(element)
+Ola
+155
+Python
+
+for element in person.items():  # выводим и ключи и их значения
+    print(element)
+('name', 'Ola')
+('height', 155)
+('Favorite_language', 'Python')
+
+----------------------------------------------------------------------------------------------------------------------
+
+person = {
+    'name' : 'Ola',
+    'height' : 155,
+    'Favorite_language' : 'Python'
+}
+
+for key, value in person.items():     # по ключу и значению person.items (все показываем)
+    print('Person\'s ' + str(key) + ' is ' + str(value)) # персона ключь значение str(key) для того чтобы все перевести в строку а то вдруг есть цифры
+
+Person's name is Ola          # сначало прогонит по первой строке словаря потом по следующей и так далее
+Person's height is 155        #  height рост  значения value 155  
+Person's Favorite_language is Python
+
+
+Person\'s # Закрываем лишнию запятую
+_________________________________________________________________________________
+for number in range(1, 11):
+    print(number)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10  # От одного до 11
+
+Обрати внимание что второе число (конец списка) не включается в результат работы функции (range(1, 11) создает список от 1 до 10, не включающий 11). Это потому, что «range» — полуоткрытый диапазон, то есть включает в себя первое значение, но не включает последнего.
+______________________________________________________________________________________________________________________________________________________________________
+Про Django!!!
+
+Когда на сервер приходит запрос, он переадресуется Django, который пытается сообразить, что же конкретно от него просят. Для начала он берет адрес веб-страницы и пробует понять — что же нужно сделать. Эту часть процесса в Django выполняет urlresolver (адрес веб-сайта называется URL — Uniform Resource Locator — Единый указатель ресурсов, так что название urlresolver, resolver == определитель, имеет определенный смысл). Он не слишком умён, поэтому просто берет список шаблонов и пытается сопоставить их с URL. Django сверяет шаблоны сверху вниз и, если что-то совпадает, он переправляет запрос соответствующей функции (которая называется view).
+Представь себе почтальона с письмом. Она идет вниз по улице и сверяет номера домов с адресом на письме. Если они совпадают, то она оставляет письмо. Так же работает и urlresolver!
+Но самые интересные вещи происходят в функции view: мы, например, можем обращаться к базе данных за определенной информацией. Может быть пользователь попросил изменить какую-нибудь информацию? Как будто в письме написано: "Пожалуйста, поменяйте описание моей работы." Функция view может проверить, имеете ли вы разрешение делать это, а затем обновит описание работы и отправит обратно ответ: "Готово!". Затем функция view сгенерирует ответ, и Django сможет отправить его веб-браузеру пользователя.
+
+______________________________________________________________________________________________________________________________________________________________________
+Создаем виртуальное окружение
+ mkdir djangogirls
+ cd djangogirls
+
+Мы создадим виртуальное окружение под именем myvenv. В общем случаем команда будет выглядеть так:
+python -m venv myvenv
+
+C:\Users\Name\djangogirls> myvenv\Scripts\activate
+активация уже созданного виртуального окружения!!!!!
+myvenv\Scripts\activate
+
+Ты поймёшь, что virtualenv запущено, когда увидишь префикс (myvenv) в начале приглашения командной строки.
+При работе с виртуальным окружением команда python будет автоматически обращаться к правильной версии языка, так что ты можешь использовать просто python вместо python3.
+
+python -m pip install --upgrade pip # обновление установщика
+
+Для начала создай файл requirements.txt внутри директории djangogirls.
+В файл djangogirls/requirements.txt нужно добавить такой текст: Django~=2.0.6
+
+Теперь выполни команду pip install -r requirements.txt, чтобы установить Django.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Не забудь: ты должна запускать все команды в virtualenv. Если ты не видишь в командной строке префикса (myvenv), то необходимо активировать virtualenv. Мы объясняли, как это сделать, в разделе Работаем с virtualenv главы Установка Django. Для этого нужно набрать myvenv\Scripts\activate в Windows или source myvenv/bin/activate в Mac OS / Linux.
+
+djangogirls
+├───manage.py
+├───mysite
+│        settings.py
+│        urls.py
+│        wsgi.py
+│        __init__.py
+└───requirements.txt
+
+
+manage.py — это другой скрипт, который помогает с управлением сайтом. С помощью него мы, помимо прочего, сможем запустить веб-сервер на твоем компьютере без установки дополнительных программ.
+
+Файл settings.py содержит настройки для твоего веб-сайта.
+
+Помнишь нашу аналогию с почтальоном? Файл urls.py содержит список шаблонов, по которым ориентируется urlresolver
+____________________________________________________________________________________________________________________________
+
+В файле settings.py найди строку, содержащую TIME_ZONE, и измени её в соответствии со своим часовым поясом:TIME_ZONE = 'Europe/Moscow'  # устанавливаем время
+
+Измени язык, отредактировав следующую строку:
+mysite/settings.py
+LANGUAGE_CODE = 'ru-ru'
+___________________________________________________________________________________________________________________________________________
+БАЗЫ данных!!!!
+
+Cуществует множество различных баз данных, которые могут хранить данные для твоего сайта. Мы будем использовать стандартную — sqlite3.
+
+Она уже выбрана по умолчанию в файле mysite/settings.py:
+
+mysite/settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+ python manage.py migrate     # команда не рабоатает
+https://www.pythonanywhere.com
+sammygun
+sam.rybtsov@gmail.com
+sam3030034
+
+
+https://ss64.com/  
+# справочник по командам
+
+https://putty.org.ru/articles/unix-linux-ref.html
+# справочник по командам на русском
+
+Your API token
+3030622587581e1e37e88709a1671040b957727f
+(Windows)      (Mac OS / Linux)    Описание    Пример
+exit        exit    Закрыть окно    exit
+cd        cd    изменить каталог    cd test
+cd        pwd    вывести текущий каталог    cd (Windows) или pwd (Mac OS / Linux)
+dir        ls    список каталогов/файлов    dir
+copy        cp    копировать файл    copy c:\test\test.txt c:\windows\test.txt
+move        mv    переместить файл    move c:\test\test.txt c:\windows\test.txt
+mkdir        mkdir    создать новый каталог    mkdir testdirectory
+rmdir (или del)    rm    удалить файл    del c:\test\test.txt
+rmdir /S    rm -r    удалить каталог    rm -r testdirectory
+[CMD] /?    man [CMD]    справка для команды    cd /? (Windows) или man cd (Mac OS / Linux)
+____________________________________________________________________________________
+Basic python
+в командной строке просто ввожу python windows и могу уже кодить 
+Ctrl + Z для Windows или exit (Ctrl + D для Mac/Linux)
+>>> exit()  # выйти
+
+integer 5
+string "" ''
+
+
+>>> 2 ** 3
+8
+
+>>> "Ola"
+'Ola' # Кавычки говорят Python'у, что внутри них находится строка.
+
+>>> "Hi there " + "Ola"
+'Hi there Ola'
+
+
+>>> "Ola" * 3
+'OlaOlaOla'
+
+"Runnin' down the hill" # можно и так писать
+
+>>> 'Runnin\' down the hill'  # можно и так что спраятать запятую лишнию
+"Runnin' down the hill"
+
+>>> "Ola".upper() # метод с большой буквы метод потому что функция только  для строк(объкт) но тоже функция
+'OLA'
+len("Ola") # работает
+
+print(len("Ola")) # для len всех значит функция
+
+'My name is "Ola"'  # так будет работать
+'My name is "Ola" and I \'m programmer' # \ показываем что код не заканчивается
+
+____________________________________
+
+len(304023)  # будет ошибка так как целые числа int не имеют длины
+len("304023") #  так посчитает
+>>> len(str(304023)) # Но так все посчитает так как мы перевили в строку
+
+
+Функция str преобразует объекты в строки
+Функция int преобразует объекты в целые числа
+
+int('hello') # Но так будет ошибка нельзя в целые числа перевести буквы
+
+Error Our friends, type errors
+
+>> name = "Ola"
+>>> "Hi " + name
+'Hi Ola'
+name = "Liz" #поменяется название после присвоения последнего
+"Liz"
+
+name variables must be nice
+
+_______________________________________________________________________________________
+Список
+
+lottery = [1, 2, 3, 4, 5, 6]
+print[lottery]
+[1, 2, 3, 4, 5, 6]
+>>> len(lottery)
+>>> 6       # посчитает количество переменных а не их Id
+>>>l
+
+>>> lottery.sort()  # отсортирует помни про ()
+>>> print(lottery)
+[1, 2, 3, 4, 5, 6]
+
+>>> lottery.reverse() # Обратную сторону
+>>> print(lottery)
+[6, 5, 4, 3, 2, 1]
+>>> lottery.append(100) # добавляю 100
+>>> print(lottery)
+[6, 5, 4, 3, 2, 1, 100]
+
+>>> print(lottery[0]) # вот тут ищем по индекусу 0 значит 6
+6
+
+>>> del lottery [2]
+>>> >>> lottery.pop(2) # можно и так
+>>> print(lottery)
+[6, 5, 3, 2, 1, 100]  # 4 номер удалился
+
+print(lottery[1000])
+IndexError: list index out of range # Индексная ошибка
+
+>>> names = ["Ola", "liz", "Sonya"] # как пример
+>>> print(names)
+['Ola', 'liz', 'Sonya']
+
+>>> mixed = ["Ola", 7, [1, 2, 3, 4, 5]] # намиксованный
+>>> mixed
+['Ola', 7, [1, 2, 3, 4, 5]]
+___________________________________________________________________________
+Словари
+доступ получаем по ключу
+номер телефона мы ищем по имени его телефон это есть ключь
+---------------------------------------------------
+>>> participant = {'name': 'Ola', 'country': 'Poland', 'favorite_numbers': [7, 42, 92]}
+Этой командой ты создала переменную participant с тремя парами ключ/значение:
+
+ключ name, указывающий на значение 'Ola' (объект типа строка),
+ключ country, указывающий на значение 'Poland' (еще одна строка),
+и ключ favorite_numbers, указывающий на значение [7, 42, 92] (объект типа список с тремя числами внутри).
+
+Когда стоит использовать словарь, а когда список? Это хороший вопрос для самостоятельного размышления. Сделай предположение перед тем, как читать дальше.
+
+Тебе нужна упорядоченная последовательность элементов? Список — наш выбор.
+Тебе нужны сочетания ключ/значение, чтобы быстро искать значения (по ключу) в дальнейшем? Словарь отлично подойдет.
+Словари, как и списки, изменяемы, т. е. они могут быть изменены после того как были созданы. Ты можешь добавить новые пары ключ/значение в словарь следующим образом:
+
+command-line
+>>> participant['favorite_language'] = 'Python'
+------------------------------------------------------------------------
+
+phonebook = {'liz' : '44 000000', 'Mary' : '1111111', 'Alice' : '44 222222', 'Maria' : '44112223333'}
+>>> phonebook
+{'liz': '44 000000', 'Mary': '1111111', 'Alice': '44 222222', 'Maria': '44112223333'}
+
+словарь нам нужен для того чтобы по ключу получить доступ к данным полязователя как пример по имени его посмотреть где они живет почта и т.д.
+
+ participant = {'name': 'Ola', 'country': 'Poland', 'favorite_numbers': [7, 42, 92]}
+print(participant['name']) # вместо того чтобы искать по индексу мы ищем по ключу
+
+>>> print(participant['country'])
+Poland
+
+>>> print(participant['age'])
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+KeyError: 'age' #!!!!!!!!!!!!!!! age ошибка нету такого значения
+
+
+participant = {'name': 'Ola', 'name' : 'Liz', 'country': 'Poland', 'favorite_numbers': [7, 42, 92]}
+>>> participant
+{'name': 'Liz', 'country': 'Poland', 'favorite_numbers': [7, 42, 92]} # заменит Ola на liz как и с переменной
+
+>>> participant['favorite_language'] = 'Python' # так можно добавлять в словарь
+>>> participant
+{'name': 'Liz', 'country': 'Poland', 'favorite_numbers': [7, 42, 92], 'favorite_language': 'Python'}
+>>>
+
+>>> len(participant) # находим 4 ключа
+4                            
+
+del paricipant['favorite_language'] # удаляем из словаря обозначения
+participant['country'] = 'Uk'# меняем обзначение poland на uk
+
+Подведём итог
+Шикарно! Теперь ты знаешь немало о программировании. Мы познакомились с:
+
+ошибками — теперь ты знаешь как читать и анализировать ошибки, которые возникают, если Python не понимает твоей команды;
+переменными — именами для объектов, которые упрощают твой код и делают его более читабельным;
+списками — последовательностями объектов в заданном порядке;
+словарями — объектами, хранящими пары ключ/значение.
+____________________________________________________________
+boolean
+
+True # Только так пишутся данные значения true false ошибка
+False 
+
+>>> 5 > 2
+True
+>>> 1 == 1
+True
+
+>>> 5 != 2 #  5 не равно 2 
+True
+SyntaxError:  # ошибке в синтаксисе
+
+>>> 6 >= 6
+True
+
+сначало >< потом равно >=, <=
+
+and true true
+or  true true , или true else
+
+not
+
+Пример
+>>> True and False
+False  # нету двух True
+
+>>> True or False  # или или True
+True
+
+>>> not True
+False
+
+>>> a = True
+>>> a
+True
+>>> a = 2 > 5 # !!!!!1
+>>> a
+False
+
+
+True and True
+False and True
+True or 1 == 1
+1 != 2
+________________________________________________________________________________
+if И сохранение
+в командной строке перейти в место где находится файл через cd и ls
+потом написать python python_intro.py
+
+C:\Users\sam\Desktop>python python_intro.py
+Hello world
+
+if condition:
+    block      # if something do something
+if 3 > 2:
+    print("it works")
+
+
+if 5 > 2:
+    print('5 is indeed greater than 2')  # если true То выполнится, если false то код ниже
+else:                      # если false то код ниже
+    print('5 is not greater than 2')
+-----------------------------------------------------------
+name = "Sonja"
+
+if name == 'Ola':        # false  # после If идет elif если надо еще раз
+    print('Hey Ola!')
+elif name == 'Sonja':           # else if true его напечатает
+    print('Hey Sonja')
+else:
+    print('Hey anonumus')
+-------------------------------------
+
+name = "Sonja"
+age = 21
+
+if age < 18:
+    print("You not allowed to read!") # можно использовать разные переменные разные условия вот это и выведит
+elif name == 'Ola':        # false  # после шf идет elif если надо еще раз
+    print('Hey Ola!')
+elif name == 'Sonja':           # else if true его напечатает
+    print('Hey Sonja')
+else:
+    print('Hey anonumus')
+
+Можно ограничиться и одним пробелом перед print, однако практически все программисты Python используют 4, чтобы код выглядел аккуратно и читабельно. Каждая табуляция также считается за 4 пробела.
+
+elif позволяет добавить дополнительные условия, которые запускаются, если предыдущие не срабатывают.
+Можно использовать сколько угодно elif после первого if
+
+!!!!elif позволяет добавить дополнительные условия, которые запускаются, если предыдущие не срабатывают.!!!!!!!
+______________________________________________________________________________________________________________________________________________________________________________
+Функции
+
+чай (чашка вода чай и все вместе)
+
+def make_tea(cup,teabag,water):          # def говорит питону что мы пишем функцию
+ ...........
+
+def hi():            # writing our function
+    print('Hi there!')
+    print('How are you')
+
+hi()       # активирую данную функцию по ее имени
+
+
+
+Error best friends 
+Traceback (most recent call last):
+  File "python_intro.py", line 8, in <module>  # line 8
+    hi()
+TypeError: hi() missing 1 required positional argument: 'name' # "hi"не имеет значения name
+
+def hi(name):
+    if name == "Ola":
+        print('Hi Ola')
+    elif name == "Sonja":
+        print('Hi Sonja')
+    else:
+        print('Hi anonymous!')
+hi("Ola") 
+Hi Ola
+
+
+def hi(name):
+    print("Hi " + name + "!")
+hi("Sandra")   
+
+Hi Sandra!
+
+def area(side):
+    print(side * side)
+
+area(2)   # вызываем функцию
+area(4)
+
+
+def area(side):
+    return side * side  # return ничего не выводит
+
+print(area(2))  
+
+
+smal_square_area = area(2) # area(2) равно 4
+big_square_are = area(smal_square_area)     # здесь 4
+print(big_square_are) 
+
+ ошибку IndentationError, проверь, что обе строки с вызовом print начинаются с одинакового количества проблелов.
+NameError, то, возможно, ты что-то неправильно ввела, поэтому проверь, что ты использовала одно и то же имя при создании функции в строке def hi(): и при её вызове в строке hi().
+TypeError: hi() missing 1 required positional argument: 'name'
+_________________________________________________________________________________________________________________
+Loop
+Dont repeat yourself   DRY
+
+def hi(name):
+    print('Hi ' + name + '!')
+
+girls = ['Rachel', 'Monica', 'Phoebe', 'Ola', 'You']
+
+hi("Rachel")      # Берем из списка и используем имена в фукнкции hi
+hi("Monica")      # у нас hi(name) мы просто туда подставляем что угодно
+hi("Phoebe")
+hi("Ola")
+_______________________________________________________________
+def hi(name):          # тоже самое только быстрее
+    print('Hi ' + name + '!')
+
+girls = ['Rachel', 'Monica', 'Phoebe', 'Ola', 'You']
+
+for name in girls:        #name берем из списка
+    hi(name)
+
+
+for name in ['Rachel', 'Monica', 'Phoebe', 'Ola', 'You']
+    hi(name)
+#  к каждому значению в списке мы присвоим переменную name и запустим ее
+
+
+for name in 4:
+    print(name)
+Будет ошибка
+
+for ожидает от нас данные из списка и словаря
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+person = {
+    'name' : 'Ola',
+    'height' : 155,
+    'Favorite_language' : 'Python'
+}
+
+for element in person:
+    print(element)
+name            # выведит чисто ключи но не значения
+height
+Favorite_language
+
+for element in person.values():  # .values Но если так писать выведит значения ключей
+    print(element)
+Ola
+155
+Python
+
+for element in person.items():  # выводим и ключи и их значения
+    print(element)
+('name', 'Ola')
+('height', 155)
+('Favorite_language', 'Python')
+
+----------------------------------------------------------------------------------------------------------------------
+
+person = {
+    'name' : 'Ola',
+    'height' : 155,
+    'Favorite_language' : 'Python'
+}
+
+for key, value in person.items():     # по ключу и значению person.items (все показываем)
+    print('Person\'s ' + str(key) + ' is ' + str(value)) # персона ключь значение str(key) для того чтобы все перевести в строку а то вдруг есть цифры
+
+Person's name is Ola          # сначало прогонит по первой строке словаря потом по следующей и так далее
+Person's height is 155        #  height рост  значения value 155  
+Person's Favorite_language is Python
+
+
+Person\'s # Закрываем лишнию запятую
+_________________________________________________________________________________
+for number in range(1, 11):
+    print(number)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10  # От одного до 11
+
+Обрати внимание что второе число (конец списка) не включается в результат работы функции (range(1, 11) создает список от 1 до 10, не включающий 11). Это потому, что «range» — полуоткрытый диапазон, то есть включает в себя первое значение, но не включает последнего.
+______________________________________________________________________________________________________________________________________________________________________
+Про Django!!!
+
+Когда на сервер приходит запрос, он переадресуется Django, который пытается сообразить, что же конкретно от него просят. Для начала он берет адрес веб-страницы и пробует понять — что же нужно сделать. Эту часть процесса в Django выполняет urlresolver (адрес веб-сайта называется URL — Uniform Resource Locator — Единый указатель ресурсов, так что название urlresolver, resolver == определитель, имеет определенный смысл). Он не слишком умён, поэтому просто берет список шаблонов и пытается сопоставить их с URL. Django сверяет шаблоны сверху вниз и, если что-то совпадает, он переправляет запрос соответствующей функции (которая называется view).
+Представь себе почтальона с письмом. Она идет вниз по улице и сверяет номера домов с адресом на письме. Если они совпадают, то она оставляет письмо. Так же работает и urlresolver!
+Но самые интересные вещи происходят в функции view: мы, например, можем обращаться к базе данных за определенной информацией. Может быть пользователь попросил изменить какую-нибудь информацию? Как будто в письме написано: "Пожалуйста, поменяйте описание моей работы." Функция view может проверить, имеете ли вы разрешение делать это, а затем обновит описание работы и отправит обратно ответ: "Готово!". Затем функция view сгенерирует ответ, и Django сможет отправить его веб-браузеру пользователя.
+
+______________________________________________________________________________________________________________________________________________________________________
+Создаем виртуальное окружение
+ mkdir djangogirls
+ cd djangogirls
+
+Мы создадим виртуальное окружение под именем myvenv. В общем случаем команда будет выглядеть так:
+python -m venv myvenv
+
+C:\Users\Name\djangogirls> myvenv\Scripts\activate
+активация уже созданного виртуального окружения!!!!!
+myvenv\Scripts\activate
+
+Ты поймёшь, что virtualenv запущено, когда увидишь префикс (myvenv) в начале приглашения командной строки.
+При работе с виртуальным окружением команда python будет автоматически обращаться к правильной версии языка, так что ты можешь использовать просто python вместо python3.
+
+python -m pip install --upgrade pip # обновление установщика
+
+Для начала создай файл requirements.txt внутри директории djangogirls.
+В файл djangogirls/requirements.txt нужно добавить такой текст: Django~=2.0.6
+
+Теперь выполни команду pip install -r requirements.txt, чтобы установить Django.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Не забудь: ты должна запускать все команды в virtualenv. Если ты не видишь в командной строке префикса (myvenv), то необходимо активировать virtualenv. Мы объясняли, как это сделать, в разделе Работаем с virtualenv главы Установка Django. Для этого нужно набрать myvenv\Scripts\activate в Windows или source myvenv/bin/activate в Mac OS / Linux.
+
+djangogirls
+├───manage.py
+├───mysite
+│        settings.py
+│        urls.py
+│        wsgi.py
+│        __init__.py
+└───requirements.txt
+
+
+manage.py — это другой скрипт, который помогает с управлением сайтом. С помощью него мы, помимо прочего, сможем запустить веб-сервер на твоем компьютере без установки дополнительных программ.
+
+Файл settings.py содержит настройки для твоего веб-сайта.
+
+Помнишь нашу аналогию с почтальоном? Файл urls.py содержит список шаблонов, по которым ориентируется urlresolver
+____________________________________________________________________________________________________________________________
+
+В файле settings.py найди строку, содержащую TIME_ZONE, и измени её в соответствии со своим часовым поясом:TIME_ZONE = 'Europe/Moscow'  # устанавливаем время
+
+Измени язык, отредактировав следующую строку:
+mysite/settings.py
+LANGUAGE_CODE = 'ru-ru'
+___________________________________________________________________________________________________________________________________________
+БАЗЫ данных!!!!
+
+Cуществует множество различных баз данных, которые могут хранить данные для твоего сайта. Мы будем использовать стандартную — sqlite3.
+
+Она уже выбрана по умолчанию в файле mysite/settings.py:
+
+mysite/settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+ python manage.py migrate     # команда не рабоатает
+
+
+##################################
+
