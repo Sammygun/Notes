@@ -140,8 +140,8 @@ class Genre(models.Model):
     def __str__(self): 
         return self.name
     
-    class Meta: 
-        verbose_name = "Жанр" 
+    class Meta:  ## помни это как в админке будет называться графа Жанры !!!!!!!!!
+        verbose_name = "Жанр"  
         verbose_name_plural = "Жанры" 
 
 
@@ -186,4 +186,83 @@ password DJWOMS
 # после этого обязательно перезагрузи локальный сервер!!!!!!
 
 3 После этого в админке увидим наши модели
-2:08
+setings.py # русифицируем админку
+LANGUAGE_CODE = 'ru' 
+
+4 в админке добавляем = категорию записи= добавить=(Категория) Фильмы= Все фильмы мира(описание) = url = movie
+При добавлении актеров  и фото у нас в папке появится папка = actors = Jackie_Chan.jpg
+
+4.1 Создаем папку media в корене самого проекта , там где setings.py
+seting.py в самом конце прописываем нащ url
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # указываем путь к папке media где она находится
+
+
+4.2 django_movie = urls.py 
+
+from django.conf import settings # !!
+from django.conf.urls.static import static #!!
+from django.contrib import admin
+from django.urls import path
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
+
+
+if settings.DEBUG: # при включенном режиме django будет раздавать наши медифайлы из папки media
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+4.3 После этого появится папка media = actors = Jackie_Chan.png # так правильно хранить картинки
+
+4.4. Добавляем фильм Терминатор Терминатор2 и актеров Джеки Анрнолльд  и режиссеры
+
+5 все что мы созадали в админке надо отобразить на сайте
+movies/views.py
+
+from django.shortcuts import render
+from django.views.generic.base import View
+
+from .models import Movie
+
+
+class MoviesView(View): # создаю класс с аргументом view django
+    ### Список фильмов
+    def get(self, request): # функция get запросы инф. от нашего клиента
+        movies = Movie.objects.all() # запрос передаем
+        return render(request, "movies/movie_list.html", {"movie_list": movies})
+        # return возвращаем ответ в виде нашего html страницы
+
+
+6 Потом создаю templates = movie = movie_list.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+{% for movie in movie_list %} # то что views писал
+    {{ movie.title }} # обращение title что прописано в models.py
+{% endfor %}
+</body>
+</html>
+
+7 movies/urls.py 
+
+from django.urls import path
+
+from . import views
+
+
+urlpatterns = [
+    path("", views.MoviesView.as_view())
+]
+
+8 Надо перейти в корневой urls.py (не в приложение movie)
+10:00
