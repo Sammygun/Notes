@@ -1,4 +1,8 @@
 Django 3 создание сайта
+https://github.com/Sammygun/Django3
+мой gitGitHub
+
+
 Проект на GitHub - https://github.com/DJWOMS/django_movie
 
 1 Создаю папку Django3 = проваливаюсь:
@@ -26,6 +30,19 @@ http://127.0.0.1:8000/
 # SET_NULL!!! папка migration там файл появиться init
 
 5.3 python manage.py migrate ## вот теперь если все успешно реально создали записи в таблице
+
+5.4. после изменений в models.py
+1  python manage.py makemigrations ###  делаем миграции
+2 python manage.py migrate #Добавление в базу данных
+3 в папке migrations появится новый файл c изменениями
+
+5.5. 
+python manage.py createsuperuser # создаю пользователя и пароль его
+http://127.0.0.1:8000/admin/
+user DJWOMS
+password DJWOMS
+# после этого обязательно перезагрузи локальный сервер!!!!!!
+
 
 =================
 6 В проекте django_movie смотрим рабочие файлы:
@@ -148,4 +165,25 @@ INSTALLED_APPS = [
 
 ======================================================
 Уроки Django 3 - таблицы в базе данных и файлы миграций - урок 5
+Изменения в models.py сразу делай миграции
+1  python manage.py makemigrations ###  делаем миграции
+2 python manage.py migrate #Добавление в базу данных
+3 в папке migrations появится новый файл c изменениями
 
+
+========================================================
+Уроки Django 3 - создание и вывод фильмов на сайт - урок 6
+1 все что вводил в models.py надо импортировать в admin.py
+from .models import Category, Genre, Movie, MovieShots, Actor, Rating, RatingStar, Reviews ## все что models.py
+
+admin.site.register(Category) # прописываем таким образом регистрируем нашу модель в админке Django
+admin.site.register(Genre)
+
+2 python manage.py createsuperuser # создаю пользователя и пароль его
+http://127.0.0.1:8000/admin/
+user DJWOMS
+password DJWOMS
+# после этого обязательно перезагрузи локальный сервер!!!!!!
+
+3 После этого в админке увидим наши модели
+2:08
