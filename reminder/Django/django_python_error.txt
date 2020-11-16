@@ -1,0 +1,23 @@
+Python
+
+1 SyntaxError: invalid syntax # проблема с синтаксисом
+  def__init__(self, one, two):                              ^
+SyntaxError: invalid syntax # здесь ошибка так как нету пробела после def __init__ # так правильно
+
+2 TypeError число и строку умножить не можем, также ошибка когда в самой функции один аргумент, def (some_org)
+TypeError: test() takes 0 positional arguments but 1 was given ## аргумент только 1 а нужен ключь
+
+3 ValueError когда пытаюсь строку преврать в число int(a) (a это строка)
+
+4 UnboundLocalError: local variable 'a' referenced before assignment # проблема с глобальной и локальной переменной
+
+5 IndentationError  проблема с большим количеством отступов пробелов
+
+
+
+
+
+Django
+
+1 TemplateDoesNotExist
+Папка каждого приложения должна находится в папке этого приложения, сделано чтобы не было путаницы с html шаблонами

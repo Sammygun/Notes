@@ -265,4 +265,72 @@ urlpatterns = [
 ]
 
 8 Надо перейти в корневой urls.py (не в приложение movie)
-10:00
+django_movie/urls.py ## подключаем urls.py movie
+
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path, include ## !! include импортирован
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path("", include("movies.urls")), ## подключаю movies urls.py к главному urls.py
+]
+
+9 перенос шаблона html верстки
+
+1 movies/static ## создаю данную папку переношу все нужные файлы 11:30 css картинки и другое
+2 setings.py
+STATIC_DIR = os.path.join(BASE_DIR, 'static') ## показываю где лежит наша статика
+STATICFILES_DIRS = [STATIC_DIR] # покажем из каких директорий надо собирать нашу статику сделал список
+3 movies/template/movies ### переношу с архива сюда файл movies.html
+movie.html
+1
+<!DOCTYPE html>
+{% load static %} # подключаю показываю где брать нашу статику
+<html lang="ru">
+
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"> # указываю путь на папку static django сама поймет что делать
+    <!-- Bootstrap-Core-CSS -->
+    <!--/ Style-CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
+    <!--// Style-CSS -->
+    <!-- font-awesome-icons -->
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+
+2 div class="col-md-4 product-men"> # нахожу все после него удаляю
+Колдую html так как настраиваю рендер создаю цикл, инфу беру с movie_list.html
+
+                                {% for movie in movie_list %}  #!!!!!!!!!!!!!!!!
+                            <div class="col-md-4 product-men">
+                                <div class="product-shoe-info editContent text-center mt-lg-4" >
+                                    <div class="men-thumb-item">
+                                        <img src="{{ movie.poster.url }}" class="img-fluid" alt="" > # подключил картинки
+                                    </div>
+                                    <div class="item-info-product">
+                                        <h4 class="">
+                                            <a href="moviesingle.html" class="editContent" >
+                                                {{ movie.title }} # !!!!
+                                            </a>
+                                        </h4>
+
+                                        <div class="product_price">
+                                            <div class="grid-price">
+                                                <span class="money editContent" >{{ movie.tagline }}</span> # !!!!
+                                            </div>
+                                        </div>
+                                        <ul class="stars">
+                                            <li><a href="#"><span class="fa fa-star" aria-hidden="true" ></span></a></li>
+                                            <li><a href="#"><span class="fa fa-star" aria-hidden="true" ></span></a></li>
+                                            <li><a href="#"><span class="fa fa-star-half-o" aria-hidden="true" ></span></a></li>
+                                            <li><a href="#"><span class="fa fa-star-half-o" aria-hidden="true" ></span></a></li>
+                                            <li><a href="#"><span class="fa fa-star-o" aria-hidden="true" ></span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                {% endfor %} ###!!!!
+
+=================================================================
+Уроки Django 3 - классы ListView и DetailView, страница с фильмом - урок 7 
+все сделал все работает остановился пока здесь
