@@ -1,0 +1,170 @@
+ 1) подключение css В html 
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head> 
+style.css находится в папке у нас там где index.html 
+особенность css, что задав параметры к примеру для параграфов можно сразу всем задать параграфам на страничке, самый низкий приоритет
+
+2) второй способ подключения
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<style type="text/css">
+     p{                         какое бы правило не было  задано в style.css это правило всегда будет в приорите
+     color: #0000ff;          так как в head
+ }
+ </style>
+</head> 
+
+3)третий способ
+<p style="color=#fff000">Привет! </p> это подключение в самом html тоже будет иметь повышенный найвысший приоритет, но рекомендуют
+
+4)
+ <p class="red">Страницу><p>
+в css
+p.red{                         для параграфа а именно с класом red задаем стиль
+     color: #ff0000;
+ }
+5) класс 
+<h1 class="dark">Привет</h1>
+.dark{
+     color: #000080;
+ }
+здесь всему чему мы зададим class="dark", будет иметь соответствующий цвет к примеру 
+6)
+<p id="clid">Хорошая контактная страница</p>
+
+#clid{
+     color:#00CED1;          это id через решетку, класс через точку
+ }  
+id используется только один раз,будет работать если несколько, но это будет ошибка нужно для валидации
+к id обращатся через javascript и назначают свойства, чаще всего будут классы, но можно id изредка
+
+7)<p class="fontclass">Когда речь</p>
+.fontclass{
+     font-family:Arial;          это наш шрифт
+    font-size: 20px; размер в  px, в pt, в em чаще всего для текста 
+    font-weight: bold; жирный значит можно 600 писать просто еще жирней 
+    font-style: italic;  стиль нашего шрифта 
+  
+   font: italic bold 17px Arial;    общая команда последовательность: стиль, жирность, размер, шрифт
+}                                            принципиальна последовательность
+
+8) <p class="textclass">Хорошо</p>
+.textclass{
+   text-align: center;        выравнивание текста здесь:по центру
+   line-height:1,7;               междустрочный интервал
+  text-decoration:underline;     подчеркнутый текст overline надчеркнутый сверху полоса будет  line-through зачеркнутый текст
+ color:#ff0000;          цвет красный
+  font-family:Arial;    можем комбинировать и с предыдущими стилями, с большого количества стилей
+}
+9)
+.bgstyle{
+     background-color:#999999;  наш текст в сером фоне будет
+    background-image: url(images/bg.png);   это путь указываем к текстуре на заднем фоне путь через url();
+    background-repeat: no-repeat;   чтобы наша картинка не повторялась,repeat тогда она будет на весь <p> 
+    repeat-x по горизонтали повторяется по горизонтали, repeat-y  по вертикали, но не по гризантали
+  
+    background-position:right center; наша текстура справа в центре или right top, right bottom, так и left
+   порядок сначало вправо влево, потом низ вверх
+    background-position:300px 5px;  влево вниз наверное -300 -5 наверн наоборот вправо вверх
+
+    background:#999999 url(images/bg.png) no-repeat  right center  цвет,путь, повтор, позиция
+ }
+
+.bgstyle{
+     background-color:#999999;
+     background-image: url(images/bg.png);
+     background-repeat: no-repeat;
+     background-position:right center;
+ }
+
+ body{
+     background:#999999 url(images/bg.png) no-repeat  right center
+ }
+
+10)<div></div> обернуть в конейнер позволяет лучше стилизировать то что внутри
+Пример
+<div class="wstyle">Самый лучший день</div>
+               
+.wstyle{
+     width: 400px;    ширину нашего контейнера так можно делать div на всю <body></body>
+     max-width: 900px; максимальная ширина
+   min-width: 700px;  минимальная ширина   используется для резиновой верстки
+  для больших мониторов удобно сайт выглядит хорошо и на маленьком засчет растяжения
+  height:100px; лучше его не использовать html автоматически высчитывает
+
+}
+11)
+<span class="spstyle">онлайн-сервисах</span> позволяет украшать текст слова картинки небольшие
+
+.spstyle{
+     text-decoration: line-through;color: #ff0000;
+ }
+
+12)
+p{                                        сбрасываем настройки для p
+     padding: 0;margin: 0;
+ }
+*{                                             или сброс для всех тегов
+     padding: 0;margin: 0;
+ }
+13) .menu li a:hover{
+     text-decoration: underline;color: #2ca1f2;
+     /* данный псевдокласс позволяет при наведении курсора мыши менять цвет, и делать нижние подчеркивание для наших ссылок */
+ }
+14)
+.main-content{
+ overflow: hidden; /* у нас есть класс main-content, в нем два класса content-left right bar, но у нас при задавании стилей подтянулся футер для этого мы и прописываем его, чтобы футер стал на свое место */  
+ И футер всегда будет опускаться вниз когда будем добавлять  }
+15)
+.content-left{ /*наш левый контент   */
+        padding: 30px 30px 32000px 30px;/* 32000px низ */
+     margin-bottom: -32000px;                         финт чтобы белый фон за текстом растянулся
+  {
+.content-left{ /*наш правый контент   */
+        padding: 30px 30px 32000px 30px;/* 32000px низ */
+     margin-bottom: -32000px;                финт чтобы белый фон за текстом растянулся так как он маленький
+  {
+16)
+.main-content-img{           наша картинка чтобы была дистанция между картинкой и левым и правым баром
+     margin-bottom: 23px;
+ }
+17)
+main-conternt h1{
+ font:normal 18px "Times new Roman";/* таким способом предусматриваем размеры заголовков на перед */
+ margin-bottom: 20px;
+ }
+ main-conternt h2{
+ font:normal 14px "Times new Roman";
+ margin-bottom: 20px;
+ }
+ main-conternt h2{
+ font:normal 10px "Times new Roman";
+ margin-bottom: 20px;
+ }
+18)делай для ссылок стили предусматривай их на перед
+a{
+     color: #5f5d67;          кто-то будет делать ссылки и они будут такого цвета
+ }
+19)a:hover{
+   text-decoration: none;  при наведение на мышь исчезало нижние подчеркивание
+ } 
+
+был фиксированная верстка,потом резиновая верстка, сейчас уже адаптивная верстка 
+20).menu{
+     list-style: none;   убираем маркеры 
+    overflow: hidden;
+ } 
+
+ .menu li{    если делаем float:left; тогода overflow:hidden;
+     float: left;
+    
+ }
+21)
+h3{    
+         white-space: nowrap;   чтобы не было переноса в заголовке
+} 
+22)
+.tell input[type="submit"]{          редактирование самой кнопки
+  color: #ffffff;
+}

@@ -1,0 +1,363 @@
+<link rel="stylesheet" href="style.css" type="text/css">
+подключение  путем создания текстового файла style.css и указываем в нашем коде путь к нему
+где-то можно без type=""text/css в html5
+ селектор выбрать 
+свойства изменений
+
+<!DOCTYPE html>
+ <html>
+ <head>
+ <meta charset="UTF-8">
+ <title> Моя первая HTML страничка! Уляля</title>
+<link href="style.css" rel="stylesheet" type="text/css">    подключение нашего css главное указать путь в папку href остальные просто указываем
+ </head>
+ <body>
+ Привет <a href="http://google.com">мир</a>!
+ </body>
+
+ </html>
+
+a{                                         в отдельном окне мы выбираем тег который хотим изменить 
+      color:green;
+    font-size:13px;                  меняем размер шрифта ссылок
+ }
+
+селектор{                                             
+      свойство:значение;   перевод кода   обязательно двоеточие  и точка с запятой
+    }
+
+шрифт 16 px стандартный размер
+
+http://www.colorpicker.com          подбираем цвета для css копируем код от туда но не забываем про# есть коды с определенными цветами система цветов hex
+есть программа ColorMania 3.2  сразу можно подбирать цвет там есть пипетка выбираешь цвет нажимаешь и программа определяет его цвет, также цвет можно писать словами green
+div{
+      color:#19FBFF;                             пример
+ }
+
+div{
+      color:rgb(255,0,0);             система RGB red green blue  здесь мы указали красный цвет 255 макс ост. 0 0
+ }
+
+div{
+      color:rgba(255,0,0,0.5);  цвет a прозрачность  в color mania можно определять эти цвета надо выбрать RGB Values
+ }
+
+<body>
+ Привет <a href="http://google.com">мир</a>!<br/>
+ Привет <a id="moya_ssilka" href="http://google.com">мир</a>!<br/>       здесь я даю индификатор id назв.должно быть начинаться с буква а не с цифр я хочу чтоб css дал отдельный цвет
+
+Привет <a href="http://google.com">мир</a>!<br/>
+ <div>Это див который будет зелёным!</div>
+ </body>
+
+#moya_ssilka{      то что я делаю в css
+      color:lime;
+ }
+
+Если я пока не хочу указывать ссылку,то я делаю так при этом нажимая на Человек! ничего не происходит
+<a href="#">Человек!</a><br/>
+
+5)
+
+<body>                         создаем классы, название класса должно начинаться с букв 
+ <a href="#" class="human">Человек!</a><br/>             
+ <a href="#" class="animal">Животное!</a><br/>
+ <a href="#" class="animal">Животное!</a><br/>
+ <a href="#" class="animal">Животное!</a>
+ </body>
+в css
+.human{                    класс указывается с точки отличие от индификатора
+      color:#4C8BF5;
+ }
+
+ .animal{
+      color:#FFCE45;
+ }     
+отличие от индификатора у класса в том, что у индификатора только один элемент, а у класса множество
+Вот еще примеры классов
+<body>
+ <a href="#" class="human">Человек!</a><br/>
+ <a href="#" class="animal lion">Животное!</a><br/>
+ <a href="#" class="animal monkey">Животное!</a><br/>
+ <a href="#" class="animal fish" >Животное!</a>
+ </body>
+В css 
+.human{
+      color:#4C8BF5;
+ }
+
+ .animal{
+      color:#FFCE45;
+ }    
+ .lion{
+      color:#FFCE45;
+ }
+
+ .monkey{
+      color:#000000;
+ }
+ .fish{
+      color:#4169E1;
+ }
+
+6)
+<body>
+    <div class="message">Все файлы успешно удалены!!!</div>
+    Много текста...
+ </body>
+
+.message{
+      color:#747474;
+      background-color:#E4E4E4;                 задний фон указываем цвет
+      border:1px solid #323232    рамки 1px размер рамки solid сплошная рамка и цвет  есть рамка dashed пунктирная
+      font-size:20px;                                     размер текста
+ }
+
+7)HTML
+<div class="message">Просто текст.</div>              
+    <div class="message warning">Внимание! Скоро файлы удалятся.</div>
+    <div class="message fail">Файлы не были удалены...</div>
+    <div class="message success">Все файлы успешно удалены!!!</div>
+    <div class="message info">Скоро будет сюрп
+CSS
+.message{                                              мы здесь дали параметры всем message и все кто имеет этот класс
+      color:#747474;
+      background-color:#E4E4E4;
+      border:1px solid #323232
+      font-size:20px;
+      margin:10px;  это отталкивание margin-left right top buttom внещний отступ
+     margin-left:50px; оталкивание слева справа и т.д.
+    margin-right:50px;
+    margin-bottom:50px;
+   padding:15px;                 Это внутренние отталкивание внутри таблицы внутренний отступ
+}
+
+ .success{
+      background-color:#19A15F;   эти классы обладают параметрами message но тут мы им задаем дополнительные к каждому
+
+     color:#ffffff;
+ }
+ .fail{
+      background-color:#D65144;
+      color:#ffffff;
+ }
+ .info{
+      background-color:#4B8BF5;
+      color:#ffffff;
+ }
+
+ .warning{
+      background-color:#283EFF;
+      color:#000000;
+ }
+
+8)
+.message:hover{                событийный селектор мы наводим мышь в этом пример появляется рамка
+      border:10px solid #323232;  нужно знать 2 или 3 событийных селекторов
+ }
+9)
+body{        делаем чтобы на заднем фоне была картинка не путай с HTML также картинки для CSS в отдельной папке, body это тег HTML
+      background-image:url(images/1.jpg)       
+ }
+
+10)
+#test{
+      background-color:#fff;
+      color:#333;
+      padding:15px;
+      margin:15px;
+      border:7px solid #2F3A40;
+      border-radius:30px;   закруглили нашу рамку с текстом
+     opacity:0.1;    прозрачность 1 это полностью виден 0,5 на половину,0,1 чуть чуть     
+
+  box-shadow:33px 33px 7px #000000;   это мы задаем тень если -33 33 то это налево  смещение и тень внизу, если 33 -33 тень уйдет вверх, 7px это размытие тени,#000000 цвет самой тени    
+}
+
+
+#test:hover{         это,если  мы наводим чтобы текст был сразу виден
+      opacity:1;
+ }
+
+
+11)
+html
+<div id="test">CSS3</div>
+css
+#test{
+     transform:имя-функции();   это пример анимация
+     transform:rotate(-45deg)scale(0.5);   поворот на 45 градусов(degree) - это наоборот,scale это уменьшить элемент
+     
+      background-color:#fff;
+      color:#333;
+      padding:75px;
+      margin:15px;
+      border:1px solid #2F3A40;
+      border-radius:30px;
+      opacity:0.9;
+      box-shadow:10px 10px 10px #2F3A40;
+      width:100%;                     здесь мы здаем ширину нашей колонки, если не укажем то на авт. 100%
+      height:300px;                    здесь высоту можно в процентах можно в пикселях
+    display:none; прячем наше изображение, показываем его display:block;
+    text-align:center;  выравнивание текста по центру
+    font-size:30px;          размер текста
+    font-weight:800;    жирность текста стандарт 400 800-900 очень жирный 
+ }
+12)
+#test{
+      transform:scale(0.3);
+      transition:1s all;                     здесь даем анимацию время 1секунда
+      background-color:#fff;
+      color:#333;
+      padding:75px;
+      margin:15px;
+      border:1px solid #2F3A40;
+      border-radius:30px;
+      opacity:0.9;
+      box-shadow:10px 10px 10px #2F3A40;
+      width:100%;
+      height:300px;
+      display:block;
+      text-align:center;
+      font-size:30px;
+      font-weight:800;
+     
+ }
+ #test:hover{
+      transform:rotate(45deg)scale(0.3);  
+      background-color:red;               здесь мы указываем что при наведении мышки поворот на 45градусов,уменьшаем элемент, изменение на красный цвет
+ }
+
+
+http://ruseller.com/shporacss.php
+шпаргалка
+
+https://habrahabr.ru/company/htmlacademy/blog/255583/
+анимация пример
+
+=========================================================
+
+ 1) 
+селекто{
+     свойство:значение;
+     свойство:значение;
+     свойство:значение;
+ }
+2)h1{     тег
+}
+#block{} для Id
+.block{} класс
+
+3)
+#block .text2{                    в id block class text2
+     background: orange;
+ }
+4)
+
+h1, li{               для всех заголовков и списков
+     color:green;
+ }
+
+5)h2.list{               именно h2 с классом list при этмом класс лист может распространяться и на другие теги
+     color:green;
+ } 
+6)
+div#main{    не стоит так делать
+     color:green;
+ }               
+
+7)
+main-one{ если класс из двух слов
+     color:green;
+ }
+
+8)
+*{                     /* универсальный селектор для всей страницы */
+ border:1px solid black;
+ }
+ul*{}   для всех элементов внутри ul
+
+.list li{
+border-bottom: 1px dashed #666;                             класс лист и для его элементов li
+}
+
+.list>li{                                             получается все li будут выделены , кроме подъэлементов
+border-bottom: 1px dashed #666;     
+}
+
+h4 + li{               хотим выделит h4 и  Li  идушие после 
+    color: red;
+ }
+h4 ~ li{               под h4 выделим Li
+    color: red;
+ }
+
+:link{               псевдокласс для всех ссылок, которые не были нажаты
+   border-bottom: 1px dashed #444; 
+ }
+:visited{} ссылки были уже нажаты
+
+
+:hover  наведение
+ :active для ссылок которые на данный момент активны
+ :focus для полей ввода когда курсор находится в данном поле ввода
+
+a:hover{               изменение фона при наведении
+    background:#444; 
+ }
+:hover{               ко всем элементам страницы
+    border:1px solid black;
+ }
+
+h2::before{               перед каждым заголовком будет слово кстати с таким размером   вместо before можно использовать after
+     content:"Кстати";
+     font-size: 10px;
+ }
+
+a[title]{          все a ссылки с атрибутом title
+    
+ }
+ 
+a[title="my-title"]{                     все my title
+    
+ }
+
+
+ a[hrfef$=".jpg"]{          То что заканчивается на это значение
+    
+ }
+a[hrfef$=".jpg"]{          То что заканчивается на это значение
+     
+ }
+a[hrfef*=".jpg"]{      все значения с этим расширение
+     
+ }
+
+a[hrfef$=".jpg"]::after{      
+    content:"(jpg)";
+    font-size:10px
+    color:#888;
+ }
+
+a[hrfef$=".png"]::after{      
+    content:"(jpg)";
+    font-size:10px
+    color:#888;
+ }
+a[hrfef$=".mp3"]::after{      
+    content:"(jpg)";
+    font-size:10px
+    color:#888;
+ }
+
+9)
+display: block; блоками просто вниз
+           inline в строчку
+display: inline-block;     блоками в строчку
+display:none; прячем элемент очень круто использовать со скриптом при наведении чтобы появлялся данный элемент
+margin Для выравненивания элементов
+max-width:500px; больше 500 пикселей он не может быть
+
+overflow:hidden;  Бывает такое что  текст примеру выходит за размеры нашего нашего контейнера, чтобы это убрать используем данную команду и все что вышло за пределы прячется
+overflow:visible; всегда стоит по умолчанию
+overflow:scroll; прокрутить и увидеть,то что спрятано
+overflow:auto; скрол автоматический

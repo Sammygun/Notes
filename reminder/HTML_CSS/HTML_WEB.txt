@@ -1,0 +1,337 @@
+html мы просто делаем оформление разметка в css задаем стили
+Сначало мы делаем разметку в html текст картинки меню и т.д., а потом заходим в css и стилизируем
+
+ 1)<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html>
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="Keywords" content="HTML, CSS, верстка, ключевые слова">     задаем для  поиска!!!!!
+ <meta name="description" content="Описание страницы">
+ <title>Untitled Document</title>
+ </head>
+
+ <body>
+ </body>
+ </html> 
+2)<em>Курсив</em>
+<p><em>Курсив</em></p> это в параграфе
+<strong></strong> жирный
+3)<p align="left"> </p>    по левому краю атрибут
+<p align="right"> </p>   по правому краю
+<h1 align="justify"></h1> по всей ширине читается хуже
+
+4)<img src="images/100.jpg" alt="альтернативный текст">alt !!картинка не имеет закрывающегося  /
+<p><img src="images/100.jpg" alt="альтернативный текст" width="100" height="100">
+но высоту тут можно, не указаывать так как он будет автоматически подтягиваться
+<img src="images/100.jpg"  title="подсказка"> при наведини мышкой будет текст
+<img src="images/100.jpg" align="left"> объезд текста нашей картинки слева есть right
+<img src="images/100.jpg" align="top"> bottom редко применятся
+<img src="images/100.jpg" align="middle"> по центру с первой строкой для односторочных
+чаще всего middle left right
+
+<img src="images/100.jpg" hspace="20"> слева и справа отступы от нашей картинки горизонтальный
+<img src="images/100.jpg" vspace="20">" сверху снизу отступы вертикальный 
+
+<p align="center"><img src="images/1.jpg" alt=""/></p> нам надо выровнять картинку по центру но img не имеет атрибута align="center" поэтому мы его заключаем в <p></p>
+5) <a href="http://ya.ru"> на яндекс</a> ссылка
+<a href="http://ya.ru" target="_blank">Yandex</a> открытие с новой страницы
+<a href="http://ya.ru" target="_self">Yandex</a> это стоит по умолчанию открытие на этой же странице
+<a href="http://ya.ru" target="_blank" title="Картинка анонса">Yandex</a> title подсказка
+<a href="files/5.jpg">картинка</a> он открывает картинку у нас на компьютере,может открыть pdf, музыку, видео,ссылка на word документ
+<a href="files/5.zip">картинка</a> если я хочу чтоб скачала в эту же папку скидываю zip архив картинки и указываю название с расширением
+
+<a href="mailto:nice.rybkin@inbox.ru">отправить письмо</a> чтобы отправить письмо здесь указываешь кому нам к примеру есть такие ссылки на skype, сразу на видео звонок
+<br/> с новой строки
+
+<a href="#metka1">на метку 1</a> прописываем ссылку
+<a name="metka1"></a>                в документе указываем место где ставим нашу метку  и при нажатии на нее будет переводится на место на страничке где указана метка
+
+6) списки нам нужны для меню
+<ul>                                   ненумерованный список unordered list
+      <li>Пункт 1</li>
+      <li>Пункт 2</li>
+      <li>Пункт 3</li>
+      <li>Пункт 4</li>
+      <li>Пункт 5</li>
+ </ul>
+
+<ul type="circle">                можно square квадрат, по умолчанию всегда стоит диск
+      <li>Пункт 1</li>   список кружок сбоку
+ </ul>
+
+Список внутри списка просто ставлю курсор после 2 пункта нажимаю enter и туда копирую заново новый список, будет список внутри списка, чтобы внутренний список не выходил за рамки списка(<li></li>) в который вставлен
+<ul type="circle">
+      <li>Пункт 1</li>
+      <li>Пункт 2</li>
+ <ul type="circle">
+      <li>Пункт 2.1</li>
+      <li>Пункт 2.2</li>
+      <li>Пункт 2.3</li>
+      <li>Пункт 2.4</li>
+      <li>Пункт 2.5</li>
+ </ul>
+      <li>Пункт 3</li>
+      <li>Пункт 4</li>
+      <li>Пункт 5</li>
+ </ul>
+
+<ol>         ordered list нумерованный лист 
+      <li>Пункт 1</li>
+  </ol>
+можно указывать <ol type="a"></ol> нумерация по алфавиту I будет римская нумерация
+<ol type="1" reversed> реверсирует в обратном порядке номерация
+<ol type="1" start="4"> начнется с 4
+<ol type="A" start="4"> def пойдет по алфавиту от 4 букувы
+<ul type="circle">
+      <li><a href="#">Пункт 1</li></a>   делаем списки ссылкой
+</ul>
+
+7)Таблица можно делать целый,  цвета таблицы лучше делать в css
+Состоит из table, потом идут строки <tr>, а потом столбцы td
+пример
+<table> 
+     <tr>                внутри нашей строки 3 ячейки
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+     </tr>
+    </table>
+
+<table border="1" width="100%"></table> делаем так чтобы наша таблица была обведена
+width="100%" на всю ширину экрана
+<table border="1" width="100%">
+     <tr>
+        <td>11</td>
+        <td>12</td>
+        <td>13</td>
+     </tr>     просто после первой табл тут нажим enter и копирую тут предыдущую табл и так получ. 3 строки
+     <tr>
+        <td>21</td>
+        <td>22</td>
+        <td>23</td>
+     </tr>
+    <tr>
+        <td>31</td>
+        <td>32</td>
+        <td>33</td>
+     </tr>
+
+<table border="1" width="100%" cellpadding="100"></table> cellpading растояние между границами ячейк и наших данных
+<table border="1" width="100%" cellspacing="10"></table>  cellspacing растояние между границами ячейк и границами нашей таблицы
+
+  <tr> 
+        <th width="150">11</th>          первая наша таблица это заголовок 11 будет по центру жирным шрифтом ширина нашей ячейки будет определена и все что ниже тоже также будут
+        <th>12</th>           это столбик 11 12 13 погоризонтали
+        <th>13</th>
+     </tr>
+                просто после первой табл тут нажим enter и копирую тут предыдущую табл и так получ. 3 строки
+     <tr> 
+       <td height="150">21</td>  задали высоту         это столбик 21 22 23  погоризонтали
+        <td align="center" valign="top">22</td>   наша 22  по центру, valign="top" вертикаль по верхнему краю и valign="bottom" по нижнему краю
+       <td>23</td>
+     </tr>
+    <tr> 
+        <td>31</td>             это столбик 31 32 33  погоризонтали
+        <td>32</td>
+       <td width="400">33</td>         если исправим ширину самой нижней ячейки и весь столбец подтянется                                   
+     </tr>
+
+
+<tr>
+        <th colspan="3">111</th>           верхняя ячейка объединяет по горизонтали 3 ячейки снизу 21 22 23 и строку 31 32 33 становится одной большой на три ячейки col столбцы
+     </tr>
+     <tr>
+        <td height="150">21</td>
+        <td align="center" valign="top">22</td>
+        <td>23</td>
+     </tr>
+    <tr>
+        <td>31</td>
+        <td>32</td>
+        <td width="200">33</td>
+     </tr>
+
+   <tr>
+        <th colspan="3">111</th>
+     </tr>
+     <tr>
+        <td height="150" rowspan="2">21</td>   row строка вертикальное объединяем 2 строки под 111
+        <td align="center" valign="top">22</td>
+        <td>23</td>
+     </tr>
+    <tr>
+             <td>32</td>
+        <td width="200">33</td>
+     </tr>
+
+8)Формы
+<form action="" method=""></form>     в action мы скидываем url путь к нашему скрипту, что будет происходить при нажатии на кнопку method каким образом отправлять данные post(самый безопасный), get
+
+<form action="" method="get">
+    <input type="text" name="name"/>   начало любой кнопки
+  </form>
+
+<form action="" method="get">
+ Ваше имя: <input type="text" name="name"/><br/>     простой пример
+Ваш пароль: <input type="password" name="psw"/> <br/> будет  для пароля, и будет закодирована
+Ваш chek: <input type="checkbox" name="psw1"/> <br/> это просто кнопка с галочкой обрати внимания psw
+Ваш chek: <input type="checkbox" name="psw2"/> <br/>
+ Ваш chek: <input type="checkbox" name="psw3"/> <br/>
+ Ваш chek: <input type="checkbox" name="psw4"/> <br/>
+
+Ваш chek1: <input type="radio" name="rw1"/> <br/> созд. кнопки только одного выбора
+ Ваш chek2: <input type="radio" name="rw1"/> <br/> если rw1 rw2 rw3 rw4  то тогда можно выбирать все
+Ваш chek3: <input type="radio" name="rw1"/> <br/>
+ Ваш chek4: <input type="radio" name="rw1"/> <br/>
+
+Курсы:<br/>                              здесь у нас под курсами получается мы можем выбрать из этих названий
+     <select name="" id="">               все это внутри <form> делается
+             <option>html</option> 
+             <option>css</option>
+             <option>Javascript</option>
+             <option>php$MySQL</option>      
+     </select>
+
+    Сообщение: <br/>    пишим сообщение как в vk
+     <textarea cols="30" row="10" >можно пожеланию задавать столбцы (col) строки(row) размер,но это в сss        
+    </textarea>
+
+<input type="reset" name="" id=""/> к пример мы заполнили всю это форму и сделали что-то не так нажимаем на кнопку сброс и все сбрасывается
+<input type="submit" name="go" id=""> это мы к примеру заполнили все данные и решили отправить их на сервер, или просто отправить сообщение, эти данные пойдут к скрипту(в action=""), который находится в самом вверху(<form action="" method="get">), как правило по умолчанию пишется отправить запрос, но тут если написать <input type="submit" name="go" id="" value="Подписаться"> то кнопка будет соотвествующая
+
+<input type="image" src="images/sub.png"><br/> кнопка картинкой
+<input type="file"/><br/> кнопка, выбрать файл, но чтобы отправить надо знать php 
+
+     </form>
+
+
+
+9)<div></div> обернуть в контейнер позволяет лучше стилизировать то что внутри
+Пример
+<div class="wstyle">Самый лучший день</div>
+               
+.wstyle{
+     width: 400px;    ширину нашего контейнера так можно делать div на всю <body></body>
+     max-width: 900px; максимальная ширина
+   min-width: 700px;  минимальная ширина   используется для резиновой верстки
+  для больших мониторов удобно сайт выглядит хорошо и на маленьком засчет растяжения
+  height:100px; лучше его не использовать html автоматически высчитывает
+
+}
+10)
+<span class="spstyle">онлайн-сервисах</span> позволяет украшать текст слова картинки небольшие
+
+.spstyle{
+     text-decoration: line-through;color: #ff0000;
+ }
+11)
+.block{
+   border-top-color:#000000; верхняя полоса рамка 
+   border-top-width:2px;
+   border-top-style:solid; целая полоса  dotted из точек  dashed из пунктирных
+ }
+
+.block{
+   border-top: 2px solid #000000;  так более сокращенно то что вверху
+   border-bottom: 2px solid #000000; так надо делать если рамка из разных рамок пунктирной цельной и т.д.
+   border-left: 2ps solid #000000;
+   border-right: 2ps solid #000000;
+ }
+
+.block{
+   border: 2px solid #ff0000; целая рамка
+   }
+
+12)
+.block{
+   border: 2px solid #ff0000;  
+   padding-top: 20px;  внутренний отступ, отступ от рамок внутри
+   padding-bottom: 30px;   отступы от внутренних границ
+   padding-left: 40px;
+   padding-right: 60px;    
+   }
+.block{
+ padding: 20px 60px 30px 40px;  более короткая по часовой стрелки вверх вправо вниз влево 
+ padding: 20px;  это на все стороны по 20px
+ padding:100px;50px; сверху и снизу, слева и справа
+  }
+
+13) отступы от соседних элементов, или дистанция до элементов
+.block{
+   margin-top: 80px;  
+   margin-bottom: 80px;
+   margin-left: 80px;
+   margin-right: 80px;   
+   }
+.block{
+   margin:20px 30px 40px 80px; более короткая также по часовой стрелки   
+  }
+Отдельные
+  margin:20px;   это на все стороны по 20px
+  margin:100px;50px; сверху и снизу, слева и справа
+
+.block{                конечный результат
+   border: 2px solid #ff0000;
+   padding:40px 20px;
+   margin: 100px 50px;  
+   }
+14)
+<img class="imgleft" src="images/100.jpg" alt="Картинка анонса" title="Картинка анонса"  />
+.imgleft{
+     float: left; сдвигаем нашу картинку влево разместилась по-левому краю и весь текст обтекает ее справа
+     margin: 0 20px 0 0;  сдвигаем на 20 px от нашей картинки справа текст
+}
+
+но наша картинка задевает текст,который находится под ней Значение
+<div class="clr"></div>
+
+ <h2>Значение хорошей страницы контактов</h2>
+.clr{
+     clear: left;               можно сделать и справа если картинка справа
+ }
+.clr{
+     clear:both;               можно сделать и справа и слева,чтобы путаницы не было
+ }
+15)
+<h2 class="dstyle">Значение
+<p class="dstyle">Страницу
+.dstyle{
+   display: block;   создаем блок с новой строки inline будут в одну строку
+ }
+.dstyle{
+   display: none;не отображает элемент как будто бы его и не было
+ }   принцип выпадающего меню при наведении мышки появляется меню 
+
+.dstyle{
+   display: table-cell;   создается таблица из текста заключенного этого класса
+ }
+
+16)background: #cccccc; если одинаковые то можно #ссс
+17)
+<div class="posout"></div>  создали  пустойблок
+.posout{
+     width: 300px;
+     height: 300px;
+     background: #cccccc;
+     border:1px solid #0000ff;
+    margin: 200px 0 0 300px; подвигали его
+ }
+
+<div class="posout"></div>  создали  пустойблок
+.posout{
+     width: 300px;
+     height: 300px;
+     background: #cccccc;
+     border:1px solid #0000ff;
+    position: relative;top:200px;left:300px;      у нас есть позиция relative (относительное) и мы ее начали двигать top left только после position и двигается с того места где было (на то оно и  относительное)
+можно указать -200 px  и т.д.
+}
+position: absolute; top:300px; 200px абсолютное позиционирование прямо на контенте закрывает абсольтно его
+если нам надо поместить блок внутрь другого блока, надо чтобы он был absolute, а тот блок,в который помещаем он должен быть relative относительный
+
+position: fixed; наш блок при скролинге он всегда будет оставаться на своем месте,зафиксированный
+
+проста кнопка
+<form>
+<input type="submit" value="Add me Now">
+</form>
