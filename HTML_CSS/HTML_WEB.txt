@@ -314,7 +314,7 @@ width="100%" на всю ширину экрана
      height: 300px;
      background: #cccccc;
      border:1px solid #0000ff;
-    margin: 200px 0 0 300px; подвигали его
+     margin: 200px 0 0 300px; подвигали его
  }
 
 <div class="posout"></div>  создали  пустойблок
