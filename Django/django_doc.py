@@ -101,6 +101,10 @@ LANGUAGE_CODE = 'ru' ## было 'en-us'
     models.py
     tests.py
     views.py
+
+7 from . import views ## подключил views.py который в текущей папке  лежит
+8 polls/views.py ## если мы создали страницу html в polls/templates/polls то здесь должны сделать ее представление
+
 ===================================================
 
 7 Сразу пишу представление polls/views.py
@@ -292,3 +296,162 @@ admin.site.register(Question)
 =================================================================
 
 Создание первого приложения на Django, часть 3¶
+1 views.py # предтсавление здесь описан какой тип страницы будет использоваться в нашем приложении
+
+polls/views.py
+
+from django.http import HttpResponse
+
+
+def index(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
+
+def detail(request, question_id):
+    return HttpResponse("You're looking at question %s." % question_id)
+# %s." % question_id когда клиент вводит /polls/34/ будет вывожится текст выше номер 34
+def results(request, question_id):
+    response = "You're looking at the results of question %s."
+    return HttpResponse(response % question_id)
+
+def vote(request, question_id):
+    return HttpResponse("You're voting on question %s." % question_id)
+
+2 polls/urls.py ### сразу же подключаем описанные выше представления
+
+from django.urls import path
+
+from . import views ## подключил views.py который в текущей папке 
+
+urlpatterns = [
+    # ex: /polls/
+    path('', views.index, name='index'),
+    # ex: /polls/5/
+    path('<int:question_id>/', views.detail, name='detail'),
+    # ex: /polls/5/results/
+    path('<int:question_id>/results/', views.results, name='results'),
+    # ex: /polls/5/vote/
+    path('<int:question_id>/vote/', views.vote, name='vote'),
+]
+
+3 Теперь смотри /polls/34/ сработает метод detail() описаннный в views.py отобразит любое число которое будет вводить пользователь
+Также «/polls/34/results/» и «/polls/34/vote/» - они отобразят результаты и страницы голосования.
+
+Обрати внимание 
+pols.views.py 
+def vote(request, question_id): ## функци vote и ее атрибуты
+    return HttpResponse("You're voting on question %s." % question_id)
+
+
+polls/urls.py
+path('<int:question_id>/vote/', views.vote, name='vote'),
+ 
+4 polls/views.py # добавил
+
+def index(request):
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    output = ', '.join([q.question_text for q in latest_question_list])
+    return HttpResponse(output)
+
+5 polls/templates/polls ## создаю папки
+# в каждом приложении django ищет папку templates в кажлом installed apps(setings.py)
+index.html
+
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+        <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+
+5 polls/views.py ## бежим в views.py если создали страницу в templates/polls/index.html делаем ее представление
+
+from django.shortcuts import render
+
+from .models import Question
+
+
+def index(request):
+    latest_question_list = Question.objects.order_by('-pub_date')[:5] # здесь переменнная
+    context = {'latest_question_list': latest_question_list} ### словарь с ключом и значением 
+    return render(request, 'polls/index.html', context) ###
+
+#Функция render() принимает объект запроса в качестве первого аргумента, имя шаблона в качестве 
+#второго аргумента и словарь в качестве необязательного третьего аргумента. Она возвращает объект HttpResponse данного шаблона, отображенный в данном контексте.
+==================
+
+Ошибка 404 
+
+1 делаем исключение 
+polls/views.py
+
+from django.http import Http404
+from django.shortcuts import render
+
+from .models import Question
+# ...
+def detail(request, question_id):
+    try:
+        question = Question.objects.get(pk=question_id) ## если введем это
+    except Question.DoesNotExist: ## исключение тогда выводим следующую страницу 
+        raise Http404("Question does not exist")
+    return render(request, 'polls/detail.html', {'question': question}) ### возвращаем следующие надо создавать detail.html
+
+2 polls/templates/polls/detail.html¶
+{{ question }} ## создаю страницу detail.html и ввожу следующие
+
+3 404 ошибка если объект не существует то вызываем функцию get()
+polls/views.py¶
+from django.shortcuts import get_object_or_404, render
+
+from .models import Question
+
+
+def detail(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/detail.html', {'question': question})
+
+Функция get_object_or_404() принимает модель Django в качестве первого аргумента и произвольное количество ключевых аргументов,
+ которое она передает в get() - функцию менеджера модели. Он вызывает Http404, если объект не существует.
+
+Также есть функция get_list_or_404(), которая работает так же, как get_object_or_404() - за исключением использования filter() 
+вместо get(). Он вызывает Http404, если список пуст.
+
+
+4 polls/templates/polls/detail.html¶
+<h1>{{ question.question_text }}</h1>
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+{% endfor %}
+</ul>
+
+
+
+5 Добавляю app_name  
+
+polls/urls.py¶
+from django.urls import path
+
+from . import views
+
+app_name = 'polls' ## для того чтобы django отличать разные urls для разных приложений
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('<int:question_id>/', views.detail, name='detail'),
+    path('<int:question_id>/results/', views.results, name='results'),
+    path('<int:question_id>/vote/', views.vote, name='vote'),
+]
+
+
+5.1 Теперь мы указываем пространство имен
+polls/templates/polls/index.html
+<li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+
+
+
+==============================================================================
+
+Создание первого приложения на Django, часть 4

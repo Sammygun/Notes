@@ -121,3 +121,49 @@ I am a manager
 Where do you work? 
 
 Урок 3 
+101 if --- I will go there if you want it
+102 up --- The price went up
+103 down ---- I went down the street # пошел вниз по улице
+104 now --- Where are you now?
+105 today --- I will be busy today
+106 tomorrow --- what are your plans for tomorrow # are plans потому что, на завтра for tomorrow
+107 yesterday --- I was there yesterday 
+108 one --- I have one computer 
+109 two ---- I have two very good friends
+110 three --- I got three messages 
+
+
+111 four --- I see four boys
+112 five ---- I see five cars
+113 six ---- We can meet at six 
+114 seven --- lets meet at seven !!!!
+115 eight --- I usually get up at eight o'clock in the morning
+116 nine --- he made nine mistakes ## made !!!
+117 ten --- She made more then ten mistakes 
+118 eleven --- We can meet at eleven 
+119 twelve --- We can meet after twelve
+120 thirteen ---  It costs thirteen dollars 
+
+121 fourteen--- He is fourteen
+122 fifteen --- She is fifteen 
+123 sixteen --- I am sixteen 
+124 seventeen ---- He will be seventeen  next year
+125 eighteen --- She will be eighteen this year
+126 nineteen --- He is nineteen years old
+127 twenty --- It cost twenty pounds 
+128 thirty --- It cost thiry euros(юрс)
+129 forty ---- He is forty years old 
+130 fifty ----She is fifty years old
+
+21:50
+
+
+
+
+
+
+
+
+
+
+
