@@ -104,6 +104,7 @@ LANGUAGE_CODE = 'ru' ## было 'en-us'
 
 7 from . import views ## подключил views.py который в текущей папке  лежит
 8 polls/views.py ## если мы создали страницу html в polls/templates/polls то здесь должны сделать ее представление
+9 polls/url.py ### URLconf 
 
 ===================================================
 
@@ -455,3 +456,108 @@ polls/templates/polls/index.html
 ==============================================================================
 
 Создание первого приложения на Django, часть 4
+
+1 polls/templates/polls/detail.html¶
+
+<h1>{{ question.question_text }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'polls:vote' question.id %}" method="post"> # post будет происходить изменения данных на сервере
+{% csrf_token %}   # все формы шаблона защита от подделки межсайтовых запросов
+{% for choice in question.choice_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+{% endfor %}
+<input type="submit" value="Vote">
+</form>
+
+2 Делаем представление Django, которое обрабатывает отправленные данные и что-то с ним делает
+polls/views.py # добавляем его 
+
+
+def vote(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice =
+question.choice_set.get(pk=request.POST['choice']) 
+    except (KeyError, Choice.DoesNotExist)
+    # Повторное загрузка окна формы опроса
+        return render(request, 'polls/detail.html', { # возвращает словарь со значениями
+            'question': question,
+            'error_messages': "You didn't select a choice"
+        })
+    else:
+        selected_choice.votes += 1
+        selected_choice.save()
+        #Всегда возвращай  HttpResponceRedirect after successfully
+        # with post data избегаем повторную публикацию данных
+        #user hits the back button
+        return HttpResponseRedirect(reverse('polls:results', args=(question.id)))     
+Разбор:
+1 # request.POST['choice'] возвращает индетификатор выбранного варианта строки, всегда возвращает строку
+
+2 # request.POST['choice'] будет вызывать KeyError если ключ choice не был представлен в POST будет повторно отображать форму вопроса
+# сообщение об ошибке если choice на задано
+
+3 #  HttpResponseRedirect принимает один аргумент: URL-адрес, на который будет перенаправлен пользователь
+#Как указано выше в комментарии Python, вы должны всегда возвращать HttpResponseRedirect после успешной 
+# обработки данных POST!!!хорошая практика
+
+4 # функцию reverse() в конструкторе HttpResponseRedirect. Эта функция помогает избежать жесткого кодирования URL-адреса в 
+#функции представления. 
+# '/polls/3/results/'
+
+
+3 После того как user проголосовал в опросе представление voice() перенаправляет на страницу результатов для опроса:
+polls/views.py
+
+def results(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/results.html', {'question': question}) # rendet то что возвращаем
+
+
+5 базовые представления: чем меньше кода, тем лучше¶
+polls/urls.py¶
+
+from django.urls import path
+
+from . import views
+
+app_name = 'polls'
+urlpatterns = [
+    path('', views.IndexView.as_view(), name='index'),
+    path('<int:pk>/', views.DetailView.as_view(), name='detail'),
+    path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
+    path('<int:question_id>/vote/', views.vote, name='vote'),
+]
+
+6 polls/view.py # меняем
+
+class IndexView(generic.ListView): ### Listview
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Question.objects.order_by('-pub_date')[:5]
+
+
+class DetailView(generic.DetailView): # DetailView  !!!!!
+    model = Question
+    template_name = 'polls/detail.html'
+
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'polls/results.html'
+
+1 # По умолчанию базовое представление DetailView использует шаблон с именем <имя приложения>/<имя модели>_detail.html.
+#  В нашем случае он будет использовать шаблон "polls/question_detail.html"
+
+2 #Аналогично, базовое представление ListView использует шаблон по умолчанию с именем <имя приложения>/<имя модели>_list.html;
+# мы используем template_name, чтобы сказать ListView использовать наш существующий шаблон "polls/index.html".
+
+=====================================================================================================================
+
+Создание первого приложения на Django, часть 5¶

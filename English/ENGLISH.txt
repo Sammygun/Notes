@@ -1,7 +1,7 @@
 https://www.youtube.com/watch?v=lnMeSIwERdU&list=PLD6SPjEPomasIFEwzlWscfw8qtwiDsDgL
  первые 3000 слов!!!!!
 Лучший желтый плейлист
-
+Обращай внимание на строки с пометками отсортируй потом строки в bash по спецсимволу #
 
 1 .I understand
 2 .I understand you very well
@@ -155,13 +155,31 @@ Where do you work?
 129 forty ---- He is forty years old 
 130 fifty ----She is fifty years old
 
-21:50
+131 sixty --- He is sixty 
+132 seventy --- She is seventy
+133 eighty --- I paid eighty dollars
+134 ninety --- She paid ninty dollars
+135 a hundred (one hundred) --- I earned two hundred dollars # earn заработал 200 сотни two hundred(s не добавляй после d) есть two поэтому
+136 thousand --- He earns two thousand dollars monthly# ежемесячно monthly(a month) в месяц thousand без s two есть
+137 million --- Millions of people leave here ## если нету цифры конкретной сколько миллионов, то тогда s milllions
+138 billion --- billions of people live on our planet ## of принадлежность к people
+139  cost --- It cost much more 
+140 money --- I need this money ## this(these) множественное число money елинственное число
 
 
+141 price --- This price is very high # is если нету глагола
+142 really --- I really want it
+143 love ---- I love you very much
+144 enjoy --- I enjoy english # обожаю английский
+145 see ---- I see this hotel 
+146 come --- come to me!!
+147 home --- I went home (house)
+148 house---  He wants a buy new house # wants he she it s в конце глагола
+149 car --- I have a car 
+150 back --- I will come back soon
 
-
-
-
+Урок 4
+https://www.youtube.com/watch?v=nfF8otSxNKQ&list=PLD6SPjEPomasIFEwzlWscfw8qtwiDsDgL&index=4
 
 
 
