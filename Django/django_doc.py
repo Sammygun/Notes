@@ -102,9 +102,64 @@ LANGUAGE_CODE = 'ru' ## было 'en-us'
     tests.py
     views.py
 
+6.1 python manage.py test polls ## запускаем тесты из файла tests.py приложения polls(polls/tests.py) 
+
 7 from . import views ## подключил views.py который в текущей папке  лежит
 8 polls/views.py ## если мы создали страницу html в polls/templates/polls то здесь должны сделать ее представление
 9 polls/url.py ### URLconf 
+
+
+10 
+def get_queryset(self):
+    """Возвращает 5 последних опубликованных вопросо"""
+    return Question.objects.order_by('-pub_date')[:5]          #!!!!!!!!!! пример использования
+
+
+11 
+СТАТИКА пример статики
+1 polls/templates/ # это где хранится html страницы
+2 polls/static/polls ### где хранится статика помни надо указывать setings.py
+polls/static/polls/style.css. ## как пример
+3 polls/style.css ## ссылаться наа этот статический файл в Django можно так
+
+
+1 polls/static/polls/style.css¶ # пример статики
+li a {
+    color: green;
+}
+
+
+2 Пример подключение стилей в наш html
+polls/templates/polls/index.html
+{% load static %} # это тег  генерирует абсолютный URL-адрес статических файлов
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> 
+# обрати внимание как подключение преоисходит polls/style.css (без полного пути polls/static/polls/style.css!!!!)
+
+3 После чего по следующей ссылке отобразится зеленый цвет
+http://127.0.0.1:8000/polls/ ### по ссылке /polls/ # приложение polls
+
+4 Добавление изображения пример
+1 polls/static/polls/images ## сюда закидываю картинку 
+
+2 polls/static/polls/style.css¶
+body {
+    background: white url("images/моя_картинка.gif") no-repeat; #background картинка
+}
+
+
+5  Настройка шаблонов вашего проекта в setings.py
+ mysite/settings.py
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], #### вот эту строку надо добавить обязательно хорошая практика!!!!!!!!!
+        'APP_DIRS': True, ## если не сделать то что выше то django просто будет искать по умолчанию подкаталог templates
+#DIRS - список каталогов файловой системы, которые нужно проверить при загрузке шаблонов Django; это путь поиска.
+
+5 python -c "import django; print(django.__path__)" # узнать где находится  исходные файлы в Django в вашей системе
+
+
 
 ===================================================
 
@@ -558,6 +613,217 @@ class ResultsView(generic.DetailView):
 2 #Аналогично, базовое представление ListView использует шаблон по умолчанию с именем <имя приложения>/<имя модели>_list.html;
 # мы используем template_name, чтобы сказать ListView использовать наш существующий шаблон "polls/index.html".
 
-=====================================================================================================================
+=====================================================================================================================d
 
 Создание первого приложения на Django, часть 5¶
+Тесты
+
+1 Некоторые разработчики на самом деле пишут свои тесты, прежде чем написать свой код
+
+2 полезно написать свой первый тест в следующий раз, когда вы внесете изменение, либо при добавлении
+ новой функции или исправлении ошибки.
+
+3 Поиск ошибок 
+python manage.py shell
+
+>>> import datetime
+>>> from django.utils import timezone
+>>> from polls.models import Question
+>>> # create a Question instance with pub_date 30 days in the future
+>>> future_question = Question(pub_date=timezone.now() + datetime.timedelta(days=30))
+>>> # was it published recently?
+>>> future_question.was_published_recently()
+True
+
+4 Создание тестов 
+polls/tests.py
+
+import datetime
+
+from django.test import TestCase
+from django.utils import timezone
+
+from .models import Question
+
+
+class QuestionModelTests(TestCase):
+
+    def test_was_published_recently_with_future_question(self):
+        """
+        was_published_recently() returns False for questions whose pub_date
+        is in the future.
+        """
+        time = timezone.now() + datetime.timedelta(days=30)
+        future_question = Question(pub_date=time)
+        self.assertIs(future_question.was_published_recently(), False)
+
+#создали подкласс django.test.TestCase с методом, который создает экземпляр Question с pub_date в будущем.
+#Затем мы проверяем вывод was_published_recently() - который должен быть ложным.
+
+5 Исправление ошибки
+Question.was_published_recently() должна возвращать false если его pub_date находится в будущем 
+
+polls/models.py
+
+def was_published_recently(self):
+    now = timezone.now()
+    return now - datetime.timedelta(days=1) <= self.pub_date <= now
+
+6 Всесторонние тесты
+polls/tests.py
+
+def test_was_published_recently_with_old_question(self):
+    """
+    was_published_recently() returns False for questions whose pub_date
+    is older than 1 day.
+    """
+    time = timezone.now() - datetime.timedelta(days=1, seconds=1)
+    old_question = Question(pub_date=time)
+    self.assertIs(old_question.was_published_recently(), False)
+
+def test_was_published_recently_with_recent_question(self):
+    """
+    was_published_recently() returns True for questions whose pub_date
+    is within the last day.
+    """
+    time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+    recent_question = Question(pub_date=time)
+    self.assertIs(recent_question.was_published_recently(), True)
+
+
+"""
+И теперь у нас есть три теста, которые подтверждают, что Question.was_published_recently() возвращает разумные значения для прошлых,
+недавних и будущих вопросов.
+"""
+
+7 Тестовый клиент django
+>>> responce = client.get('/') !!!!!
+ Not Found: /
+>>> responce.status_code !!!!
+404
+
+1 python manage.py shell
+
+2 >>> from django.test.utils import setup_test_environment
+>>> setup_test_environment()
+# TIME_ZONE в settings.py проверь
+
+3 >>> from django.test import Client
+>>> # create an instance of the client for our use
+>>> client = Client()
+
+4 # get a response from '/'
+>>> response = client.get('/')
+Not Found: /
+>>> # we should expect a 404 from that address; if you instead see an
+>>> # "Invalid HTTP_HOST header" error and a 400 response, you probably
+>>> # omitted the setup_test_environment() call described earlier.
+>>> response.status_code
+404
+>>> # on the other hand we should expect to find something at '/polls/'
+>>> # we'll use 'reverse()' rather than a hardcoded URL
+>>> from django.urls import reverse
+>>> response = client.get(reverse('polls:index'))
+>>> response.status_code
+200
+>>> response.content
+b'\n    <ul>\n    \n        <li><a href="/polls/1/">What&#x27;s up?</a></li>\n    \n    </ul>\n\n'
+>>> response.context['latest_question_list']
+<QuerySet [<Question: What's up?>]>
+
+7 Улучшение представления 
+polls/views.py
+
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Question.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')[:5]
+
+# question.objects.filter(pub_date__lte=timezone.now()) возвращает набор запросов, содержащий Question чье pub_date меньше или равно
+# то есть раньше или равно timezne.now
+
+=============================================================================
+
+СТАТИКА
+1 polls/templates/ # это где хранится html страницы
+2 polls/static/polls ### где хранится статика помни надо указывать setings.py
+polls/static/polls/style.css. ## как пример
+3 polls/style.css ## ссылаться наа этот статический файл в Django можно так
+
+
+1 polls/static/polls/style.css¶ # пример статики
+li a {
+    color: green;
+}
+
+
+2 Пример подключение стилей в наш html
+polls/templates/polls/index.html
+{% load static %} # это тег  генерирует абсолютный URL-адрес статических файлов
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> 
+# обрати внимание как подключение преоисходит polls/style.css (без полного пути polls/static/polls/style.css!!!!)
+
+3 После чего по следующей ссылке отобразится зеленый цвет
+http://127.0.0.1:8000/polls/ ### по ссылке /polls/ # приложение polls
+
+4 Добавление изображения пример
+1 polls/static/polls/images ## сюда закидываю картинку 
+
+2 polls/static/polls/style.css¶
+body {
+    background: white url("images/моя_картинка.gif") no-repeat; #background картинка
+}
+
+=================================================
+Настройка админки
+
+1 пример админки с множечтво форму
+polls/admin.py¶
+from django.contrib import admin
+
+from .models import Question
+
+
+class QuestionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,               {'fields': ['question_text']})
+        ('Date information', {'fields': ['pub_date']})
+    ]
+## fieldsets  это первый элемент каждого кортежа 
+
+2 Пример настройки только двух форм:
+class QuestionAdmin(admin.ModelAdmin):
+    fields = ['pub_date', 'question_text'] ## дата публикации поле текста
+
+admin.site.register(Question, QuestionAdmin)
+
+3 Настройка страницы списка объектов
+polls/admin.py¶
+class QuestionAdmin(admin.ModelAdmin):
+    ######.............
+    list_display = ('question_text', 'pub_date')
+
+4 Настройка шаблонов вашего проекта
+mysite/settings.py
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], #### вот эту строку надо добавить обязательно хорошая практика!!!!!!!!!
+        'APP_DIRS': True, ## если не сделать то что выше то django просто будет искать по умолчанию подкаталог templates
+#DIRS - список каталогов файловой системы, которые нужно проверить при загрузке шаблонов Django; это путь поиска.
+
+5 python -c "import django; print(django.__path__)" # узнать где находится  исходные файлы в Django в вашей системе
+
+
+
+
+
+
+
+
+
+
+
