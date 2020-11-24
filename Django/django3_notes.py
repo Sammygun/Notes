@@ -4,10 +4,20 @@ https://github.com/Sammygun/Django3
 
 
 Проект на GitHub - https://github.com/DJWOMS/django_movie
-
+===================================================
+Установка django2 
+1 mkdir djangogirls
+2 cd djangogirls
+3 python3 -m venv myvenv # создание вирутального окружения
+4 source myvenv/bin/activate # активация
+5 python3 -m pip install --upgrade pip ## установка последней версии pip
+6 djangogirls/requirements.txt
+Django~=2.2.4
+7 pip install -r requirements.txt
+===========================
+Создаю настраиваю django3 
 1 Создаю папку Django3 = проваливаюсь:
 1 python3  -m venv venv # создаю виртуальное окружение
-
 2 source venv/bin/activate # активирую его в папке Django3
 # deactivate # деактивировать
 Тоже самое через pycharm только он все сам создаст и настроит виртуальное окружение
@@ -22,7 +32,7 @@ https://github.com/Sammygun/Django3
 
 5 python manage.py runserver # запуск сервера
 http://127.0.0.1:8000/
-
+=========================================
 5.1  python manage.py startapp movies # создаем новое приложение movies
 
 5.2 python manage.py makemigrations ## теперь делаем миграции после радактирования models.py # это как контроль версий
