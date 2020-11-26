@@ -85,16 +85,56 @@ db.sqlite3
 
 URL-адреса Django
 
+4 
+mysite/urls.py
+from django.contrib import admin
+from django.urls import path, include # функция include будет использована ниже поэтому ссылаемся на нее
+
+    path('admin/', admin.site.urls),
+#Таким образом, любому URL-адресу, начинающемуся с admin/, Django будет находить соответствующее view (представление view.py).!!!
+    path('', include('blog.urls')), ## здесь ссылаемся на blog.urls (blog/urls.py)
+
+5 blog/urls.py ## создаю пустой данный файл
+from django.urls import path ## path функцию которую импортировали
+from . import views
+urlpatterns = [
+    path('', views.post_list, name='post_list') #'' # пустая строка
+    # views.post_list — это правильное направление для запроса к твоему веб-сайту по адресу 'http://127.0.0.1:8000/'.
+]   # name='post_list' это имя URL, которое будет использовано, чтобы идентифицировать его
 
 
+6 view это представление здесь мы представляем что от чего будет отдаваться клиенту в зависимости от обращения к определенной страницы
 
 
+blog/views.py
+from django.shortcuts import render # импортируем функцию render
+
+def post_list(request):
+    return render(reques, 'blog/post_list.html', {}) ## blog/template/blog хранилка html шаблонов
+    #ссылаемся на возврат конкретного шаблона
+
+#функцию (def) с именем post_list, которая принимает request в качестве аргумента и возвращает (return) результат
+#  работы функции render, которая уже соберёт наш шаблон страницы blog/post_list.html.
+
+7 Шаблон html к примеру шаблон письма который ты не хочешь постоянно набирать
+blog/templates/blog # хранилка шаблонов приложения blog
+post_list.html # тут создаю html шаблон
 
 
+8 базовый html 
+<h1>Заголовок</h1> — главный заголовок страницы;
+<h2>Подзаголовок</h2> — для заголовков второго уровня;
+<h3>Заголовок третьего уровня</h3> … и так далее, вплоть до <h6>;
+<p>A paragraph of text</p>
+<em>текст</em> подчёркивает твой текст;
+<strong>текст</strong> — жирный шрифт;
+<br /> — переход на следующую строку (внутрь br тега нельзя ничего поместить);
+<a href="https://djangogirls.org">link</a> создаёт ссылку;
+<ul><li>первый элемент</li><li>второй элемент</li></ul> создаёт список, такой же как этот!
+<div></div> определяет раздел страницы.
 
 
-
-
+9 django командная строка 
 
 
 
