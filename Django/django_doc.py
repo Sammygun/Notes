@@ -1,5 +1,8 @@
 http://127.0.0.1:8000/
 http://127.0.0.1:8000/admin
+
+pip install -r requirements.txt  ### когда скачиваю с github устанавливаю все зависимости из этого файла
+
 =================================
 Установка django2 
 1 mkdir djangogirls
@@ -7,7 +10,7 @@ http://127.0.0.1:8000/admin
 3 python3 -m venv myvenv # создание вирутального окружения
 4 source myvenv/bin/activate # активация
 5 python3 -m pip install --upgrade pip ## установка последней версии pip
-6 djangogirls/requirements.txt
+6 djangogirls/requirements.txt # создал файл там указал данную запись
 Django~=2.2.4
 7 pip install -r requirements.txt
 =================================

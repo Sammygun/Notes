@@ -21,3 +21,9 @@ Django
 
 1 TemplateDoesNotExist
 Папка каждого приложения должна находится в папке этого приложения, сделано чтобы не было путаницы с html шаблонами
+blog/templates/blog/base.html # проверь чтобы в этой папке лежало 
+
+
+TemplateDoesNotExist at ## перерзапусти сервер
+
+2 AttributeError, поскольку представление post_new не реализовано
