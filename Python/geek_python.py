@@ -1,5 +1,12 @@
 Суть в том что указываешь переменные, а потом ворочаешь этими данными
 
+ ModuleNotFoundError: No module named 'lxml # решение ошибки 
+1 python3 -m venv venv # в папке проекта
+2 source venv/bin/activate # активировал 
+3 pip install lxml
+4 pip install requests
+
+
 python3 # вызов интерпретатора
 
 vscode visual studio code
