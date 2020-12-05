@@ -414,14 +414,143 @@ num: 2
 >>>  
 """ Но лучше так не делать """
 
-Страница 68
+
+Возведение в степень
+1 
+>>> 4 ** 2 # 4 в стемени 
+16
+
+2
+ >>> 10 ** 100 #  10  в степени 100
+
+3 
+>>> import operator # для математических операций
+>>> operator.add(2, 4)  # the same as 2 + 4 
+6
+
+Порядок операций
+
+>>> 3 + 2 * 3
+9
+>>> (3 + 2) * 3
+15
+
+=====================================
+Строки
+неизменяемые объекты для хранения символьных данных
+символ,слово, последовательность слов, абзац, несколько абзацев.
+'some text' # строки заключаются ммежду символами
+"some text"
+""" some text """
+''' some text '''
+
+1 '''Кавычки начинаются и завешаются одним и тем же видом'''
+character = 'a' 
+name = 'Matt'
+with_quote = "I ain't gonna"
+longer = """This string has
+multiple lines"""
+latin = '''lorum ipsum dolor'''
+escaped = 'I ain\'t gonna'  # \ если надо экранировать ковычку то делаем так как в примере
+zero_chars = ''
+unicode_snake = "I love \N{SNAKE}" ### будет змейка
+
+2 
+>>> backlash = '\\' # чтобы вывести \\
+>>> print(backlash)
+\     
+
+3 Экранирующая последовательность
+\\ Обратная косая черта
+\' одинарная кавычка
+\" двойная кавычка 
+\b символ backspace
+\n новая строка
+\t табуляция
+\u12af 16-разрядный символ Юникода
+\U12af89bc 32-разрядный символ Юникода
+\N{SNAKE} Символ Юникода
+\o84 Символ в восьмеричной кодировке
+\xFF Шестнадцатеричный символ
+
+3.1 Необработанный строки тогда r
+>>> slash_t = r'\tText \\'
+>>> print(slash_t)
+\tText \\         # благодаря r сохранится значения текста
+
+>>> normal = '\tText \\'
+>>> print(normal)
+        Text \ # без r как будет отображаться
+
+3.2 Тройные кавычки 
+Нужны для строк разделенных на абзацы часто используются в строках документации
+>>>
+paragraph = """Lorem ipsum dolor            
+sit amet, consectetur adipisicing
+elit, sed do eiusmod tempor incidid """
+В коде """ some comments .... """
+
+3.3 Также внутри тройных кавычках можно использовать другие каычки и их не надо экранировать
+""" this string has double " and single quotes ' inside of it """
 
 
 
+Форматирование строк 
+
+1 
+>>> name = "Matt"
+>>> print('Hello {}'.format(name)) # {} в скобках .format(name) указываю что в эти скобки {} воткнуть 
+Hello Matt
+
+2 >>> print('I:{} R:{} S:{}'.format(1, 2.5, 'foo')) # :{} в скобках format(1, 2.5, 'foo') указываю последовательность 
+I:1 R:2.5 S:foo
+
+Синтакстис форматных строк
+1 >>> 'Name: {}'.format('Paul')
+'Name: Paul'    # вставим имя
+
+2 'Name: {name}'.format(name = 'Paul') #  обрати внимание {name} и название переменной name
+'Name: Paul'
+
+3 >>> 'Name: {[name]}'.format({'name' : 'Paul'}) # обрати {[name]} тут как словарь  {'name' : 'Paul'}
+'Name: Paul'
+
+4 >>> 'last: {2} First: {0}'.format('Paul', 'George', 'John') # 'Paul', 'George', 'John' это 0 1 2 
+'last: John First: Paul'
+''' 2 это позиция элемента  John ''' 
+
+
+5 Примеры форматирования 
+
+>>> "Name: {:*^12}".format("Ringo")
+'Name: ***Ringo****'
+''' * символ заполнитель, ^ поле вырвнивания, 12 поле ширины (***Ringo****)''' 
+
+
+6 Справка по форматированию
+>>> help()
+help> FORMATTING
+
+https://pyformat.info/
 
 
 
+7 F -строки с python 3.6
+1 
+>>> name = "matt"
+>>> f'My name is {name}' # указываю куда воткнуть переменную name
+'My name is matt'
 
+2 
+>>> f'My name is {name.capitalize()}'
+'My name is Matt'
+
+3 
+>>> f'Square root of two: {2**.5:5.3f}'
+'Square root of two: 1.414' 
+
+====================================================================
+dir, help, pdb # 80
 
 
 
