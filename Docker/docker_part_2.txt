@@ -1,0 +1,217 @@
+
+https://www.reg.ru/support/vps-servery/oblachnie-serveri-vps/ustanovka-programmnogo-obespechenija/kak-ustanovit-docker-na-ubuntu-18-04-i-20-04
+шпоргалка
+https://www.digitalocean.com/community/tutorials/docker-ubuntu-18-04-1-ru
+установка docker
+
+
+Основы docker
+
+1 sudo usermod -aG docker ${USER} # добавляю права
+2 docker --help
+3 docker run --help
+4 docker search ubuntu # ищу образ docker
+выбирай официальный docker образ
+5 docker pull ubuntu:18:04
+6 docker image ls # смотрю список образов
+7 docker create -t-i --name testt ubuntu:18.04
+8 docker ps    ### какие процессы запущены
+9 docker ps -a
+10 docker attach test
+11 docker exec -it test bash ## это чтобы контейнер в фоне работал
+12 docker logs test ## информация о моем контейнере test !!!!!!!!
+13 docker stop test # остановили контейнер
+14 docker kill test  # убил свой контейнер когда он работает некорректно!!!!!!!
+15 docker rm test # удаляю свой контейнер
+16 docker image ls ## однако сам образ остался
+
+================================================
+Докер нужен когда надо развернуть прииложение на сервере однако там много зависимостей, разные пути, разные пользователи.
+Каждое приложение разное по разному работают и нету одноко подхода. В мороской логистике с этим уже сталкивались, один контейнер, один размер, единый стандарт.
+Docker очень похож как аналогия.
+Это средство уппаковки в один контейнер, средство доставки. Приложение java и python будут иметь.
+
+Docker image  это наше приложение 
+Контейнер работающая приложение создано на базе image, но контейнер не влияет на image, удаляя контейнер на image никак не влияет.
+Слоеный пирог:
+1 образ ubuntu сервер nginx
+2 Образ базы данных modgodb
+3 Образ python приложения
+images это слои которые мы можем накладывать друг на друга 
+
+Docker hub реест images, можно брать официальные образы, можно чьи-то решения использовать
+==========================================================
+Работа с докером
+1 systemctl status docker ## есть ли докер на сервере 
+1.1 docker logs test ## информация о моем контейнере test !!!!!!!!
+1.2 sudo docker run hello-world
+Hello world   ## выполниться наша приложение контейнер отработал и остановился
+1.3 sudo docker run --name hello hello-world  # задаю свои имя контенеру в Графе NAMES ниже появится
+1.4  docker run --name hello -d hello-world #запуск в фоне будет терминал будет свободен
+1.5  docker run --name hello -d --rm hello-world # после того как контейнер выполниться он удалится!!!
+1.6 sudo docker run --rm --name web web-hello # с удалением после остановки, с названием web
+есл имя на задать docker сам даст название 
+
+1.7 sudo docker run --rm --name web -p 8080:8080 web-hello  # запуск с портом первый порт на нашей мащине второй то что в контейнере
+## запуск с портами 8080 наша тачка 8080 тачка контейнера
+
+1.8 sudo docker build -t web-hello . # пересобираем наш образ после того как внесли правки Dockerfile
+
+
+
+2 sudo docker images  ## какие есть образы
+3 sudo docker ps  ##смотрю какие контейнеры зарущены у меня
+
+4 sudo usermod -aG docker $USER # чтобы невсегда писать sudo
+
+5 sudo docker build -t hello-world . # создаем образ название в текущей директории
+будет ошибка 
+
+5.1 решение 
+Создаем Dockerfile
+
+FROM python:3.6                 ## так как приложение на python то указываем его
+
+RUN mkdir -p /usr/src/app/     ### создать папку
+WORKDIR /usr/src/app/          ### перешли и оттуда будет запуск
+
+COPY . /usr/src/app/          ### откуда . текущая папка куда /usr/src/app/
+
+CMD ["python", "app.py"]      ### команда котроя должна выполниться при запуске контейнера
+
+#ENTRYPOINT ["python", "app.py"] # выполнения без shell аналог команды выше но пока не нужно
+
+
+5.2 sudo docker build -t hello-world . ## теперь могу запустить
+docker пошел на docker hub скачал python  и т.д. 
+
+6 sudo docker images
+
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+hello-world         latest              dbd64fcc109e        8 minutes ago       874MB
+python              3.6                 bda27a013ab2        2 days ago          874MB
+
+# два образа наше приложение hello-world и python для приложения
+image id 
+hello-world # created 8 минут назад
+python      ## 2 дня назад так как docker скачаивался
+
+7 sudo docker run hello-world
+Hello world   ## выполниться наша приложение контейнер отработал и остановился
+
+8 sudo docker ps ## ничего не покажет так как контейнер существует до момента выполнения задачи после он уже не работает
+
+9 sudo docker ps -a ## all контейнеры которые когда-то работали
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+c9a45d80fca5        hello-world         "python app.py"     4 minutes ago       Exited (0) 4 minutes ago                       vigilant_gates
+                                # здесь команда которая была запущена           # уже не работает
+
+10 sudo docker run --name hello hello-world  # задаю свои имя контенеру в Графе NAMES ниже появится
+
+11 sudo docker ps -a ## покажет два контейнера
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                          PORTS               NAMES
+b622eabb1188        hello-world         "python app.py"     About a minute ago   Exited (0) About a minute ago                       hello
+c9a45d80fca5        hello-world         "python app.py"     10 minutes ago       Exited (0) 10 minutes ago                           vigilant_gates
+
+12 sudo docker rm b622eabb1188 # удаляем контейнер по его id
+
+Удаление нескольких контейнеров
+13 sudo docker ps -a -q # вывод список id 
+sudo docker rm $(docker ps -qa) ### удаление списка контейнеров 
+
+14 Бесконечный цикл в app.py 
+
+import time   
+
+while True:        ##  цикл здесь он бесконечный будет
+    print("Hello world")
+    time.sleep(1)  ## создаю бесконечный цикл который замирает на 1 секунду 
+
+
+
+15 sudo docker build -t hello-world . ## пересобираю image
+
+15.1 docker run --name hello hello-world # запуск терминал будет занят
+15.2  docker run --name hello -d hello-world #запуск в фоне будет терминал будет свободен
+33ba762b3b4d10ec7b91dcb1ccbe58d631ba02939111ce7aa0344eb6ff6f6c56 # его id
+
+docker run --name hello -d --rm hello-world # после того как контейнер выполниться он удалится!!!
+
+15.3 sudo docker ps             # увижу как он запускается STATUS Up значит работает
+33ba762b3b4d  ## тут то же укажет его id, STATUS Up значит работает
+
+16 docker stop hello            # можешь указать имя контейнера или id в ps увидишь его 
+sudo docker ps                  # его уже тут не будет
+
+17 docker rm hello  # удалили наш контейнер
+
+18 sudo docker run --name hi -d --rm hello-world  ##запуск с авто удалением после того как он остановится
+926b56dc77ce08db55e4cde97375655c6013fcbaaff65ff52e926418f13d0b48
+sudo docker ps # увижу его
+sudo docker stop hi # больше его не увижу он удалится из-за остановки контейнера hi
+
+===================================================================
+Приложение по сложней  flask
+1 touch requirements.txt 
+flask==1.1.1
+2 python3 -m venv venv
+3 source venv/bin/activate
+4 pip install --upgrade pip
+5 pip install flask
+5.1 pip install -r requirements.txt ## а можно и так если выше указал все модули указанные утсновятся
+===========================================
+Копируй с github проект
+
+Dockerfile 
+
+FROM python:3.6
+
+RUN mkdir -p /usr/src/app/
+WORKDIR /usr/src/app/
+
+
+COPY . /usr/src/app/
+RUN pip install --no-cache-dir -r requirements.txt  # тоже самое только запускаем установку зависимостей
+
+EXPOSE 8080
+
+
+CMD ["python", "app.py"]         ## запуск команды
+
+
+1 sudo docker build -t web-hello .
+
+2 sudo docker images # смотрю образы там должен быть web-hello
+3 sudo docker run --rm --name web web-hello             # запуск но ничего не запустится
+Проблема в том что контейнер в изолированном окружении 
+
+4
+Решение Dockerfile добавь проект
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 8080  ## добавил порт задекларировал
+
+4.1  sudo docker build -t web-hello . # пересобрал образ
+
+4.2 sudo docker run --rm --name web -p 8080:8080 web-hello  # запуск с портом первый порт на нашей мащине второй то что в контейнере
+Hello, World!!!. - 06.12.2020 12:07:05
+только во времени разница и будет  в контейнере другое время
+
+5 в Dockerfile исправляю данный параметр
+EXPOSE 8080
+
+ENV TZ Europe/Moscow ### надо добавить данную запись
+
+5.1 sudo docker build -t web-hello . ### пересобрали наш образ
+
+5.2 sudo docker run --rm --name web -p 8080:8080 web-hello   ## запустили с портом 
+Hello, World!!!. - 06.12.2020 15:15:13 ### запустит правильое время
+
+=====================================
+
+6 Dockerfile удаляем 
+EXPOSE 8080
+
+6.1 sudo docker build -t web-hello .  ## пересобираем образ
+40:32
