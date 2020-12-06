@@ -1,0 +1,77 @@
+Настройка mysql после установки:
+1 echo -n @ && cat /dev/urandom | env LC_CTYPE=C tr -dc [:alnum:] | head -c 15 && echo  ## создаю крепки пароль
+2 sudo /usr/bin/mysql_secure_installation
+sudo mysql_secure_installation ####или так
+1 y новый пароль ввожу для root
+@kGB9vTM5aKep55l
+2 remove anonymous users y ## удалм анонимов
+3 dissalow root login remotely y ##запретить удаленною подключение к roo пользователь к базе данных
+4 remove test databases and access to it y ## тестовые удаляем
+5 Reload privilege tables now [Y/n] y ### да перезагрузка привилегий
+
+2 Create database and db user in Mysql
+Создание пользователя на сервере
+1 mysql -u root -p ## авторизация от рута в базе данных
+
+echo -n @ && cat /dev/urandom | env LC_CTYPE=C tr -dc [:alnum:] | head -c 15 && echo
+создание пароля для ного пользователя
+
+2 CREATE DATABASE tutorialinux; ## создаю базу
+CREATE USER 'tutorialinux'@'localhost' IDENTIFIED BY 'chooseapassword'; ## создаю пользователя и пароль
+GRANT ALL PRIVILEGES ON tutorialinux.* TO tutorialinux@localhost; ## даю все права
+FLUSH PRIVILEGES;  ### обновляю
+
+Рекомендательно создавать пользователя и базу данных по имени одинаковыми
+
+2.1 
+Создаем базу данных для сайта командами:
+mysql -uroot -p
+ CREATE DATABASE site1 DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+ GRANT ALL PRIVILEGES ON site1.* TO dbuser@localhost IDENTIFIED BY 'password' WITH GRANT OPTION;
+ quit
+* данными sql-командами мы создаем базу данных site1 и предоставляем к ней доступ для учетной записи dbuser с паролем password. При желании сделать соединение более безопасным, можно убрать WITH GRANT OPTION.
+https://www.dmosk.ru/instruktions.php?object=mega-webserver-ubuntu#firstsite
+
+
+3 Можно также создавать пользователя на сервере
+https://www.reg.ru/support/vps-servery/oblachnie-serveri-vps/ustanovka-programmnogo-obespechenija/kak-ustanovit-linux-nginx-mysql-php-lemp-v-ubuntu-16041804?query=lemp
+mysql -u root -p ### захожу под root пользователя это не безопасно создаю нового пользователя
+CREATE USER 'user-name'@'localhost' IDENTIFIED BY 'password';
+CREATE USER 'sam'@'localhost' IDENTIFIED BY 'sam3030034';
+- вместо user-name укажите логин пользователя базы данных;
+- вместо password укажите пароль нового пользователя.
+GRANT ALL PRIVILEGES ON * . * TO 'user-name'@'localhost';
+Не забудьте изменить user-name на логин, который был указан при создании пользователя.
+GRANT ALL PRIVILEGES ON * . * TO 'sam'@'localhost';
+даю все права пользователю
+ чтобы изменения вступили в силу 
+FLUSH PRIVILEGES;
+CREATE DATABASE BaseName;
+создал базу, потом exit; или ctrl + D 
+
+
+
+
+
+
+
+ sudo mysql_secure_installation # выбираешь сложность пароля, устанавливай пароль и по шагам
+     Remove anonymous users? удалить ананонимных юзеров #  на рабочем нет(да на loca)
+      Disallow root login remotely? [Y/n]  # может удаленно подключаться yes так это уязвимость
+      Remove test database and access to it? # удалить ли тестовые базы данных yes
+      Reload privilege tables now? [Y/n]  # перезагрузить ли таблицу с привелегиями да
+5. mysql -u root -p
+SHOW DATABASES; # посмотрел таблицу
+EXIT
+
+5.1 ERROR 1045 (28000)
+root@LAMP:~# mysql
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+/root/.my.cnf  ### создал такой файл потом рестартанул
+[client] ### в этом файле прописать my.cnf
+user=root
+password="'DIoNb|}DP"
+
+sudo mysqld --skip-grant-tables --user=root ### возможно это команда помогла потомо рестартанул сервис
+systemctl restart mysql
+https://qna.habr.com/q/439469VTVG

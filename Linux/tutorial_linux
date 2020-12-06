@@ -1,0 +1,1603 @@
+RHCA7/RHCI/RHCX, 6xCCIE, 4xJNCIE, CCDE, HCIE, VCIX-NV
+
+
+http://catb.org/~esr/faqs/smart-questions.html
+how to ask!!!!!
+
+https://www.kernel.org/doc/man-pages/
+!!!!!!man pages
+
+https://www.amazon.com/Networking-Systems-Administrators-Mastery-5/dp/0692376941
+книга!!!!
+
+ssh mastering michail lukas grat book
+
+books
+1)unix linux system administration handbook
+best book!!!!!!!!!!!книга про корабль
+
+2)The Practice of System and Network Administration (when you're actually in the middle of your career)
+
+3) the little schemer функциональное программирование
+
+https://help.ubuntu.com/community/Servers
+# хороший ресурс по серверам установи 
+
+serverfault.com
+reddit.com
+
+https://help.ubuntu.com/
+хороший ресурс по ubuntu
+
+
+1) Игра
+the ultimate uplink game
+http://guide.modlink.net/section1.php
+описание
+
+sam & max hit the road
+еще одна игра
+________________________________________________________
+alt + f2 введение суперпользователя
+
+Ctrl + x # выйти из nano
+
+crtl + j это с новой строки
+shft + @ это кавычки """"
+решетка shift 3 #
+одинарные кавычки просто кнопка @
+| shift + решетка
+* shift + 8
+& shift + 7
+кавычки просто  латиницей ё кнопка `````
+shift + ё ~
+
+# shift + 3
+: shift + возле L
+pycharm масштабирование текста view = toolbar = setings=font=
+изменение переменных правой кнопкой маши refactor = rename вводишь и все
+или Shift + F6
+
+ctrl + Tab переключение между вкладками
+
+$ shift + 4
+
+TAB ускоряет набор который был уже
+ctrl + A возврат к началу кода
+ctrl + R history mode пишешь команду подскажет какие были
+ctrl + D Закрыть терминал
+
+Ctrl+Z  - отправить процесс на background (загоняю процесс на background)
+fg Это fourground вернуть с background обратно на экран
+Ctrl+C – прекратить процесс вообще (прекратить процесс)
+
+SHIFT + ПРАВОЙ КНОПКОЙ МЫШИ можно открыть новый терминал
+________________________________________________________
+
+Bash Shortcuts Every Linux User Should Know
+ГОРЯЧИЕ КЛАВИШИ
+
+
+ping 8.8.8.8 # ping google
+ctrl + c # остановить
+ctrl + d # выйти из sudo пользователя
+также выйти из командной строки
+
+ls /var/log
+la -alh /var/log/gpu.manager.log
+#Используй TAB даже если та пишешь путь в папке ты знаешь есть файл пиши его начало и tab
+clear # или ctrl + L
+
+ctrl + A #В начало команды
+ctrl + E # конец строки
+
+alt + f # скачим по пробелам
+alt + b
+history # история
+ctrl + R # похожие но поиск по ключевым словам, буквам
+несколько раз нажимай!!!!
+ctrl + G # или  ctrl + с
+
+_______________________________________________________
+Vim Basics in 8 Minutes
+
+в начале загружается command mode
+:q # просто выхожу
+:wq # write quit save and exit
+i # insert mode
+esc # вернуться command mode
+в command mode выбираю строку нажимаю dd удаляю линию
+ddd # удалит три строки сразу
+В command mode U  вернет тебя во времени
+ctrl + r
+В command mode / search
+shift n
+:%s/provis/frovis/gc # replace
+
+
+vi vim
+
+
+
+
+
+
+
+_______________________________________
+Top 10 Linux Job Interview Questions
+1)How to check the kernel version of a Linux system?
+uname 
+Linux # вывод
+uname -a # all
+Linux DESKTOP-JQN2ABT 4.4.0-18362-Microsoft #1-Microsoft Mon Mar 18 12:02:00 PST 2019 x86_64 x86_64 x86_64 GNU/Linux
+uname -v kernel version
+uname -r #print the kernel release
+ 4.4.0-18362-Microsoft
+2)How to see the current IP address on Linux?
+ifconfig
+ifconfig eth0 # смотрим конкретно
+
+ip addr show # ip address
+ip addr show eth0
+
+3) How to check for free disk space in Linux
+df -ah # место свободное на диске
+a -all h -human readeble
+
+4)
+How to see if a Linux service is running?
+service udev status # udev это название сервиса
+systemctl status udev
+5)
+How to check the size of a directory in Linux?
+du -sh code # estimate file space usage s summarize h human readeble
+ # смотрю папки объем памяти
+
+6)
+How to check for open ports in Linux?
+listen, sockets, tcp ip
+
+netstat
+netstat -tulpin
+sudo netstat -tulpin # доп информация
+Proto Это TCP IP
+local address
+PID Номер процессора который слушает
+
+7)
+How to check Linux process information (CPU usage, memory, user information, etc.)?
+ps -aux | grep nginx # конкретный процессор ngignx его название
+ps -aux | grep sam конкретно процессы sam]
+top
+htop # better
+
+8)
+ How to deal with mounts in Linux
+ls /mnt
+mount /dev/sda2 /mnt
+mount # показывает что подсоединено
+less /etc/fstab
+
+9)
+ Man pages
+man ps
+ example look for them
+
+10)
+google stackoverflow
+
+
+
+________________________________________________________
+DEVOPS interview
+1) basic linux
+Troubleshooting
+2) General cloud
+3) basic networking skills
+dns http
+4)containers docker
+5) Programming scripting 
+not optional
+6)security questions
+7)databases quiestions
+basic
+
+
+__________________________________________
+ifconfig # ubuntu
+/sbin/ifconfig # debian
+
+man hier #   Linux Programmer's Manual
+whoami # кто я
+which sudo # покажет где команда находится
+ps -aux # процессы в таблице
+top
+htop
+which bash # где bash находится
+/bin/bash # вывод
+#!/bin/bash  # для скрипта
+sudo apt install sublime-text
+
+lsof # listen open file
+grep allow /etc/monit/monitr
+lsof -u sam # смотрю что юзер делает
+df -h #  disk space usage h human readable
+
+./helloworld.sh # Вызов скрипта
+alias | grep lr # поиск lr в alias
+____________________________________________
+
+1.1. pwd
+      ls # просмотрел увидел Desktop
+      ls Desktop/ # посмотрел че там 
+      cd .. # поднимаюсь наверх
+1.2. 
+     linux tree with branch
+     ls
+     ls -a
+     ls /
+     ls Downloads/ 
+     ls /home/dave/Desktop/  # когда я у казываю / я как будто с самого начало 
+     ls /home # смотрю что внутри
+     ls /home/sam/
+     cd / # в самом начале
+     cd # просто так вернет меня /home/sam/
+     cd /home/sam/Downloads # абсолютный путь с любого места могу зайти
+
+
+     cd /home/sam/Downloads # абсолютный путь с любого места могу зайти
+     ls home # это где я сижу
+     ls /home # Это абсолютный путь могу войти с разного места абсолютный путь
+
+     touch myawesomefile.txt # создал файл    
+     cat myawesomefile.txt   # читаю данный файл
+     mkdir aplacesomefile # создал папку
+     mv myawesomefile.txt apacesomefile/ # перенес файл в папку
+     rm myawesomefile.txt # удаляю данный файл
+
+     mkdir RMDIR # создал директорию
+     rmdir RMDIR # удалил данную директорию
+
+     mkdir RMDIR # создал директорию
+     touch RMDIR/testdelete.txt # так можно создавать файлы
+     rm -r RMDIR # удаляю не пустую директорию
+     man rm # смотрю директорию
+  
+     rm -rf / # уничтожить линукс
+
+ 1.3.   touch file3
+    с file3 захожу в текстовый редактор и смотрю файл
+    ln -s file3 file3LINK  # создаю ссылку на файл с новым названием
+
+ 0 lrwxrwxrwx 1 sam sam     5 Aug 31 14:02 file3LINK -> file3 # так она выглядит l впереди
+ создаешь линку и даешь юзерам доступ к файлу кидая им на рабочий стол
+
+    nano file3link # захожу пишу link edited
+    cat file3 # и вижу что там такой же текст
+    
+    shutdown -h +60  # Выключить через час
+    shutdown -h now # отключить сейчас
+    shutdown -r + 30 # перезагрузка через 30 минут
+    poweroff # выключить машину
+    init 0 # выключить машин
+    init 6 # перезагрузить
+    tail опуститься вниз файла
+
+
+2.    sudo apt get install htop # установка диспетчер задачь linux
+    htop # загрузка диспетчер задачь
+    top # загрузка тоже самое но проще
+    Там же смотри PID номер с помошью его можно убить процесс
+    
+
+    w # кто находится в системе в ssh более подробнее
+    who # Тоже самое но менее подробное
+
+https://zalinux.ru/?p=1811 # инструкция top
+    top #диспетчер
+    netstat -tupln  # смотрим сеть
+    sudo netstat -tupln  # дает больше возможностей
+
+    htop # диспетчер
+    / # поиск пишешь sam и сразу строку подсвечивает
+
+3.     mkdir -p coolfolder/search/happy # создаю папку в папке p Означает родитель
+    cd coolfolder/search/happy  # перемещаюсь в данную папку
+    
+    touch text.txt
+    mkdir somefolder # создал папку                 
+    mv text.txt somefolder # перенес туда файл somefolder папка
+    mv text.ru removetext.ru # переименовал файл
+    cp somefolder/text.txt textcopy.txt # coздаю копию файла
+   cp -R folder1 folder2 
+   cp -r folder1 folder2 # копируем по жесткому всю папку и сразу же создаем folder2 папку без r не сработает
+    nano text.txt # Открываем файл и редатируем 
+    nano text.ru # создаем файли и заходим в него 
+    Ctrl + x # выйти из nano
+    
+    vi test.txt # Открываем редактор vi
+    :q! выйти без сохранения
+    :wq выйти и сохранить
+    :w write сохранить
+    :q выйти
+    emacs text.txt крутой редактор для программирования
+
+    cd ../.. подняться выше еще на одну папку
+
+    mv text.ru removetext.ru # переименовал файл
+
+4.Linux Sysadmin Basics 04 -- Shell Features -- Pipes and Redirection
+    stdin 0 # in
+    stdout 1 #out
+    stderr 2 #error
+    
+     echo "hi how are" > somefile.txt # отправлю эту фразу туда
+    echo "I am fine" > somefile.txt # перезапишет по новому уберет предыдущие
+    cat sommefile.txt # можно посмотреть 
+    echo "I am fine" >> somefile.txt # создаст новоую строку
+    
+    ls -alh somefile.txt >> error
+    cat error # увидим путь файла его права somefile.txt
+
+    ls -alh somefileabragadbra.txt 2> error
+    cat error увидим ошибку
+
+    mail -s "this is subject" sam < message.txt # Отправит сообщение output < ,s значит subject
+    
+    ps # какие процессы
+    ps aux # выведит таблицей очень удобно
+    ps aux | less # меньше информации объединение двух команд 
+    # pip это называется  объединение двух команд
+    in -0
+    out -1
+    err -2
+    | можно объединять кучу команд в одну команду
+
+5. Filtering Output and Finding Things (&&, cut, sort, uniq, wc, grep)
+    пример pip
+    prog1 | prog2 | prog3
+    
+    prog && prog2 # если prog true то след prog2 но если false то prog2 не запустит
+    Пример
+    ls file3 && echo "successful"
+    file3  # первая команда вывелась    
+    successful # так первая сработала запустиалсь вторая команда
+    но если в первой будет ошибка вторая не запуститься
+    
+    $ cat file3 # есть файл с текстом
+    dave:we # это то что выведит
+    user:love 
+    someone:linux
+
+    cat file3 | cut -d: -f2    # d это determine вырежим все что перед : f2 field 2
+    we
+    love
+    linux
+    
+    cut # чето - то вырезать 
+    sort # сортировка данных
+
+    cat file.txt | uniq # если есть дупликаты то их не тронет, а выведит только уникальные значения
+    
+    $ cat file3 # есть файл с текстом
+    dave:we # это то что выведит
+    user:love 
+    someone:linux
+    
+    cat file3 | grep user
+    user:love # выведит строку user
+
+     grep user file3 # поиск чего то важного в файле
+     grep user ./* # поиск user по всей директории
+     grep user ./* | uniq # чтобы не было дубликатов
+     grep user ./* | uniq |  cut -d: -f2    # d
+     we # То что выведит
+     love
+     linux
+    
+    Итого
+    && - the logical AND operator, useful for running things IF something else is successful.
+
+    cut - divide output into two fields and select one of them.
+
+    sort - sort items (by alphabetical order, etc.)
+
+    uniq - only show unique output (duplicates not shown)
+
+    wc - "word count." Count lines, letters, etc.
+
+    grep - the very basics of this unbelievably powerful searching/pattern-matching command.
+
+
+
+6. Package Management with apt-get
+
+     sudo apt-get update # обновляем систему
+     sudo apt-get upgrade
+     sudo apt-get install name # установка чего-то
+    
+     apt-cache search tmux # ищу tmux
+     sudo apt-get install tmux # нашел ставлю
+
+        cat /etc/apt/sources.list # list что обновил
+      
+    sudo apt-get remove name # удаляем программу
+    man apt-get
+
+
+7 Linux Sysadmin Basics -- Linux File Permissions
+    остановился на 11 занятии
+    drwxrwxrwx # d значит директория
+    -rw-rw-rw-  # owner groupe others
+    -rw-rw-rw-  # owner groupe others
+    -crw-rw-rw- # keyboard
+    -brw-rw-rw # block жесткий диск
+     chmod 7 everything,6 read write, 4 read, 0 no rights
+    chmod 777 # все могут все
+    chmod 640  # user read write,  groupe read, others nothing
+    
+    Пример:
+    chmod 640 app.py # 6 owner read write,4 groupe read , 0 others no rights
+    -rw-r----- # вот такие права
+
+    nano /etc/login.defs
+    
+    
+8.Basic Linux Access Control
+    drwxrwxrwx # директория
+    lrwxrwxrwx # link
+    
+    whoami # кто я 
+    id # мои права
+
+9.Linux Sysadmin Basics -- User Account Management
+    
+     tail /etc/passwd # смотрим юзеров
+     tail /etc/shadow
+     tail /etc/group
+     less /etc/shadow
+
+     sshd # network
+
+    useradd -m -d /home/schnerg -s /bin/bash - schnerg #m create home directory, d direction home где она будет находиться
+    tail etc/passwd     # сразу посмотрел в самом внизу на юзера нового
+    ls /home # можно и тут посмотреть
+
+    ls /etc/skel # смотрим на файлы
+
+    passwd schnerg # добавляем пароль новому юзеру
+    usermod -L schnerg # блокируем юзера пароль
+    usermod -U schnerg # разблокирум юзера пароль
+    userdel schnerg # Удалил его 
+    rm -rf /home/schnerg/ # подчищаю home
+    
+     tail /etc/passwd # смотрим  что удалилось отсюда
+     tail /etc/shadow
+     tail /etc/group
+     less /etc/shadow
+        
+    man newusers # manual о новых юзерах
+
+10.Linux Sysadmin Basics -- 6 -- Processes Overview
+
+    PID # id процессов
+    1 самый важный процесс
+    init родитель всех процессов
+
+11.Process Signals
+    http://man7.org/linux/man-pages/man7/signal.7.html
+    ссылка на сигналы
+    
+    kill -l # куча сигналов покажет
+    ps aux | grep firefox # ишем процесс firefox 
+    kill 15 #автоматически
+    kill 9 # очень опасная команда
+
+    Убить процесс
+    ps aux # выкинет pid разных процессов 2196 пример
+    kill 2196 # убиваю конкретный процесс
+
+    ps aux | grep cups # тоже самое с другим процессом
+    kill 61
+
+    ps aux | grep cups
+    sudo killall cupsd # убиваем все процессы на cupsd
+    # попросит пароль
+    
+    sudo pkill -u dave #u user dave убить все его процессы
+    
+    man signal # смотрю мануал как остановить signal
+
+ИТОГО
+-kill (sending signals)
+-killall
+-pgrep
+-pkill
+
+
+12 Linux Sysadmin Basics -- 6.2 State, Niceness, and How to Monitor Processes
+
+    htop
+    выбираю процесс
+    F9 # kill
+    Выбираю какой Signal Отправить  15 SIGTERM более частое
+    9 SIGKILL более жесткий метод
+    
+     htop -u sam # смотрю процессы sam
+     htop man # !!!!!!!!
+     top man #!!!
+    
+    nice -n 15 /backup/not/important/at/all/task
+    sudo renice -5 2744
+
+
+    htop # тут выбираю процесс
+    F7 # понижаю nice 
+    F8 # повышаю nice приоритетность
+
+    смотришь какой процессор жрет память ресурсы смотришь его родителя почему так
+    и регулируешь
+    
+    
+    
+13 Linux Sysadmin Basics -- 6.3 The /proc Filesystem
+    
+    df -ah
+    ls -alh /proc
+    sudo -i # Захожу в рут юзера
+    
+    sam@DESKTOP-JQN2ABT:/$ ls
+    bin   home   media  root  srv  var
+    boot  init   mnt    run   sys
+    dev   lib    opt    sbin  tmp
+    etc   lib64  proc   snap  usr
+
+    cd proc # папка где обо всем
+    ls fd # file description
+    cat maps # memory maps смотрим
+    cat cmd # Как процесс называется смортим
+    cat environ # user environment смотрим
+
+    лучше htop все тоже самое
+
+    strace #  -  trace system calls
+        and signals
+
+14 Linux Sysadmin Basics -- Filesystem Purpose and Absolute/Relative Pathnames
+
+    ls /dev 
+    ps -aux | grep udevd # udevd ищем демона процесс который постоянно в background
+    df -ah #  report file system disk space usage a all h human readable mb
+    ls /home/dave/Desktop/  # когда я у казываю / я как будто с самого начало указываю путь и не должен там находиться
+         
+    ifconfig # ubuntu
+    /sbin/ifconfig # debian
+
+15 Linux Sysadmin Basics -- 7 -- Filesystem Layout Overview
+
+    $ ls
+    bin   etc   lib    mnt   root  snap  tmp
+    boot  home  lib64  opt   run   srv   usr
+    dev   init  media  proc  sbin  sys   var
+
+    # Это сам линукc его file system
+    # Здесь работает админ
+    
+     ls /etc  # Это место где все что установлено на linux имеет файл конфигурации
+    system configuraion
+    
+    ls /etc/ssh # Тоже настройка
+    
+    ls sbin # biners
+    ls bin # other biners, links
+    ls /bin | grep rmdir # даже покажет место команды
+    rmdir
+
+    ls /tmp # каждая перезагрузка ощищает здесь папку
+    ls / home # user direction 
+    ls / root
+    ls lib64 # library
+    man hier #   Linux Programmer's Manual
+    
+
+16 Linux Sysadmin Basics -- 7.1 Filesystem Layout
+    root # самое главное
+    ls /bin    # all commands
+    ls /bin | less
+    
+    ls /boot # загрузка
+
+    ls /dev # all your devices Жесткий диск к примеру
+    ls / dev | grep sd # watching hard drive disk
+    
+    ls /etc | less # sys configuration, setup cinfiguration
+    
+    ls /etc/ssh/ 
+    ls / home
+
+    ls /lib
+    ls /lib64/
+    
+    ls /media # 
+    ls /mnt
+    ls /opt # option software
+    
+    ls /proc # каждый процесс отдельная папка с информацией об этом процессе
+    ls /tmp # каждая перезагрузка ощищает здесь папку
+    не доскачаенный файл
+    
+    ls /usr
+    ls /usr/bin
+    ls /usr/share | less
+    ls /var
+    ls /var/log  # all system logs
+
+17 Linux Sysadmin Basics -- Linux File Types
+
+    
+     ls -l | grep link # ищем link В данном списке
+    socket # comunication chanel
+    
+18 Linux Basics -- Scheduling Tasks with Cron
+    
+    crontab -l
+    ls /etc.cron.d/ # packages installed
+    расписание процесоов в linux по дням
+
+19. Sysadmin Training: Where to find Answers to Technical Questions
+    
+http://catb.org/~esr/faqs/smart-questions.html
+how to ask!!!!!
+
+https://serverfault.com/
+# все ответы здесь
+
+https://unix.stackexchange.com/
+
+https://stackoverflow.com/
+
+https://www.kernel.org/doc/man-pages/
+!!!!!!man pages
+
+https://linux.die.net/man/
+!!!!!        
+
+20.Basic tmux Tutorial - Windows, Panes, and Sessions over SSH
+tmax
+    ssh ubuntu@10.0.3.152
+    sudo apt-get install tmux
+    ctrl + b < command> 
+    ctrl + b # its not for bash its for tmux
+    ctrl + b c # create new window1
+    [0] 0:bash- 1:bash*   # внизу экрана 1:bash* я в этом экране
+    ctrl + b p # previos windows
+    ctrl + b n  # next windows
+    ctrl + b w # переключение между windows
+    ctrl + b : # потом пишу ниже
+    split bash # и делю окна
+    
+
+
+# session management
+tmux ls (or tmux list-sessions)
+tmux new -s session-name
+Ctrl-b d Detach from session
+tmux attach -t [session name]
+tmux kill-session -t session-name
+
+Ctrl-b c Create new window
+Ctrl-b d Detach current client
+Ctrl-b l Move to previously selected window
+Ctrl-b n Move to the next window
+Ctrl-b p Move to the previous window
+Ctrl-b & Kill the current window
+Ctrl-b , Rename the current window
+Ctrl-b q Show pane numbers (used to switch between panes)
+Ctrl-b o Switch to the next pane
+Ctrl-b ? List all keybindings
+
+# moving between windows
+Ctrl-b n (Move to the next window)
+Ctrl-b p (Move to the previous window)
+Ctrl-b l (Move to the previously selected window)
+Ctrl-b w (List all windows / window numbers)
+Ctrl-b window number (Move to the specified window number, the
+default bindings are from 0 -- 9)
+
+# Tiling commands
+Ctrl-b % (Split the window vertically)
+CTRL-b " (Split window horizontally)
+Ctrl-b o (Goto next pane)
+Ctrl-b q (Show pane numbers, when the numbers show up type the key to go to that pane)
+Ctrl-b { (Move the current pane left)
+Ctrl-b } (Move the current pane right)
+
+# Make a pane its own window
+Ctrl-b : "break-pane"
+
+# add to ~/.tmux.conf
+bind | split-window -h
+bind - split-window -v
+
+21.Basic tmux Tutorial, Part 2 -- Shared Sessions
+
+ssh ubuntu@10.0.3.152
+
+tmux new-session -s thisshared #senior sys admin создает сессию
+tmux sessions #junior ищет сессии
+tmux attach -t -thisshared # подключился # juinor
+
+и можно работать вдвоем в двух окнах одновременно
+
+tmux list-sessions # Смотрим опять
+
+22 Archiving and Compression on Linux - Basic tar Commands
+
+tar -zcvf docs.tar.gz Documents/  # c create
+tar -zxvf docs.tar.gz # extract
+
+
+tree # дерево файлов
+
+
+Итого
+ARCHIVING + COMPRESSION ON LINUX:
+tar -zcvf docs.tar.gz Documents/
+
+DECOMPRESS/UNARCHIVE ON LINUX
+tar -zxvf docs.tar.gz
+
+####################
+OPTIONS
+z - gzip
+c - create archive
+f - archive FILE (name file)
+v - verbose
+x - extract
+
+
+23 Bash Scripting 1 - Why Write Bash Scripts?
+Bash Scripting 2 -- Bash Basics
+
+echo "Hello there" >> hello.txt # создам файл и в пишу туда Hello there
+echo "Hello sam" > hello.txt # перепишу файл
+cat hello.txt # почитаю
+
+echo "Hello world" >> hello.txt # просто добавит следующую строку в блокнот
+
+>> Добавляет новую запись c новой строки
+> перезаписываеь запись заново
+
+
+Написал какой-то текст в hello.txt
+ wc -l < hello.txt
+11 # посчитал строки
+
+cat hello.txt  | wc -l # l lines
+11 # тоже самое но лучше так
+
+ (cat hello.txt  | wc -l)
+11 # Тоже самое
+
+ (cat hello.txt  | wc -l) && echo "Done"
+11
+Done
+
+ls ыфвывфы && echo "Success!" # первый не сработал значит и второй не сработает аналог AND
+ls ыфвывфы || echo "Success!"  # аналог OR или если первое не сработает, то второе все равно сработает если корректно
+
+&& AND
+|| OR     
+
+24 Bash Scripting 3 -- Variables and Quoting
+echo $HOME  # вызов переменной встроенная переменная
+/home/sam  # выведит
+
+$HOME # просто так не сработает
+
+myvar="This is so wonderful" #правильно
+myvar = "This is so wonderful" # Так не правильно отступы нельзая
+
+
+myvar="This is so wonderful" #правильно
+echo $myvar # Вызов переменной $
+
+
+some_number=10
+echo "My favorite number is $some_number"
+My favorite number is 10 # То что выведит
+
+echo "This is my $some_numberth beer" # Ошибка
+echo "This is my ${some_number}th beer" # сработает
+This is my 10th beer # то что выведит
+
+echo "there are x of lines in the /etc/shadow file"
+there are x of lines in the /etc/shadow file # вывод
+
+wc -l < /etc/group
+69 # количество строк
+
+echo "there are `wc -l < /etc/group` of lines in the /etc/shadow file"
+#встроенная команда в текст
+there are 69 of lines in the /etc/shadow file
+
+num lines=`ls $home | wc -l` # встраваем команды в переменные
+echo $num_lines # Вызов команды
+` ` позволяет нам встраивать команды в текст, в переменную
+
+num_lines=`ls $HOME | wc -l` # встроенная переменная в Linux home
+echo $num_lines # Вызов команды
+17 # вывод
+
+ls $HOME
+Dir3       Myscripts.sh       app.py      file3      file3link  helloworld.py  myscript3.sh  sam         testcopy.txt
+Myscripts  Myscripts.sh.save  coolfolder  file3LINK  hello      myscript1.sh   name          somefolder
+
+cd
+ls  # Выведит тоже самое
+ir3       Myscripts.sh       app.py      file3      file3link  helloworld.py  myscript3.sh  sam         testcopy.txt
+Myscripts  Myscripts.sh.save  coolfolder  file3LINK  hello      myscript1.sh   name          somefolder
+
+
+echo $HOME
+/home/sam # выведит вот это
+
+25 Bash Scripting 4 -- How Bash Scripts Work
+
+which bash # смотрим где находится bash
+/bin/bash # вывод
+
+helloworld.sh # сохранять так
+
+#!/bin/bash
+# комент
+echo "Hello World!"
+
+
+#!/bin/bash
+message="Hello world"
+echo $message
+
+exit $?
+
+ chmod +x helloworld.sh # everyone have permission exicute
+
+ls
+hello. txt   helloworld.sh test
+
+ ./helloworld.sh # запускаем при этом нахожусь в этой же директории
+Hello world # То что выведит скорее всего с ошибками но норм
+
+bash helloworld.sh # тоже запуск скрипта
+Hello world
+
+sorce helloworld.sh # Тоже запуск
+
+echo $message # После верхней команды запускается это команда по переменной в файле helloworld.sh
+
+
+
+#!/bin/bash
+message="Hello world"
+echo $message
+
+./helloworld.sh # запускаем
+bash helloworld.sh # тоже запуск скрипта
+
+sorce helloworld.sh # Тоже запуск но и активируем
+echo $message # После активации верхней команды запускается это команда по переменной в файле helloworld.sh
+
+Итого
+
+./helloworld.sh # Запускаем скрипт
+. helloworld.sh #аналог source запуск ативация
+bash helloworld.sh # запуск скрипта
+sorce helloworld.sh # аналог выше запуск активация
+echo $переменная # Запуск переменной после source работает
+
+
+26 Bash Scripting 5 -- Arguments
+
+#!/bin/bash
+$# -- number of args that our script was run with
+$0 -- the filename of our script
+$1..$n -- script arguments
+
+
+27 Bash Scripting 6 -- 'If' and Testing
+
+#!/bin/bash
+# IDE completion
+
+#tests are required
+
+#if your name is Dave
+    # greet
+#if your name is steve
+    #tip hat
+# else
+    #snake head slowly
+
+
+    
+NAME=$1
+
+if ["$NAME" = "DAVE"]; then
+    echo "Hi Dave!"
+fi
+ # если каким-то образом станет вот NAME DAVE То пишем вот так 
+Hi Dave! # Вывод
+else# nothing else tue then it works
+
+
+
+NAME=$1  # $1..$n -- script arguments
+GREETING="Hi there"
+HAT_TIP="*tip of the hat*"
+HEAD_SHAKE="*slow head shake"
+if ["$NAME" = "DAVE"]; then
+    echo "Hi Dave!"
+elif [ "$NAME" = "Steve" ]; then
+    #statements
+else
+    echo $HEAD_SHAKE
+fi
+    
+
+________________________________________
+#!/bin/bash
+# IDE completion
+#NUM_REQUIRED_ARGS=2
+
+#if [[ $# -lt NUM_REQUIRED_ARGS ]]; then
+#echo "Not enough arguments.Call this script wit 
+#.?{$0} <name> <number>"
+    #statements
+#fi
+___________________________________________________
+
+&& and two thinks TRUE
+|| or #true or false
+
+
+echo "hi." || echo "This wont happen.."
+$(ls nonexistentfile) || echo "This happens if the first fails"
+echo $(pwd) && echo "This ALSO happens!"
+
+Strings
+
+str1="a"
+str2="b"    
+
+___________________________________________________
+#Equality (= and !=) (ASCII comprasion)
+if ["$str1" = "$str2"]; then  # равны
+    echo "${str1} is equal to ${str2}!"
+fi
+
+if ["$str1" != "$str2"]; then # не равны
+    echo "${str1} is not equal to ${str2}!"
+    #statements
+fi
+____________________________________________________
+ #Not Null (-n) or Zero length (-z)
+notnully="this is something (not nuthing)"
+nully=""
+
+if [ -n "$notnully"]; then
+    echo "This is not at all nully..."
+fi
+
+if [ -z "nully"]; then
+    echo "nully/zeroooo (length)"
+fi        
+    
+#Not Null (-n) or Zero length (-z) !!!!!
+
+_____________________________________
+int1=1
+int2=7
+# equal not equal
+if [ $int1 -eq $int2 ]; then
+    echo "${int1} is equal to ${int2}"
+fi
+if [ $int -ne $int2]; then
+    echo "${int1} is NOT equal to ${int2}."
+fi
+
+#eq equal
+#ne not equal
+_______________________________________________
+#greater than less tahn  + equal
+#-gt -lt -ge -le
+if [ $int1 -gt $int2 ]; then
+    echo "${int1} is equal to ${int2}"
+fi
+
+if [ $int1 -le $int2]; then
+    echo "${int1} is less than or equal to ${int2}"
+#gt greate than
+#lt less than
+#ge greate equal
+#le less equal
+___________________________________________________
+
+    if (( $int1 == $int2 )); then
+        echo "${int1} is equal to ${int2}"
+    fi
+
+    #(())
+    #== Is Equal To
+    # != Is not Equal To
+    # < Is less Than
+    # <= Is less than or equal TO
+    #> Is greater Than
+    #>= Is grate Tnan Or Equal TO
+
+Dont Fill stuped if something not work i did thousands mistake
+just practice
+
+if else the main in bash scripts
+
+
+27.Bash Scripting 7: Functions and Course Review
+#!/bin/bash
+# arguments
+#variables
+#testing and control flow
+#iteration
+#functions # better python bash hard to read
+#read (get user input and store in variable)
+#exit codes
+
+NUM_REQUIRED_ARGS=2
+num_args=$#
+
+#Do we have at least two arguments?
+if [ $num_args -lt $NUM_REQUIRED_ARGS ]; then
+        echo "Not enough arguments. Call this script with ${0} <name> <number>"
+        exit 1
+fi
+# lt least two
+
+#Set variables, using arguments
+name=$1
+number=$2
+echo "Your first two arguments were: $1 $2"
+
+_________________________________________________
+# for loops: iteration, string interpolation
+echo "You ran this program with ${num_args} arguments. Here they are:"
+for arg in "$@"; do
+        echo "$arg"
+done
+____________________________________________________
+
+#two ways of defining a function
+spasced() { # function name
+# parameters are not named; they are positional
+    echo
+    echo "########################"
+    echo "$1"
+    echo "########################"
+}
+
+#define a function
+_____________________________________
+
+#two ways of defining a function
+spasced() {
+# parameters are not named; they are positional
+    echo
+    echo "########################"
+    echo "$1"
+    echo "########################"
+}
+
+function javatest() { # проверяеи равно 99  то и т.д.
+    if [[ $number -eq 99 ]]; then
+        spasced "You win! You guessed the secret number! It's amaaaazzzzing"
+    elif (( $number < 10 )); then
+        spaced "You're a courageous one. I like that about you. Unfortunately, you must still DIEE
+
+
+
+    echo "Hi ${name}, to avert a horrble death, please enter the password:"
+    read password
+# check password
+    if [[ "Spassword" != "Java"]]; then
+        spaced "Well, at least  you're not a Java Programming sympathizer. You can go now."
+    else spaced "DIEEEEEEEEE! Actually, nevermind. Writing Java is enough\
+        of a hellfish punishment. You are free to leave. Take a biscuit\
+        way out."
+    fi
+fi
+
+}
+
+# call a function
+javatest $number
+exit 0
+_____________________________________________________
+
+28 Everything You Need to Know About $PATH in Bash
+
+which sudo # покажет где команда находится
+
+echo $PATH
+PATH=$PATH:/some/dir
+
+PATH=/root:$PATH
+echo $PATH
+which sudo
+sudo echo "hello world"
+You speel my Drink!# вывод
+cat sudo
+You speel my Drink!
+
+
+/.bash_profile
+PATH=$PATH:$HOME/bin
+
+less /etc/profile
+# можно посмотреть
+
+less /etc/profile.d
+
+ls /home/dave/.bash_profile
+# редактирование для пользователя его профиля
+less /etc/profile # Тоже для пользователей
+
+EVERNOTE ДО СИХ
+29The Linux 'script' Command: Record Your Shell Sessions
+остановился 36 урок    EVERNOTE ДО СИХ
+EVERNOTE ДО СИХ
+________________________________________________________________________________
+The Linux 'script' Command: Record Your Shell Sessions
+script -c 'netstat -tuplin' netstat.log
+# c comand говорю скрипту что он запустил команду netstat -tuplin
+и сохранил данные в файле netstat.log
+
+less netstat.log # смотрим этот файл
+
+script myscript.log - t time.log
+scriptreplay -s myscript.log --timing=time.log
+
+
+30.Linux Shell Aliases: What You Need to Know
+alias lr="ls -lra" # создал сокращеннуб команду повыводу списка ls -lra
+lr # теперь будет вызвать команду ls -lra но будет работать только в том окне котором открыт bash
+alias # смотрим вообще какие alias у нас есть
+alias | grep lr # так мы ее можем найти быстрей
+nano bash
+
+lr # теперь будет вызвать команду ls -lra но будет работать только в том окне котором открыт bash
+делаю что работало во всех окнах
+cd # Захожу в главную директорию root в самое начало 
+sam@DESKTOP-JQN2ABT:~$ nano .bashrc # захожу в данный файл (найти файл \home\sam      ls -al)
+alias lr="ls -lra" # захожу в этот документ и в самом в низу пишу просто так сохраняю два раза enter
+перезагрузи terminal и во свех termilax будет работать lr
+tail .bashrc # просто читаю файл не заходя в него
+
+less .zshrc
+
+alias # кличка
+
+alias lr="ls -lrc"
+alias ls="ls -a --color"
+alias vim="nvim"
+
+
+31 Basic lsof Commands Every Sysadmin Needs to Know
+lsof # listen open file
+COMMAND PID TID USER FD TYPE DEVICE SIZE  NODE NAME
+Command # команды init
+PID номер процессора
+TYPE # директория или что-то еще
+USER  # кто что запустил
+FD # формат документа
+NODE NAME # расположение файла
+
+главное Command, node name
+
+ls /var/log/ | grep nginx
+
+lsof /var/log/access.log # доступ смотрю
+дыщ
+lsof /var/log/nginx-error.log
+
+ps aux | nginx
+lsof -p 1192 # p processor id смотрим по номеру процесса
+
+lsof -p | grep bin
+lsof -p 1192 | grep log
+
+lsof -u sam # смотрю что юзер делает
+
+lsof -i :80 # какие процессы слушают порт 80
+lsof -i tcp
+lsof -i udp # смотрим какие процессы слушают порты
+
+df -h #  disk space usage free, h human readable
+
+htop # смотришь процессы не знаешь что за процесс
+lsof -p 1555 # смотрю по процессу более подробно
+
+
+Итого
+lsof /var/log/nginx-error.log
+
+lsof -p 1
+lsof -p `pgrep ABC
+lsof -p ABC | grep bin
+lsof -p PID | grep .so
+lsof -p ABC | grep log
+lsof grep libname.so
+
+lsof -u XYZ
+lsof -u XYZ -i # network only
+lsof -i :80
+lsof -i tcp
+КУЧУ ВСЕГО МОЖНО ПРОВЕРЯТЬ
+
+32 Monitoring Linux Systems and Services with Monit (Hands-On Linux Course Preview)
+
+CPU
+Port 80 http
+Port 3306 mysql
+Memory usage
+php-fpm amd mginx processes
+Site-specific monitoring config files in/etc/monit/monit.d/sitename.cfg
+Web interface (local forwarding withh SSH)
+E-mail alerts
+
+apt-get update
+apt-get install monit
+
+systemctl enable monit
+systemctl start monit
+
+nano /etc/monit/monitrc # захожу в файл
+смотри раскоментированные строки
+
+33 Linux System Monitoring with Monit, part 2: SSH Local Forwarding for our Web Dashboard
+
+
+ssh -L 1234:Localhost:2812 remoteuser@remotehost.net
+
+ssh -L 8383:Localhost:2812 root@46.101.108.127 
+ netstat -tupln # смотрю порты
+
+grep allow /etc/monit/monitrc # ищу allow в файле  monitrc ищем пароль
+можно в браузере контролировать процессы память и т.д.
+
+systemctl:manages services
+journalctl: manages logs
+
+system status mysql # status нам дает сколько работает процессы
+system start nginx php5-fpm monit
+systemctl enable mysql nginx php5-fpm monit
+
+systemctl <command> <unit>
+command:
+enable
+disable
+start
+stop
+reload
+restart
+status
+
+journalctl -xn
+journalctl -u <unit>
+journalctl -b #boot log
+journalctl -f
+journalctl --since "10 min ago"
+
+
+
+
+________________________________________________________________________________
+
+
+34
+Ansible 2 For Beginners: Linux Automation Course Overview
+
+35
+Linux Documentation In 2017
+
+man man
+mawk - pattern  scannig and text processing language
+man man # если нажать / и ввести слово сразу найдет что искать какую фразу
+
+info ls # Тоже че-то такое
+
+whatis whatis
+whatis bash
+
+sudo mandb
+ls /usr/share/doc # - package-provided documentation
+
+https://www.reddit.com/r/sysadmin/
+https://www.reddit.com/r/linux/
+https://www.reddit.com/r/freebsd/
+
+!!!!!
+https://wiki.archlinux.org/index.php/General_recommendations
+https://wiki.archlinux.org/index.php/List_of_applications
+!!!!!
+http://www.tldp.org/LDP/abs/html/abs-guide.html
+Bash Docs
+ 
+https://serverfault.com/
+https://stackoverflow.com/ # for developer
+
+
+
+
+36 Top 10 Linux Job Interview Questions
+1)How to check the kernel version of a Linux system?
+uname 
+Linux # вывод
+uname -a # all
+Linux DESKTOP-JQN2ABT 4.4.0-18362-Microsoft #1-Microsoft Mon Mar 18 12:02:00 PST 2019 x86_64 x86_64 x86_64 GNU/Linux
+uname -v kernel version
+uname -r #print the kernel release
+ 4.4.0-18362-Microsoft
+2)How to see the current IP address on Linux?
+ifconfig
+ifconfig eth0 # смотрим конкретно
+
+ip addr show # ip address
+ip addr show eth0
+
+3) How to check for free disk space in Linux
+df -ah # место свободное на диске
+a -all h -human readeble
+
+4)
+How to see if a Linux service is running?
+service udev status # udev это название сервиса
+systemctl status udev
+5)
+How to check the size of a directory in Linux?
+du -sh code # estimate file space usage s summarize h human readeble
+ # смотрю папки объем памяти
+
+6)
+How to check for open ports in Linux?
+listen, sockets, tcp ip
+
+netstat
+netstat -tulpin
+sudo netstat -tulpin # доп информация
+Proto Это TCP IP
+local address
+PID Номер процессора который слушает
+
+7)
+How to check Linux process information (CPU usage, memory, user information, etc.)?
+ps -aux | grep nginx # конкретный процессор ngignx его название
+ps -aux | grep sam конкретно процессы sam]
+top
+htop # better
+
+8)
+ How to deal with mounts in Linux
+ls /mnt
+mount /dev/sda2 /mnt
+mount # показывает что подсоединено
+less /etc/fstab
+
+9)
+ Man pages
+man ps
+ example look for them
+
+10)
+google stackoverflow
+
+37 Sublime Text Basics: All the Best Features in One Video
+
+1)ctrl + n # new window
+2) каждая строка когда я зажимаю ctrl выделяется и можно писать одновременно
+
+3)ctrl + d # выделяю схожие выражения
+
+4) удерживаю ctrl выделяю две строки
+ctrl + c  опускаюсь вниз  зажимаб ctrl  выделяю две строки ctrl + p вставить
+
+5)ctrl + p поиск go to anywhere
+ 
+6) ctrl + shift+ p # пишу Python и sublime понимает какой синтаксис
+
+7)shift + ctrl + p # ищу файлы
+8) shift i # install packge control
+
+38) 
+Linux Command: 'tee' - Watch & Log Command Output
+tee #output input
+
+man tee
+touch mylog.log
+echo S(date) >> mylog.log
+date
+cat mylog.log
+echo S(date) >> mylog.log
+
+tail -f mylog.log #слежу за нижнимм командами в реальном времени
+
+date | tee mylog.log
+#информирует о том что  происходит с файлом когда что то меняется
+
+39)How to Backup and Restore a MySQL/MariaDB Database
+mysql -u r00t -p [database_name] < backupname.sql
+
+mysql -uroot -p < alldatabases.sql
+
+
+nano .my.cnf
+[client]
+user-root
+password=3030034 # save it
+
+mysql -u root # все рабаотает
+
+chmod 600 .my.cnf # только user может его читать редактировать
+rw -- ---
+
+
+# mysqldump --add-drop-table --databses <yourdatabasename> > /home/<username>/backups/db/$(bin/date '+\%Y-\%m-\%d').sql.bak
+mkdir -p /home/tutorialinux/backups/db
+
+mysqldump --add-drop-table --databses tutorialinux > /home/tutoriallinux/backups/db/$(bin/date +\%Y-\%m-\%d'.sql.bak
+<yourdatabasename>, <username> # там где было так ввел tutorialinux
+
+nano /etc/crontab
+cd /home/tutorialinux/backups/db # захожу сюда
+mysql -u root tutorialinux < 2016-04-08.sql.bak
+
+
+39
+MySQL/MariaDB Basics (RHCE Study)
+
+MariaDB 
+
+yum install -y madiadb-server
+
+systemctl status mariadb
+systemctl start mariadb
+systemctl status mariadb
+
+mysql_install_db
+mysql_secure_installation
+ставим пароль
+yes
+yes
+yes
+yes
+yes
+
+les /var/log/mariadb/mariadb.log
+
+unit file
+less /lib/systemd/system/mariadb.service
+
+55 -tulpn | grep mysql
+
+less /etc/my.cnf
+mysql # подключится
+
+mysql -u root -p
+
+mysql -h localhost -u root -p
+
+show databases;
+show tables;
+use mysql;
+
+Bye # выхожу из mariadb
+
+grep port /etc/my.cnf
+vi /etc/my.cnf
+
+port=3360 # ввожу
+
+:wq # вышел
+
+firewall-cmd --permanent --add-port-3360/tcp
+firewall-cmd --reload
+semanage port -a -t mysqld_port_t -p tcp 3360
+
+semanage port -l | grep mysql
+semanage port -l | grep mariadb
+
+systemctl restart mariadb
+systemctl status mariadb
+
+
+40
+Questions You NEED to Ask During Your Tech Job Interview
+You NEED to Ask them also
+Не только тебя выбирает но и ты выбираешь
+
+
+41
+VPNs for Privacy - The Basics
+virtual privat network 
+
+DNS > VPN
+DNS < VPN
+
+Free VPN worse then no vpn
+
+
+42 Bash Shortcuts Every Linux User Should Know
+
+ping 8.8.8.8 # ping google
+
+ctrl + c # остановить
+
+ctrl + d # выйти из sudo пользователя
+также выйти из командной строки
+
+ls /var/log
+
+la -alh /var/log/gpu.manager.log
+#Используй tab даже если та пишешь путь в папке ты знаешь есть файл пиги его начало и tab
+
+clear # или ctrl + L
+
+ctrl + A #В начало команды
+
+ctrl + E # конец строки
+
+
+alt + f # скачим по пробелам
+alt + b
+
+history # история
+ctrl + R # похожие но поиск по ключевым словам, буквам
+несколько раз нажимай!!!!
+ctrl + G # или  ctrl + с
+
+
+43
+Vim Basics in 8 Minutes
+
+в начале загружается command mode
+:q # просто выхожу
+:wq # write quit save and exit
+i # insert mode
+esc # вернуться command mode
+в command mode выбираю строку нажимаю dd удаляю линию
+ddd # удалит три строки сразу
+В command mode U  вернет тебя во времени
+ctrl + r
+
+В command mode / search
+shift n
+
+:%s/provis/frovis/gc # replace
+vi vim
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,1151 @@
+https://docs.ansible.com/ansible/latest/modules/copy_module.html
+документация ansible
+		push
+ansible master  push
+		push
+
+установка с одного компа на все сервера
+
+master server # ком который управляет
+1)linux
+2) Python 
+
+controlled Servers - Managed Servrs:
+# серввера которыми надо управлять
+linuxнадо username password или ssh key и pythin 2.6
+Windows username password powershell 3.0 and запустить скрипт
+
+linux -> ssh port 22
+wimdows - > winrm Port 5986
+
+pull => agent который делает pull настроек от master
+push => система master делает Push настроек ansible
+
+требование linux mac
+нужны ключи ssh или login и пароль
+работа -> порт 22 должен открыть в linux
+
+
+
+---------------------------------------------------------------------------------------
+Centos
+sudo yum install epel release # подключаем репозитарий
+sudo yum install ansible
+ansible -- version
+
+Ubuntu
+sudo apt-add-repository ppa:ansible/ansible # добавил репозиторий
+Enter 2x
+sudo apt-get update
+sudo apt-get install ansible
+ansible --version # версия
+
+Amazon linux
+sudo pip install ansible # если есть python но не будет config file
+
+Итого
+Установка на Ubuntu 16.04:
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update # обновил репозитории
+sudo apt-get install ansible
+
+Установка на CentOS 7:
+sudo yum install epel-release
+sudo yum install ansible
+----------------------------------------------------
+Подключение к серверам
+1.можно по логину и паролю
+а можно по ssh key
+Качаю ssh key
+
+2.chmod 400 california key станут 
+rw
+r
+r 
+станут
+-----------------------------------------------------------------
+Генерировать можешь где угодно. ssh-keygen   enter, enter, enter
+Получишь два ключа Private,Public
+
+На всех клиентах нужно чтобы был Public SSH Key.
+Ansible пользуется Private SSH Key.
+
+Сделай юзера vasya и его private key на мастера. Потом на мастере ansible_user = vasya ну и ключь
+
+
+ssh-keygen
+ls .ssh # /home/sam
+ id_dsa  id_dsa.pub  id_rsa  id_rsa.pub  known_hosts# id_rsa то что надо
+
+ssh-copy-id -i .ssh/id_rsa.pub admin@10.0.1.6 
+# copy-id что именно копировать -i  .ssh/id_rsa.pub конкретный путь ключа оптравил публичный ключь
+!!для урока нужен просто id_rsa
+
+ssh admin@10.0.1.6 # зашел
+cat .ssh/authorized_keys # такой же ключь как и в  локальном компе cat .ssh/id_rsa.pub
+тоже самое dsa
+
+------------------------------------------------
+
+3. mkdir ansible
+4. cd ansible
+5. nano hosts.txt # можно просто писать ip сервера наш invenory файл
+[staging_servers] # своего рода группа серверов
+linux1 ansible_host=172.31.8.69 ansible_user=ec2-user ansible_pass=mypassword123 # это если есть пароль
+
+linux1 ansible_host=172.31.8.69 ansible_user=ec2-user ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key1.pem # путь ключа
+# так можно прописать кучу юзеров
+6.ansible -i hosts.txt all -m ping #i inventory file hosts.txt, m modul это ping , all все группы все серверы  (но можно было бы staging_servers)
+попросит fingerprint yes нажми первый раз
+ping:pong # подключилось
+7.nano host.txt # настройка двух других серверов 
+
+[staging_servers] # своего рода группа серверов
+linuxX ansible_host=172.31.8.69 ansible_user=ec2-user ansible_pass=mypassword123 # то что уже вводили
+
+[prod_servers] 
+linux1 ansible_host=172.31.27.16 ansible_user=ec2-user ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key2.pem
+linux2 ansible_host=172.31.19.118 ansible_user=ec2-user ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key3.pem
+
+
+8. 	ansible --version # смотрим есть ли файл config
+	nano ansible.cfg # в  проекте но на ubunte он уже будет надо будет изменять его
+
+[defaults]
+host_key_checking = false
+inventory	  = ./host.txt 
+
+-------------------------------------------------------------------
+[defaults] # в самом конфиге
+host_key_checking = false
+inventory         = ./hosts.txt # чтобы в команде не указывать
+------------------------------------------------------------------
+
+# сохранил
+9. ansible all -m ping # засчет того что выше указали не надо прописывать m какой модуль нам над использовать
+
+#ansible -i hosts.txt all -m ping # было вот так
+#загрузиться три пинг понга
+___________________________________________________________________
+10. подключение к windows сервер
+1.sudo pip install "pywinrm>=0.2.2"
+2.nano hosts.txt # файл в рабочей папке
+[staging_servers] # своего рода группа серверов
+linux1 ansible_host=172.31.8.69 ansible_user=ec2-user ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key1.pem # путь ключа
+
+[prod_servers] 
+linux1 ansible_host=172.31.27.16 ansible_user=ec2-user ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key2.pem
+linux2 ansible_host=172.31.19.188 ansible_user=ec2-user ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key3.pem
+
+[windows_servers]
+windows2012 ansible_host=172.31.4.99 # все через равно
+windwos2016 ansible_host=172.31.13.170
+
+[windows_servers:vars]
+ansible_user = myadmin # в inventory равно все 
+ansible_password = advit1234%
+ansible_port = 5986
+ansible_connection = winrm
+ansible_winrm_server_cert_validation = ignore
+#сохрани
+
+ansible for windows # в браузере
+https://docs.ansible.com/ansible/latest/user_guide/intro_windows.html 
+# тут куча всего про windows
+качаю скрипт, открываю его как администратор
+
+ansible windows_servers -m win_ping # windows_server указал
+
+ansible windows_servers -m win_ping --ask-pass
+в hosts.txt ansible_password = advit1234% удаляю поэтому в команде -ask-pass
+
+___________________________________________________________________________
+
+
+11.Правила создания файла Inventory
+nano host.txt
+
+
+10.50.1.1 # можно и так писать а не как выше просто пишешь ip adresa
+10.50.1.2
+webserver.com
+my_server_host=10.50.1.1
+all это группа все 
+ungrupped # сервереа не входят ни в одну из групп
+10.50.1.1  # ungrupped
+10.50.1.2
+большие буквы и маленькие  это разные обозначения
+
+-----------------------------------------------
+10.50.1.1 
+10.50.1.2
+
+[staging_DB]
+192.168.1.1
+192.168.1.2
+
+[staging_WEB]
+192.168.1.1
+192.168.1.2
+
+[staging_APP] # разбивка серверов по группам
+192.168.3.1
+192.168.4.2
+
+[staging_ALL:children] # включил их в группу ALL :children!!
+staging_DB
+staging_WEB
+staging_APP 
+
+
+[prod_DB] # тоже самое на продакшн
+10.10.1.1
+
+[prod_WEB]
+10.10.2.2
+
+[prod_APP]
+10.10.3.3
+[prod_All:children]
+prod_DB
+prod_WEB
+prod_APP
+
+[DB_ALL:children] # сервер базы данных
+staging_DB
+prod_DB
+
+[APP_ALL:children]
+staging_APP
+prod_APP
+
+
+[RAZNOE:children]
+APP_ALL
+DB_ALL
+
+#потом с помощью данных групп можно обращаться к ним
+
+
+[staging_servers] # своего рода группа серверов
+linux1 ansible_host=172.31.8.69 ansible_user=ec2-user ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key1.pem # путь ключа
+
+[prod_servers] 
+linux1 ansible_host=172.31.27.16 ansible_user=ec2-user ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key2.pem
+linux2 ansible_host=172.31.19.118 ansible_user=ec2-user ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key3.pem
+
+[prod_servers:vars] # в строке выше видим что общий user делаем так
+ansible_user=ec2-user
+ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key2.pem
+
+[prod_servers]  # теперь что было выше можно писать так
+linux1 ansible_host=172.31.27.16 
+linux2 ansible_host=172.31.19.118
+
+[windows_servers]
+windows2012 ansible_host=172.31.4.99
+windwos2016 ansible_host=172.31.13.170
+
+[windows_servers:vars]
+ansible_user = myadmin
+ansible_password = advit1234%
+ansible_port = 5986
+ansible_connection = winrm
+ansible_winrm_server_cert_validation = ignore
+
+[stanging_DB]
+192.168.1.2
+192.168.1.1
+
+[stanging_WEB] # рекомендуется делить сервера по группам
+192.168.2.1
+192.168.2.2
+
+[stanging_APP]
+192.168.2.3
+192.168.2.4
+
+[stanging_ALL:children] # создаю общию группу дети большой группы
+stanging_DB  # включаю все пред группы
+stanging_WEB
+stanging_APP
+
+
+[prod_DB]
+10.10.1.1
+
+[prod_WEB]
+10.10.2.2
+
+[prod_APP]
+10.10.2.3
+
+[prod_ALl:children]
+prod_DB
+prod_WEB
+prod_APP
+
+[DB_ALL:childre]
+staging_DB
+prod_DB
+
+[APP_ALL:children]
+staging_APP
+prod_APP
+
+[RAZNOE:children]
+APP_ALL # комбинирую уже сами группы вставляю
+DB_ALL 
+#группы all , или группа ungrupped
+
+12. ansible-inventory --list # смотрим какие переменные есть
+покажет все группы какие и куда относятся
+13. ansible-inventory --graph # смотрю графиком
+-------------------------------------------------------------------------
+
+14.Ad-Hoc Комманд
+1.
+[staging_servers] # своего рода группа серверов
+linux1 ansible_host=172.31.8.69 ansible_user=ec2-user ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key1.pem # путь ключа
+
+[prod_servers] 
+linux1 ansible_host=172.31.27.16 
+linux2 ansible_host=172.31.19.118 
+
+[prod_servers:vars] 
+ansible_user=ec2-user
+ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key2.pem
+2. ansible all -m ping # конектимся с серваками
+3. ansible all -m setup # инфа о серваках на все серваки
+   ansible staging_serevers -m setup # смотрю первый сервак кучу информации о нем
+ip сетевые карты версия linux redhat и т.д.
+   # кучу всего можно настраивать куча переменных
+4. ansible all -m shell -a "uptime" # modul shell a !!! argument (сама команда shell в кавычках)на каждом сервере запустить данная команда
+5. ansible all -m shell -a "rm -fr /" # самая страшная команда
+6. ansible all -m shell -a "ls /etc" # пролистает на каждом сервере etc
+7. ansible all -m shell -a "ls /var"
+8. ansible all -m command -a "ls /var" # так более безопасней так как не все будет работать типо grep, pip и т.д.
+9. ansible all -m shell -a "ls /var"
+10.echo Privet > privet.txt # создаю файл с текстом Privet
+11.ansible all -m copy -a "src=privet.txt dest=/home mode=777" # a аргумент сама команда src=privet.txt так в самой директории нахожусь но если нет то можно было src=/home/privet.txt, dest destination это меcто на удаленном компе,куда на сервер ложить, mode=777 дал права можно по желанию
+ошибка так не sudo юзер
+12.ansible all -m copy -a "src=privet.txt dest=/home mode=777" -b # become true стать sudo, по умолчанию no теперь должна сработать
+13. ansible all -m copy -a "src=privet.txt dest=/home mode=777" # если еще раз то ничего не произойдет там changed = false будет
+он посмотрит что это есть и ничего менять не будет так как файл 
+14.ansible all -m shell -a "ls -la /home" # прогнал на трех серваках посмотрел директории
+15. ansible all -m file -a "path=/home/privet.txt state=absent" -b # удаляем,  file операции с файлом path это путь,state положение статус absent отсуствовать(удалить) b become sudo
+changed = true все сделал. Подравнивает все сервера под одну настройку
+16. ansible prod_servers -m copy -a "src=privet.txt dest=/home mode=777" -b  # копируем только на prod_servers
+17.ansible all -m file -a "path=/home/privet.txt state=absent" -b # на двух он удалит на одном оставит также
+и ничего не поменяет
+18. ansible all -m get_url -a "url=https://www.viber.com/download/viber64 dest=/home" -b #скачает на сервера по ссылке указанной в папку home на все сервера одновременно https указывай  всегда
+changed true, dest /home укажит путь
+19. ansible all -m shell -a "ls-la /home" -b # m modul shell командная строка на всех серверах просмотри файлики 
+20. ansible all - m file -a "path=/home/viber64 state=absent" -b # удалим файл показал путь статус отсуствующий
+changed true
+21.ansible all -m yum -a "name=stress state=installed" -b # что то установить modul yum  name название  установленный или можно вписать state=latest программа stress установлена уже
+22.ansible all -m yum -a "name=stress state=removed" -b # тоже самое только удаляем removed на всех серваках удаляем
+23.ansible all -m uri -a "url=http://www.adv-it.net" # проверяем сможем ли мы подсоединиться как сайту
+status 200 значит у серваков получилось
+24. ansible all -m uri -a "url=http://www.adv-it.net return_content=yes" #  return_content=yes по умолчанию no, теперь yes и загрузит content html страницы
+25.ansible all -m yum -a "name=httpd state=latest" -b # устанавливаю apache на все сервера latest or restarted
+26.  ansible all -m service -a "name=httpd state=started enabled=yes" -b # запускаем сервис httpd чтобы даже при перезагрузке работал, enabled=yes по желанию все серваки стартовали при запуске всегда
+27. ansible all -m service -a "name=httpd state=removed" -b
+# удалил
+
+27. cat host.txt # копирую ip 192.168.2.1
+28. curl 192.168.2.1 # проверяю что сервер наш работает загрузиться html страница
+29. ansible all -m yum -a "name=httpd state=removed" -b # удаляем httpd apache на всех серваках
+30. ansible all -m shell -a "ls /"
+    ansible all -m shell -a "ls /" -v # verbow чтобы дал мне доп информация debugging
+31. ansible stagging_servers -m shell -a "ls /var" 
+32. ansible stagging_servers -m shell -a "ls /var" -v # verbow чтобы дал мне доп информация debugging покажет файл какой конфигурационный испотльзует
+33. ansible stagging_servers -m shell -a "ls /var" -vv  # покажет какой конфигурационный испотльзует и какой ancible
+34. ansible stagging_servers -m shell -a "ls /var" -vvv  # покажет какой конфигурационный испотльзует и какой ancible, какой ключь лучше всего 
+35. ansible stagging_servers -m shell -a "ls /var" -vvvv # еще подробней
+    ansible stagging_servers -m shell -a "ls /var" -vvvvv # еще еще подробней
+36. ansible-doc -l # показать все модули которые есть в ansible типо man
+37. ansible-doc -l | grep win_ # все команды для windows
+38. ansible-doc -l | grep ec2 # все команды amazon linux
+39. ansible copy в google набирай и смотри
+40. ansible service в  google набирай и смотри и читай state смотри
+ansible copy в google  смотришь и читаешь
+ansible yum 
+-------------------------------------------------------------------------------------------------------------------------------------------------
+15. Ansible - Правила Формата YAML 
+
+TAB нельзя только пробел
+
+наша команда а ниже атрибуты параметры
+пробелы лучше любое кол-во главное чтоб на одном уровене
+
+1. nano myfile.yml
+2. --- начало ...конец
+--- 
+ - command1 # минусики под минусиками
+ - command2 # по уровню
+3. fruits: # списки
+       - apple
+       - orange
+       - mango
+4.- fruits:   # команда ее и атрибуты
+       - apple
+       - orange
+       - mango
+
+  - vegetables:  # наша команда а ниже атрибуты параметры
+       - carrots # пробелы лучше любое кол-во главное уровень
+       - cucumbers
+
+5. - vasya:
+	nick: vesek
+	positiom: developer
+	skills:
+	   - python
+	   - perl
+	   - php
+
+   - petya:
+	nick: "pettya: krutoy" # если двое : заключай в скобки
+	position: manager
+	skills:
+	   - manage
+	   - make_noise
+
+     - kolya: {nick: kolyan, position: administrator, skills: ['killer', 'cleaner']} # если skills два параметра то пишим так
+ так пишут в строку но очень редко
+      
+    fruits: ['apple', 'orange', mango] # так редко пишут
+----------------------------------------------------------------------------
+16.-Ansible - Перенос переменных в group_vars
+1.nano hosts.txt
+
+[STAGING_SERVERS_WEB] 
+linux1 ansible_host=172.31.8.69 
+linux1 ansible_host=172.31.8.70  password=mysecret
+
+
+[STAGING_SERVERS_WEB:vars]  # 2 переменные относятся к группе STAGING_SERVERS_WEB
+ansible_user=ec2-user
+ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key2.pem
+
+[PROD_SERVERS_WEB]
+linux1 ansible_host=172.31.8.69 
+linux1 ansible_host=172.31.8.70
+
+[PROD_SERVERS_WEB:vars] # переменные относятся к группе PROD_SERVERS_WEВ
+ansible_user=ec2-user
+ansible_ssh-private_key_file=/home/ec2-user/.ssh/california-key2.pem
+
+[STAGING_SERVERS_DB] # можно и так вводить
+172.31.8.69                
+172.31.8.70
+
+[PROD_SERVERS_DB]
+172.31.8.72
+172.31.8.28
+
+
+[ALL_SERVERS_DB:children]   # родитель двух верхних групп 
+STAGING_SERVERS_DB
+PROD_SERVERS_DB
+
+[ALL_SERVERS_DB:vars]    # переменные которые во всех группа ALL_SERVERS_DB то есть  STAGING_SERVERS_DB, PROD_SERVERS_DB
+db_endpoint=xxxxxx.yyyyyyy.com:4151
+owner=vasya
+location="Huston,TX"
+
+#но это не профессионально
+--------------------------------------------------------------
+
+2. mkdir group vars # просто все значения переменной переносим в другую директорию
+   ansible-inventory --list # смотрим какие переменные есть
+покажет все группы какие и куда относятся
+3. nano group_vars/STAGING_SERVERS_WEB # переносим переменные сюда а там удаляем переменные
+---
+ansible_user	            : ec2-user  # вместо = поменять на :
+ansible_ssh-private_key_file: /home/ec2-user/.ssh/california-key2.pem
+----------------------------------------------------------------------  
+    nano group_vars/PROD_SERVERS_WEB
+---
+ansible_user                : ec2-user # вместо =  ставим : выравниваем на любое расстояние :
+ansible_ssh-private_key_file: /home/ec2-user/.ssh/california-key2.pem
+---------------------------------------------------------------------
+
+ nano group_vars/ALL_SERVERS_DB
+---
+ db_endpoint: xxxxxx.yyyyyyy.com:4151
+ owner      : vasya
+ location   : "Huston,TX"
+
+-------------------------------------------------------------------
+Cуть ansible все распихать по файлам папкам
+ansible-inventory --list # список переменных покажет также все тоже самое
+
+
+
+# hosts.txt вот так начинает выглядит убираем переменные все отсюда
+только группы и ip серверов
+
+
+[STAGING_SERVERS_WEB] 
+linux1 ansible_host=172.31.8.69 
+linux1 ansible_host=172.31.8.70  password=mysecret
+
+[PROD_SERVERS_WEB]
+linux1 ansible_host=172.31.8.69 
+linux1 ansible_host=172.31.8.70
+
+[STAGING_SERVERS_DB] # можно и так вводить
+172.31.8.69                
+172.31.8.70
+
+[PROD_SERVERS_DB]
+172.31.8.72
+172.31.8.28
+
+
+[ALL_SERVERS_DB:children]   # родитель двух верхних групп 
+STAGING_SERVERS_DB
+PROD_SERVERS_DB
+--------------------------------------------------------
+4 tree # выдаст нам дерево файлов смотри ниже
+ansible.cfg  # файл
+group_vars # директория
+ ALL_SERVERS_DB   # файлы так расположены
+ PROD_SERVERS_DB
+ STAGING_SERVERS_DB
+hosts.txt # не в папке group_vars 
+
+5. ansible-inventory --list #будет тоже самое выдаст все серваки с ip
+nano group_vars/PROD_SERVERS_WEB # добавляю в нашу группу
+
+ansible_user                : ec2-user # вместо =  ставим : выравниваем на любое расстояние :
+ansible_ssh-private_key_file: /home/ec2-user/.ssh/california-key2.pem
+environment                 : production
+owner                       : Denis
+--------------------------------------------------------------
+10 Ansible - Первые Playbook'и вместо команд написания
+
+1. nano playbook1.yml
+--- # начало всегда так  #tab и # нельзя вообще пользоваться будут ошибки 
+- name: Test Connection to my servers # название
+  hosts: all    # на всех серверах
+  become: yes   # -b root права
+
+  tasks:
+ - name: Ping my servers # название
+   ping:		# просто пингует все сервера
+# сохранить это дело
+Playbook дает статистику покажет какие сервера можно заходить а какие нет на пример ping когда сотни серверов очень удобно
+
+2.ansible-playbook playbook1.yml # запустили ok ok сработало
+
+
+3.nano playbook2.yml 
+---
+- name: Install default Apach Web Server
+  hosts: all   # все серваки # помни про одинаковое кол-во пробелов
+  become: yes
+
+  tasks: # помни пробелы по уровню выше
+   - name: Install Apache WebServer # здесь можно отступить пробел
+     yum: name=htppd state=latest  # amazon потому что
+
+   - name: Start Apache and Enable it on the every boot # сообщение для вас
+     service: name=httpd state=started enabled=yes
+# сохранить это дело  
+# аналог команды ansible all -m service -a "name=httpd state=started enabled=yes" -b
+4. ansible-playbook playbook2.yml  # стартовали сервера 
+если на каком-то сервере стоит уже значит норм
+
+5. nano playbook3.yml  # создали  файл
+---
+- name: Install Apache and Upload my Web Page
+  hosts: all
+  become: yes
+
+  vars:
+   source_file: ./MywebSite/index.html  #указываем наши переменные
+   destin_file: /var/www/html
+  
+  tasks:
+  - name: Install Apache Web Server
+    yum: name=httpd state=latest
+
+  - name: Copy MyHomePage to Servers
+    copy: src={{ source_file }} dest={{ destin_file }} mode=0555 # так используем переменные {{}} в переменной указан путь
+# ansible all -m copy -a "src=privet.txt dest=/home mode=777" анналог mode=0555 это доступ
+    notify: Restart Apache # удостоверься перезагрузка сервера handler ниже смотри
+
+  - name: Start WebServer and make it enable on boot
+    service: name=httpd state=started enabled=yes # установил и запустил
+    
+
+# если мы поменяем картинку переменную то ansible зайдя на данный файл увидит картинку загрузит он также он посмотрит что сервер загружен
+и ничего не сделает а что бы увидеть картинку ему надо перезагрузить  сервер
+
+  handlers: #для того что если что то новое то перезапуск
+  - name: Restart Apache
+    service: name=httpd state=restarted # наш apache перезагрузка
+
+6. ansible all -m yum -a "name=httpd state=absent" -b # удаляем apache
+# true везде
+7. ansible-playbook playbook3.yml # запускаем сервер с нашей новой страничкой и каждый раз когда что-то будем менять будет обновляться
+можно на работу брать playbook3.yml сохрани
+
+можно поставить на сервера на одну и туже страничку html
+----------------------------------------------------------------------
+До 10 урока это хорошая база
+
+playbook3.yml хороший пример
+------------------------------------------------------------------
+
+
+11.-Ansible - Переменные - Debug, Set_fact, Register
+1. ansible.cfg
+ group_vars
+    PROD_SERVERS_WEB # в папке  group_vars
+host.txt
+
+PROD_SERVERS_WEB
+---
+ansible_user                : ec2-user 
+ansible_ssh-private_key_file: /home/ec2-user/.ssh/california-key2.pem
+
+hosts.txt
+[PROD_SERVERS_WEB]
+linux1 ansible_host=172.31.8.69 owner=Vasya # owner переменная
+linux1 ansible_host=172.31.8.70 owner=Petya
+linux1 ansible_host=172.31.8.71 owner=Nikolay
+
+2.nano playbook.yml
+---
+- name: My Super Puper Playbook for Variables Lesson
+  hosts: all
+  become: yes
+
+  vars:
+    message1: Privet
+    message2: World
+    secret  : XCKFKLKFKFFFFL
+
+  tasks:
+
+ - name: Print Secret variable
+   debug: # Print statements during execution
+      var: secret  
+# после сохранениня напишит нам фразу 
+Print Secret variable и ниже |"secret": XCKFKLKFKFFFFL  
+3.ansible-playbook palybook.yml
+Print Secret variable и ниже |"secret": XCKFKLKFKFFFFL
+4. nano playbook.yml
+---
+- name: My Super Puper Playbook for Variables Lesson
+  hosts: all
+  become: yes
+
+  vars:
+    message1: Privet
+    message2: World
+    secret  : XCKFKLKFKFFFFL
+
+  tasks:
+
+ - name: Print Secret variable
+   debug:
+      var: secret  
+ - debug:
+   msg: "Sekretnoe slovo: {{ secret }}"  # msg пишем сообщение
+
+ - debug:
+   msg: "Vladelec Etogo Server -->{{ owner }}<--" # перечислит всех кто в hosts.txt указаны
+
+ - set_fact: full_message="{{ message1 }} {{ message2 }} from {{ owner }}" # объединил переменные смотри наверх
+
+ - debug:
+    var: full_message
+сохрани
+nano playbook.yml
+5. ansible all -m setup # данные всех серверов смотрим все переменные очень важная информация
+nano playbook.yml 
+---
+- name: My Super Puper Playbook for Variables Lesson
+  hosts: all
+  become: yes
+
+  vars:
+    message1: Privet
+    message2: World
+    secret  : XCKFKLKFKFFFFL
+
+  tasks:
+
+ - name: Print Secret variable
+   debug:
+      var: secret  
+ - debug:
+   msg: "Sekretnoe slovo: {{ secret }}"  # msg пишем сообщение
+
+ - debug:
+   msg: "Vladelec Etogo Server -->{{ owner }}<--" # перечислит всех кто в hosts.txt указаны
+
+ - set_fact: full_message="{{ message1 }} {{ message2 }} from {{ owner }}" # объединил переменные смотри наверх 
+ # Set host facts from a task # он брал переменые с playbook and hosts file
+
+
+ - debug:
+    var: full_message
+
+ - debug:   # скопировал с команды выше переменную вставил ее
+    var: ansinle_distribution
+# выведит версию linux
+
+ - shell:uptime # запуститься и ничего не будет # запуск команды
+   register: results # создали переменную чтобы туда записало
+
+ - debug # а теперь печатаем
+    var: results # теперь увидим результат команды uptime
+# сохранить
+6. ansible-playbook playbook.yml #увидим доп информацию
+используй  переменные которые сам ansible выдает
+======================================================================================
+
+
+12.Ansible - Блоки и Условия – Block-When
+cat ansible.cfg
+host_key_checking  = false
+inventory          = ./hosts.txt
+
+cat group_vars/ALL_LINUX
+---
+ansible_user                : ec2-user 
+ansible_ssh-private_key_file: /home/ec2-user/.ssh/california-key2.pem
+
+
+
+host.txt
+[ALL_linux]
+linux1 ansible_host=172.31.8.69 
+linux2 ansible_host=172.31.8.70 
+linux3 ansible_host=172.31.8.71
+
+ansible all -m ping # проверяем есть ли подключение
+
+playbook5.yml
+=========================================================================
+playbook5.yml # исправленный !!!
+---
+- name: Install Apache and Upload my Web Page
+  hosts: all # все сервера
+  become: yes # root права
+
+  vars:
+   source_file: ./MywebSite/index.html  #указываем наши переменные откуда берем
+   destin_file: /var/www/html
+
+  tasks:
+  - name: Check and Print LINUX Version
+    debug: var=ansible_os_family # распечатать дистрибутив RedHAt Debian
+
+
+  tasks:
+  - name: Install Apache Web Server for Redhat
+   yum: name=httpd state=latest
+   when: ansible_os_family == "RedHat" # пишу условия когда дананя команда сработает
+ из ansible all -m setup
+   - name: install Apache Web Server for Debian
+   apt: name=apache2 state=latest    # так пишется команда для Ubuntu
+   when: ansible_os_family == "Debian"# пишу условия когда дананя команда сработает можно и так != "RedHat" # пишу условия на дистрибутив
+
+
+  - name: Copy MyHomePage to Servers
+    copy: src={{ source_file }} dest={{ destin_file }} mode=0555 # так ис$
+# ansible all -m copy -a "src=privet.txt dest=/home mode=777" анналог mod$
+#    notify: Restart Apache # удостоверься перезагрузка сервера
+
+
+  - name: Start WebServer service for Redhat
+    service: name=httpd state=started enabled=yes # установил и запустил
+    when: ansible_os_family == "Redhat"
+
+  - name: Start WebServer service for Debian
+    service: name=apache2 state=started enabled=yes # установил и запустил
+    when: ansible_os_family == "Debian" # команда сработает только если = "Debian"
+
+  handlers: # только когда понадобится
+   - name: Restart Apache Redhat # очень важное название
+     service: name=httpd state=restarted
+
+   - name: Restart Apache Debian
+     service: name=apache2 state=restarted
+
+ansible-playbook playbook5.yml # ошибка redhat 
+
+=============================================================
+ansible-playbook playbook5.yml # после исправления сработает
+========================================================================
+host.txt # то что надо было сделать между делом
+[ALL_linux]
+linux1 ansible_host=172.31.8.69 
+
+ansible linux1 -m setup # смотрим его настройки # смотрю его параметры ansible_os_family достаю
+
+
+============================================================================================
+playbook5.yml # исправление убираем when 3 раза
+
+---
+- name: Install Apache and Upload my Web Page
+  hosts: all # все сервера
+  become: yes # root права
+
+  vars:
+   source_file: ./MywebSite/index.html  #указываем наши переменные откуда берем
+   destin_file: /var/www/html
+
+  tasks:
+  - name: Check and Print LINUX Version
+    debug: var=ansible_os_family # распечатать дистрибутив RedHAt Debian
+
+
+   - block: # =====Block for Redhat =======
+  
+   - name: Install Apache Web Server for Redhat
+     yum: name=httpd state=latest
+  
+    - name: Copy MyHomePage to Servers
+    copy: src={{ source_file }} dest={{ destin_file }} mode=0555 # так ис
+# ansible all -m copy -a "src=privet.txt dest=/home mode=777" анналог mod
+#     notify: Restart Apache Redhat # удостоверься перезагрузка сервера
+     
+    - name: Start WebServer service for Redhat
+    service: name=httpd state=started enabled=yes # установил и запустил
+    when: ansible_os_family == "Redhat" # четко под блоком
+ # один раз
+
+   - block: # =====Block for Debian =======
+
+   - name: install Apache Web Server for Debian
+     apt: name=apache2 state=latest    # так пишется команда для Ubuntu
+
+   - name: Copy MyHomePage to Servers
+    copy: src={{ source_file }} dest={{ destin_file }} mode=0555 # так ис
+# ansible all -m copy -a "src=privet.txt dest=/home mode=777" анналог mod
+#     notify: Restart Apache Debian # удостоверься перезагрузка сервера
+
+  - name: Start WebServer service for Debian
+    service: name=apache2 state=started enabled=yes # установил и запустил
+      when: ansible_os_family == "Debian" # команда сработает только если = "Debian" четко под блок
+
+
+
+  handlers: # только когда понадобится
+   - name: Restart Apache Redhat # очень важное название
+     service: name=httpd state=restarted
+
+   - name: Restart Apache Debian
+     service: name=apache2 state=restarted
+
+# Тоже самое  что выше но уже с блоками.
+блоками when меньше
+
+ansible-playbook playbook5.yml # все сработает
+=============================================================
+Исправленная версия тут остановился
+
+
+
+
+===========================================================================
+
+
+Предыдущая версия
+
+2. nano playbook5.yml #дописываю 
+ - name: Install Apache Web Server for Redhat
+   yum: name=httpd state=latest
+   when: ansible_os_family == "RedHat" # пишу условия когда дананя команда сработает
+
+ - name: install Apache Web Server for Debian
+   apt: name=apache2 state=latest    # так пишется команда для Ubuntu
+   when: ansible_os_family == "Debian"# пишу условия когда дананя команда сработает можно и так != "RedHat"
+
+- name: Start WebServer service
+    service: name=httpd state=started enabled=yes  
+    when: ansible_os_family == "RedHat" # тут тоже условие поставили
+
+- name: Start WebServer service for Debian
+    service: name=apache2 state=started enabled=yes  
+    when: ansible_os_family == "Debian" # тут тоже условие поставили
+дананя команда запуститься только если равно debian
+
+ handlers: #для того что если что то новое то перезапуск
+  - name: Restart Apache
+    service: name=httpd state=restarted
+
+  - name: Restart Apache Debian
+     service: name=apache2 state=restarted
+3. чтобы три раза не писать when
+   tasks:
+ - name: Check and Print LINUX Version
+   debug: var= ansible_os_family # ansible linux1 -m setup копирую данную переменную оттуда
+
+ - block: # block for redhat========================
+
+  - name: Install Apache Web Server for Redhat
+    yum: name=httpd state=latest
+    
+  - name: Copy MyHomePage to Servers
+    copy: src={{ source_file }} dest={{ destin_file }} mode=0555 
+    notify: Restart Apache RedHat
+  
+  - name: Start WebServer service
+    service: name=httpd state=started enabled=yes  
+   when: ansible_os_family == "RedHat" # when по уровню block
+
+- block: # block for Ubuntu========================
+
+  - name: Install Apache Web Server for Debian
+    apt: name=httpd state=latest
+    
+  - name: Copy MyHomePage to Servers
+    copy: src={{ source_file }} dest={{ destin_file }} mode=0555 
+    notify: Restart Apache Debian
+  
+  - name: Start WebServer service
+    service: name=apache2 state=started enabled=yes  
+   when: ansible_os_family == "Debian" # when по уровню block под буквой б
+
+ansible-playbook playbook5.yml
+
+4. when: ansible_os_family == "Debian" # очень важная команда при использовании переменной ansible_os_family
+
+- block: # block for Ubuntu========================
+пишешь один раз и все
+
+
+
+
+
+===================================================================================
+13.-Ansible - Циклы – Loop, With_Items, Until, With_fileglob
+
+nano playbookloop.yml
+
+---
+-name
+ hosts: Linux3
+ become: yes
+
+tasks:
+ - name: Say Hello to All
+   debug: msg="Hello {{ item }}" # item слово как переменную нельзя использовать оно зарезервировано
+   loop:  			# whith_items
+     - "Vasya"
+     - "Petya"     # первый вид loop переберет всех
+     - "Masha"
+     - "olya"
+
+ - name: Loop Until example
+   shell: echo -n Z >> myfile.txt && cat myfile.txt # bash -n не ставить new line вставляем z и вывести на экран
+   register: output
+   delay: 2 # скорость загрузки 2 сек
+   retries: 10 # 10 раз повторять если не указать то по умолчанию 3 раза
+   until: output.stdout.find("ZZZZ") == false # пока zzzz = false он продолжает делать эту фигню
+
+ - name: Print Final Output
+   debug:
+     var:output.stdout # напечатает все что в этом файле
+ - name: Install many packged
+   yum: name={{ item }} state=installed # установка
+   loop:                  #with_items можно и так
+           - python       # указываем какие пакеты поставить хотим
+           - tree
+           - mysql-client
+ ansible-playbook playbookloop.yml #запуск
+
+2. cp playbook5.yml playbook6.yml # скопирую и создам playbook6
+   nano playbook6.yml
+
+- name: Copy MyHomePage to Servers
+    copy: src={{ source_folder }}//{{ item }} dest={{ destin_folder }} mode=0555 
+    with fileglob: "{{ sorce_folder }}/*.*"
+    loop:  # список файлов
+        - "index.html"
+ 	- "bananas.png"
+        - "bulgaria.png"
+        - "Jordan.png"
+        - "newzeland.png"
+    notify:
+        - Restart Apache RedHat
+        - Restart Apache Debian
+    
+
+ handlers: #для того что если что то новое то перезапуск
+  - name: Restart Apache
+    service: name=httpd state=restarted
+    when: ansible_os_family == "RedHat"
+
+  - name: Restart Apache Debian
+    service: name=apache2 state=restarted
+    when: ansible_os_family == "Debian"
+
+sudo rm * # удалить все в папке
+
+14.Шаблоны
+ansible all -m setup # разные переменные
+ansible_hostname # переменная
+
+
+host.txt
+[ALL_LINUX]
+linux1 ansible_host=172.31.8.69  owner=Petya
+linux1 ansible_host=172.31.8.70  owner=Vasya
+
+залажу в верстку файла самого в body напишу 
+Server Host Name : {{ ansible_hostname }} <br>
+Server OS Family is: {{ ansible_os_family}} <br> при запуске данные ansible подставит
+IP Address of this Server is : {{ ansible_default_ipv4.address }} <br>
+
+nano playbook6.yum
+
+ - name: Generate INDEX.HTML file
+   template: src= {{ source_folder }} /index.j2 dest= {{ destin_folder }}/index.html mode=0555 # изменяю название файла
+   notify:
+        - Restart Apache RedHat
+        - Restart Apache Debian
+
+template # смотрит есть ли переменные и заменяет их
+
+15-Ansible - Создание Ролей - Roles
+mkdir roles
+cd roles/
+ansible-galaxy init deploy_apache_web # название роль
+# делает целую кучу директорий с файликами распределяю файлы по ролям
+
+16. Ansible - Внешние переменные - extra-vars
+playbook6.yml
+
+---
+ - name: Install Apache and Upload my Home Page
+   hosts: {{ Myhosts }}
+   become: yes
+
+   roles:
+      -{role: deploy_apache_web, when: ansible_system == 'Linux'}
+
+ansible-playbook playbook6.yml  --extra-var "MYHOSTS=STAGING"
+
+---------------------------------------------------------------------------------------------
+Итого все команды ansible Main
+
+1.Установка на Ubuntu 16.04:
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get update # обновил репозитории
+2.mkdir ansible
+3. cd ansible
+4. nano hosts.txt # прописываю сервера
+5.ansible --version # смотрим есть ли файл config
+6. ansible -i hosts.txt all -m ping        #i inventory file hosts.txt, m modul это ping , all все группы все серверы  (но можно было бы staging_servers)
+попросит fingerprint yes нажми первый раз
+7.nano ansible.cfg # в  проекте но на ubunte он уже будет надо будет изменять его
+[defaults]
+host_key_checking = false
+inventory	  = ./hosts.txt  # точный путь указывай
+------------------------------------
+8.ansible all -m ping # засчет того что выше указали не надо прописывать m какой модуль нам над использовать
+9.ansible-inventory --list # смотрю переменные
+10.ansible-inventory --graph # смотрю графиком
+11. 
+12. ansible all -m ping # конектимся с серваками
+13. ansible all -m setup # инфа о серваках на все серваки
+   ansible staging_serevers -m setup # смотрю первый сервак кучу информации о нем
+ip сетевые карты версия linux redhat и т.д.
+   # кучу всего можно настраивать куча переменных
+14. ansible all -m shell -a "uptime" # modul shell a !!! argument (сама команда shell в кавычках)на каждом сервере запустить данная команда
+15. ansible all -m shell -a "rm -fr /" # самая страшная команда
+16. ansible all -m shell -a "ls /etc" # пролистает на каждом сервере etc
+17. ansible all -m shell -a "ls /var"
+18. ansible all -m command -a "ls /var" # так более безопасней так как не все будет работать типо grep, pip и т.д.
+19. ansible all -m shell -a "ls /var"
+20.echo Privet > privet.txt # создаю файл с текстом Privet
+21.ansible all -m copy -a "src=privet.txt dest=/home mode=777" # a аргумент сама команда src=privet.txt так в самой директории нахожусь но если нет то можно было src=/home/privet.txt, dest destination это меcто на удаленном компе,куда на сервер ложить, mode=777 дал права можно по желанию
+ошибка так не sudo юзер
+22.ansible all -m copy -a "src=privet.txt dest=/home mode=777" -b # become true стать sudo, по умолчанию no теперь должна сработать
+23. ansible all -m copy -a "src=privet.txt dest=/home mode=777" # если еще раз то ничего не произойдет там changed = false будет
+он посмотрит что это есть и ничего менять не будет так как файл 
+24.ansible all -m shell -a "ls -la /home" # прогнал на трех серваках посмотрел директории
+25. ansible all -m file -a "path=/home/privet.txt state=absent" -b # удаляем,  file операции с файлом path это путь,state положение статус absent отсуствовать(удалить) b become sudo
+changed = true все сделал. Подравнивает все сервера под одну настройку
+26. ansible prod_servers -m copy -a "src=privet.txt dest=/home mode=777" -b  # копируем только на prod_servers
+27.ansible all -m file -a "path=/home/privet.txt state=absent" -b # на двух он удалит на одном оставит также
+и ничего не поменяет
+28. ansible all -m get_url -a "url=https://www.viber.com/download/viber64 dest=/home" -b #скачает на сервера по ссылке указанной в папку home на все сервера одновременно https указывай  всегда
+changed true, dest /home укажит путь
+29. ansible all -m shell -a "ls-la /home" -b # m modul shell командная строка на всех серверах просмотри файлики 
+30. ansible all - m file -a "path=/home/viber64 state=absent" -b # удалим файл показал путь статус отсуствующий
+changed true
+31.ansible all -m yum -a "name=stress state=installed" -b # что то установить modul yum  name название  установленный или можно вписать state=latest программа stress установлена уже
+32.ansible all -m yum -a "name=stress state=removed" -b # тоже самое только удаляем removed на всех серваках удаляем
+33.ansible all -m uri -a "url=http://www.adv-it.net" # проверяем сможем ли мы подсоединиться как сайту
+status 200 значит у серваков получилось
+34. ansible all -m uri -a "url=http://www.adv-it.net return_content=yes" #  return_content=yes по умолчанию no, теперь yes и загрузит content html страницы
+35.ansible all -m yum -a "name=httpd state=latest" -b # устанавливаю apache на все сервера latest or restarted
+36.  ansible all -m service -a "name=httpd state=started enabled=yes" -b # запускаем сервис httpd чтобы даже при перезагрузке работал, enabled=yes по желанию все серваки стартовали при запуске всегда
+37. ansible all -m service -a "name=httpd state=removed" -b
+# удалил
+
+38. cat host.txt # копирую ip 192.168.2.1
+39. curl 192.168.2.1 # проверяю что сервер наш работает загрузиться html страница
+39. ansible all -m yum -a "name=httpd state=removed" -b # удаляем httpd apache на всех серваках
+40. ansible all -m shell -a "ls /"
+    ansible all -m shell -a "ls /" -v # verbow чтобы дал мне доп информация debugging
+41. ansible stagging_servers -m shell -a "ls /var" 
+42. ansible stagging_servers -m shell -a "ls /var" -v # verbow чтобы дал мне доп информация debugging покажет файл какой конфигурационный испотльзует
+43. ansible stagging_servers -m shell -a "ls /var" -vv  # покажет какой конфигурационный испотльзует и какой ancible
+44. ansible stagging_servers -m shell -a "ls /var" -vvv  # покажет какой конфигурационный испотльзует и какой ancible, какой ключь лучше всего 
+45. ansible stagging_servers -m shell -a "ls /var" -vvvv # еще подробней
+    ansible stagging_servers -m shell -a "ls /var" -vvvvv # еще еще подробней
+46. ansible-doc -l # показать все модули которые есть в ansible типо man
+47. ansible-doc -l | grep win_ # все команды для windows
+48. ansible-doc -l | grep ec2 # все команды amazon linux
+49. ansible copy в google набирай и смотри
+50. ansible service в  google набирай и смотри и читай state смотри
+ansible copy в google  смотришь и читаешь
+ansible yum 
+51. ansible-playbook playbook1.yml #запуск playbook
+52. ansible all -m setup # очень важная команда ip переменные можно вытянуть ansible_distribution такую переменную
+
+ - debug:   # в playbook так прописать  и выведит все данные о дистрибутивах 
+    var: ansible_distribution
+------------------------------------------------------------------------
+ - shell:uptime # запуститься и ничего не будет # запуск команды shell
+   register: results # создали переменную чтобы туда записало
+
+ - debug # а теперь печатаем
+    var: results # теперь увидим результат команды uptime
+    var: results.stdout # так конкретно выведит
+
+--------------------------------------------------------------------------
+ - set_fact: full_message="{{ message1 }} {{ message2 }} from {{ owner }}" # объединил переменные смотри наверх 
+ # Set host facts from a task # он брал переменые с playbook and hosts file
+
+ - debug:
+    var: full_message
+--------------------------------------------------------------------------------
+53. host.txt
+[ALL_linux]
+linux1 ansible_host=172.31.8.69 
+
+ansible linux1 -m setup # смотрим его настройки # смотрю его параметры ansible_os_family достаю
+
+54.
+  tasks: # пишу условия на дистрибутив
+  - name: Install Apache Web Server for Redhat
+   yum: name=httpd state=latest
+   when: ansible_os_family == "RedHat" # пишу условия когда дананя команда сработает
+
+   - name: install Apache Web Server for Debian
+   apt: name=apache2 state=latest    # так пишется команда для Ubuntu
+   when: ansible_os_family == "Debian"# пишу условия когда дананя команда сработает можно и так != "RedHat" # пишу условия на дистрибутив
