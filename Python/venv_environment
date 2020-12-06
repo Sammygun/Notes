@@ -1,12 +1,12 @@
 flask
-1 touch requirements.txt 
+1 touch requirements.txt  ## здесь указываю список зависимостей
 flask==1.1.1
 2 python3 -m venv venv
 3 source venv/bin/activate
 4 pip install --upgrade pip
 5 pip install flask
 5.1 pip install -r requirements.txt ## а можно и так если выше указал все модули указанные утсновятся
-
+##если много зависимостей то лучше так
 
 Установка django2 
 1 mkdir django
