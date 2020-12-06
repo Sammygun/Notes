@@ -1,0 +1,243 @@
+Docker 
+Это мини виртуальная машина, он урезан
+Docker engine # сама программа
+Docker container # маленькая виртуальная машинка бегущий сервер
+Docker image #образ операционной системы это его iso file грубо говоря
+Dockerfile # создавать docker image и запустим в container описываем здесь что мы будем создавать какая операционная систем и что там будет поставлено
+
+Virtual box полная версия 
+docker урезанная версия но менее требовательные
+
+Ставлю Ubuntu server 
+
+1. sudo apt-get update
+2. sudo apt install apt-transport-https
+3. curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - ##скачиваем ключик и добавляем его
+4. sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" # хотим скачивать только стабильные версии
+5. sudo apt-get update # опять обновляем
+6. sudo apt install docker-ce # ставлю docker ce бесплатная версия
+7. sudo systemctl status docker # Смотрю бежит ли docker смотри enabled running q выхожу
+8. docker -v # версия Докера  все команды docker через sudo
+9. sudo docker ps # захожу смотрю процессы без sudo через sudo -i
+10. sudo usermod -aG docker $USER # чтобы невсегда писать sudo
+11. exit # вышел
+12. docker run hello-world # посмотрел локально не нашел полез в нет нашел и написал Hello from Docker значит работает
+13. docker images # какие Images у меня есть очень важная в самом начале пусто будет
+14. после hello-world покажет docker images покажет репозиторий
+15.https://hub.docker.com/ # захожу на docker hub
+browse popular images  => в поиске tomcat => Захожу в него это веб сервер на базе tomacat
+16. docker search tomcat # в командной строке ищу tomcat в самом вверху он будет там где много stars
+17. docker pull tomcat # просто скачать и ничего не делать
+18. docker images # Вижу что появился tomcat смотри Size
+tag latest последний, Image ID номер ID его можно обращаться,created когда он был создан
+19. ifconfig или ip a # смотрю Ip eth0 надо смотреть inet 10.0.2.15/24 169.254.199.182/16
+20. docker ps # сотрим какие контейнеры запущены
+21. docker ps -a # показать все контейнеры который когда-то бежал
+22. docker run -it -p 1234:8080 tomcat # Итеративно p перенаправление портов
+Docker по умолчанию 8080 просто перенаправляю на порт 1234 tomcat указываю какой именно image 
+вместо 11234 можно поставить 80 просто
+Загружается в docker container Виртуальный сервер tomcat по перенаправленному порту 1234
+Захожу на свой ip и вижу запущенный сервер ip компа локальный сети 
+23. Идет загрузка сервера ctrl + c остановить
+24.docker ps -a # смотрю отчет как это все было
+25. docker run -d -p 1234:8080 tomcat # запускаем демона чтобы постоянно работало в background что бы посмотреть в браузере надо к Ip дописать :1234
+выдаст docker id контейнера
+26. docker ps # смотрим как контейнер работает
+27. docker run -d -p 1235:8080 tomcat # запускаю сервер но уже с новым портом 1235
+запускаем виртуальные сервера несколько
+28. docker search nginx # первая строка
+29. docker run -d -p 1237:80 nginx # команда посмотри что его нету полезет в нет скачает его и запустит в background
+nginx Работает на 80 порту p это перенаправление даст id  image 
+30. docker ps # Уже бегут 3 серверов
+31. docker images # смотрим сколько всег их
+32. docker rmi hello-world # rmi remove image но не даст так как контайнер использует его
+33. docker ps # смотрю его id hello-world
+34. docker rm 42112f24fedd # его id hello-world удаляю контейнер
+35. docker rmi hello-world # Удаляю image hello world
+    docker rmi 3819238109310 # В docker images есть id его он другой не много вставляю и также как выше удаляю
+35. docker images # проверяию нету hello-world
+36.Вывод удаление images:
+    docker ps # Записываю номер контейнера пример 233332222
+    docker rm 233332222 #удаляю контейнер
+    docker rmi hello-world # удаляю конкретно
+    docker rmi 12232321312 #аналог В docker images есть id его он другой не много вставляю и также как выше удаляю
+    docker images # захожу и мониторю удалил ли я его
+    сначало удаляешь контейнер c помощью его id (docker ps) потом images c помощью названия или id
+37.Cоздаем image:
+   1.ll #просто лл выведит всю файловую систему 
+   2.mkdir mydocker
+   3.cd mydocker
+   4.nano Dockerfile
+Вставляю ниже
+#---------------------------------------------------------------------------
+# Dockefile to build Docker Image of Apache WebServer running on Ubuntu
+#
+# Made by Denis Astahov ADV-IT  13-March-2019
+#---------------------------------------------------------------------------
+
+FROM ubuntu:16.04
+
+RUN apt-get -y update 
+RUN apt-get -y install apache2
+
+RUN echo 'Hello World from Docker!' > /var/www/html/index.html
+
+
+CMD ["/usr/sbin/apache2ctl", "-D","FOREGROUND"] # запуск нашего сервера на apache2 на заднем  фоне
+EXPOSE 80
+
+5.Сохранил
+
+6.docker build -t denis:v1 . # создаем image docker пойдет в файл выше и понему сработает
+скачает Ubuntu 16.04,Обновиться,поставит APACHE,и за грузит данные на страницу
+7. docker run -d -p 7777:80 denis:v1 # Запускаем Image demon background p переброска портов 80 как в инструкции, название Image denis:v1
+появится новый id
+8.Захожу в браузер и указываю Ip аддрес и дописываю : 7777 enter
+_________________________________________________________________________________
+38.docker tag denis:v1 denis:copy # делаю дупликат 
+39.docker images # Вижу что появился denis:copy копия denis:v1 аккуратно с памятью
+40. Изменить сайт выше указанный можно зайдя в сам файл Dockerfile наход. в папке mydocker и что то поменять
+41. docker ps # копирую id denis:v1 5267e21d140
+42. docker exec -it 5267e21d140 /bin/bash # указываю id Интерактивно значит загрузкой на экран
+заходим прямо в сам контейнер сервер виртуальную машину
+43.cd /var/www/html #перемещается в index.html
+44. echo "Version v2" >> index.html # Добавляю вторую строку потому >>
+45. cat index.html # Читаю   Hello World from Docker!
+                 Version v2
+46. на нашем сайте если обновиться то текст поменяется
+47. exit # Выхожу
+    docker ps # Видим denis:v1 бежит id fafasfafafaa
+    docker images # Смотрю свои images
+48. docker commit fafasfafafaa denis.v2 # беру id denis:v1 из docker ps вставляю и пишу denis:v2 новая версия
+49. docker images # Вижу : Repository   Tag
+               denis     v2
+               denis     v1
+               denis     copy
+50. docker run -d -p 8888:80 denis:v2 # demon p перенаправили название image
+51. docker ps # denis:v2  побежал
+52. ip аддрес в строке браузера :8888 # Увижу Hello World from Docker!Version v2
+53. чтобы скачать надо зарегиться в docker hub за пушить и скачать оттуда но память испольщуется компьютера
+___________________________________________________________________________________________________________
+Итого
+  
+#-------------------------------------------------
+# Introduction to Docker by Denis Astahov
+
+
+Install Docker on Ubuntu 18.04
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+sudo apt update
+sudo apt install apt-transport-https
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt update
+sudo apt install docker-ce
+sudo systemctl status docker
+sudo usermod -aG docker $USER
+>>>logout/login<<<
+```
+
+docker run hello-world
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+docker ps
+docker ps -a
+docker images
+
+
+docker search tomcat
+docker pull tomcat
+docker run -it -p 1234:8080 tomcat
+docker run -it -p 8888:80 nginx
+docker run -d -p 8888:80 nginx
+
+
+
+docker build -t denis .
+docker images
+
+docker run -it  -p 1234:80  denis:latest
+docker run -d -p  1234:80  denis:latest
+
+docker  ps     # list containers
+docker  ps -a  # list all containers
+
+docker tag denis_ubuntu denis_ubuntu-PROD
+docker tag denis_ubuntu denis_ubuntu-PROD:v2
+
+docker rm   # delete container
+docker rmi  # delete image
+
+UPDATE IMAGE
+~~~~~~~~~~~~~
+docker run -d -p 7777:80 denis_ubuntu4
+docker exec -it 5267e21d140 /bin/bash
+echo "V2" >> /var/www/html/index.html
+exit
+docker commit 5267e21d140 denis_v2:latest
+
+Export/Import Docker Image to file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+docker save image:tag > arch_name.tar
+docker load -i arch_name.tar
+
+
+Import/Export Docker Image to AWS ECR
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+docker build -t denis:v1 .
+aws ecr get-login --no-include-email --region=ca-central-1 
+docker tag  denis:v1  12345678.dkr.ecr.ca-central-1.amazonaws.com/myrepo:latest
+docker push 12345678.dkr.ecr.ca-central-1.amazonaws.com/myrepo:lastest
+
+docker pull 12345678.dkr.ecr.ca-central-1.amazonaws.com/myrepo:latest
+
+
+
+Kill and Delete Containers and Images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+docker rm -f $(docker ps -aq)        # Delete all Containers
+docker rmi -f $(docker images -q)    # Delete all Images
+
+
+
+
+
+
+
+
+Итого
+
+Команда Docker    Что делает, что выдаёт
+docker -v    Версия Docker Engine
+docker ps    Список Бегущих контейнеров
+docket ps -a    Список ВСЕХ контейнеров
+docker images    Список локальных Images 
+    
+docker search tomcat    Найти Image tomcat в DockerHub
+docker pull tomcat    Скачать Image tomcat из DockerHub
+docker run -it -p 7777:8080 tomcat    Запустить интерактивно контейнер  tomcat на порте 7777
+docker run -d -p 8888:8080 tomcat    Запустить НЕинтерактивно контейнер  tomcat на порте 8888
+docker run -d -p 80:80 nginx    Запустить НЕинтерактивно контейнер  nginx на порте 80
+    
+docker tag oldname:v1  newname:v2    Создать копию Image с другим именем и тагом
+    
+docker build -t myimage:latest .    Создать Image с именем myimage:latest из локального Dockerfile
+docker run -d myimage:latest    Запустить НЕинтерактивно контейнер myimage:latest
+    
+docker rm 1234567890    Удалить контейнер с ID 1234567890
+docker rmi 1112227778    Удалит локальный Image с ID 1112227778
+    
+docker exec -it 5267e21d140 /bin/bash    Запустить интерактивно /bin/bash на контейнере с ID 5267e21d140
+echo "New Version v2" >> /var/www/html/index.html    Изменить файл в контейнере
+exit    Выйти из контейнера
+docker commit 5267e21d140  newimage_v2:latest    Создать Image с именем newimage_v2:latest из контейнера с ID 5267e21d140
+
+
+
+
+
+
+
+
+
