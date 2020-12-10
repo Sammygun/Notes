@@ -13,7 +13,7 @@ TypeError: test() takes 0 positional arguments but 1 was given ## аргумен
 
 5 IndentationError  проблема с большим количеством отступов пробелов
 
-
+6  TabError   # ошибка связанная смешиванием пробелов и табуляции
 
 
 
