@@ -274,4 +274,103 @@ docker stop c2762206ad95    # так при запуске у нас --rm сто
 4 sudo docker run --rm -d -p 27017:27017 mongo ### и опять пользуюсь временной базой данных
 ## которую не надо настраивать конфигурировать скачал и пользуйся
 
-51:40
+Итого есть контейнеры которые делаются на основе images
+можно запускать много разных контейнеров, есть docker hub, контейнеры в фоне 
+===================
+Удаление images
+
+1 docker images
+mongo               latest              609301053242        5 days ago          493MB
+python              3.6                 bda27a013ab2        6 days ago          874MB
+
+2 docker rmi mongo  # удалил mongo image
+
+3 docker images
+<none>              <none>              dbd64fcc109e        4 days ago          874MB
+hello-world         latest              62f314965b6a        4 days ago          874MB
+
+none возникает когда мы вносим правки в контейнер и название контейнера переносится уже на новой контейнер,
+а старый превращается в none
+
+3.1 удаляем все images одной командой 
+ docker images -q        # вывожу список смотрю
+2e79eb34880d
+d602d8e3d961
+
+3.2 
+docker rmi $(docker images -q) # удаляю одним залпом все images передаю результат команды выше
+Котейнер помни сам ничего не сохраняет если не настроить
+===============================================================================================
+
+Docker compose для запуска кучу приложений пишим в один файлик и говорю ему запусти
+
+1 docker-compose.yaml
+2 docker-compose up -d # запуск всех наших контейнеров после того к yaml уже сконфигурирован
+3 docker-compose down  # остановка всех контейнеров
+4 docker build -t project/statistic-manager . ## собираю из текущего каталога помни про точку
+4.1 docker login ## логинюсь на в dockerhub 
+5 docker push project/statistic-manager  # запушил свой проект как на github
+
+Настройка nextcloud
+1 mkdir nextcloud
+cd nextcloud
+
+2 vim docker-compose.yaml
+
+version: '2'
+
+volumes:
+  nextcloud:
+
+
+sevrices:
+   app:
+   image:nextcloud
+   ports:
+     - 8080:80
+   volumes:
+     - nextcloud:/var/www/html
+   restart: always
+
+3 docker-compose up -d 
+по 37.215.11.5:8080 # можно открыть страницу nextcloud
+
+а так пришлось на серевер все настраивать подтягивать зависимости через контейнер на много все быстрей 
+скачали готовый контейнер и ничего больше не настраваили
+
+
+========================
+ssh
+
+cd .ssh 
+mkdir Docker
+ssh-keygen -t rsa
+cat .pub ## смотри в данном формате в файле ключь 
+копируй все содержимое и используй там где нужно
+
+В дирекории .ssh
+vim config
+host vs                 # vs 
+    hostname     79.143.29.100
+    user         root 
+    identityFile  ~/.ssh/Docker/vscale
+
+ssh vs ## теперь подключение к серверу таким способом происходит
+
+ssh-keygen -t rsa
+## github указывай конкретное для чего ты делаешь данны ключ тогда для разных сервисов удобно делать разные ключи!!!!
+cat github.pub | pbcopy ## скопирую все содержимое в буфер обмена потом просто вставлю!!!!!!
+=======================
+
+ssh alias
+1 vim ~/.ssh/config
+
+Host dev
+Hostname dev.sale.com    # можно ip здесь указать
+User root
+Port 22
+
+2 ssh dev    # теперь могу так логиниться
+
+
+===========================
