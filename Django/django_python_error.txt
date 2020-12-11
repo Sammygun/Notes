@@ -15,6 +15,15 @@ TypeError: test() takes 0 positional arguments but 1 was given ## аргумен
 
 6  TabError   # ошибка связанная смешиванием пробелов и табуляции
 
+7 TypeError: '<' not supported between instances of 'str' and 'int'
+ сортировка разных типов данных решается указанием key пример
+ things.sort(key=str) то есть теперь python понимает, что сортировка происходит по правилам сортировки строк
+
+8 Так как кортежи не изменямы то в случае добавки в уже созданного кортежа значения получим следующие:
+p.append('Golden State') 
+AttributeError: 'tuple' object has no attribute
+'append'   # у tuple (кортеж) нету такого атрибута как append
+
 
 
 Django
