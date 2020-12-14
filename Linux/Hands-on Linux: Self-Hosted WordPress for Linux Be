@@ -1,0 +1,780 @@
+Hands-on Linux: Self-Hosted WordPress for Linux Beginners
+https://github.com/groovemonkey/hands_on_linux-self_hosted_wordpress_for_linux_beginners
+самая главная инструкция 
+
+
+
+https://github.com/groovemonkey/hands_on_linux-self_hosted_wordpress_for_linux_beginners
+
+Важные статьи с курса
+https://github.com/groovemonkey/hands_on_linux-self_hosted_wordpress_for_linux_beginners/blob/master/4-basic-nginx-configuration.md
+базовая настройка nginx
+https://github.com/groovemonkey/hands_on_linux-self_hosted_wordpress_for_linux_beginners/blob/master/5-basic-phpfpm-and-php-configuration.md
+базовая настройка php-fpm # очень интересно
+https://github.com/groovemonkey/hands_on_linux-self_hosted_wordpress_for_linux_beginners/blob/master/6-set-up-mysql-database.md
+настройка mysql Генерация пароля где yes где no
+sudo /usr/bin/mysql_secure_installation
+sudo mysql_secure_installation ####или так
+1 y новый пароль ввожу для root
+2 remove anonymous users y ## удалм анонимов
+3 dissalow root login remotely y ##запретить удаленною подключение к roo пользователь к базе данных
+4 remove test databases and access to it y ## тестовые удаляем
+5  Reload privilege tables now [Y/n] y ### да перезагрузка привилегий
+6 systemctl restart mysql (service mysql restart) ### перезагружаем mysql
+https://github.com/groovemonkey/hands_on_linux-self_hosted_wordpress_for_linux_beginners/blob/master/7-set-up-wordpress-site.md
+важные настройки nginx и разворачивание wordpress
+
+
+
+
+
+1. ifconfig
+inet addr мой ip
+2. ping проверяешь работает ли облако
+при создание облака тебе высылается пароль для первого подключения и ip твоего сервера.
+
+ubuntu
+root
+*************
+******************
+
+ssh root@**********
+
+Commands.
+1. ls
+2. pwd
+3. cd Desktop/
+tab один раз
+tab 2 раза
+4.cd /home/dave
+cd ~dave # к юзера директории короткий путь
+5. cd ..# подняться на верх
+ctr a начало строки
+ctrl e конец строки
+ctrl стрелки перемещения по словам
+# комент
+читай ошибки
+sam@sam также ssh так и почта возникла
+
+2. SSH
+!!!!ssh подключения без пароля!!!
+ssh-keygen -t rsa
+cd .ssh
+id_rsa.pub (публичный ключь)  id_rsa(закрытый ключь)
+ssh-copy-id -i .ssh/id_rsa.pub host0401@vh113.hoster.by
+находись в той же директории
+везде еnter, но если хочешь парольная фразу вставь
+теперь просто:
+ssh host0401@vh113.hoster.by
+
+telnet # устарел
+
+3. Updating instaling software
+whoami
+sudo -i # перехожу в рут
+su
+apt-get upgrade
+apt-get update
+apt-get -y upgrade # чтобы не видеть что происходит
+
+apt-get -y install "software"
+apt-get remove "software"
+apt-cahe search (when you dont dont sure the name)
+
+apt-get install mysql-server php-musql php5-fpm monit  ## сначало поставь а потом делай обновления
+root password enter
+
+Итого его git
+Install software
+apt-get update
+
+Make sure to install the mysql-server package FIRST (before installing the other packages):
+apt-get install mysql-server
+apt-get install php-mysql php-fpm monit
+
+Install nginx's custom repository (PPA)
+add-apt-repository ppa:nginx/stable
+apt-get update
+apt-get install nginx
+---
+4. Installing Required Software for
+our Hosting Platform
+
+1. add-apt-repository ppa:nginx/stable # добавил репозиторий nginx
+apt-get update
+apt-get install nginx
+
+apt-cache search php | grep mysql # пример как искать
+
+=======
+Итого настройка сервера по шагам
+1.apt-get update  #
+2.apt-get upgrade # установка
+3.apt-get install mysql-server
+введи пароль рута в сервера база данных 2 раза
+4.apt-get install php-mysql php-fpm monit
+5.add-apt-repository ppa:nginx/stable
+  Enter  как подтверждение
+  apt-get update
+  apt-get install nginx
+6. netstat -tupln # смотрю открытые порты должен быть открыть 80 порт на сервере
+когда порт 80 открыт в браузере 178.172.235.75 должна страница nginx открыта
+
+==============================
+
+5. linux Services Overview
+service management with systemd
+sudo ufw allow 22 ### попробуй открываю порт 22
+
+1. sudo systmectl status mysql
+   sudo systemctl start nginx php7.2-fpm monit
+   sudo systemctl enable mysql nginx php7.2-fpm monit
+
+
+old syntax
+service <service> <action>
+   service mysql status
+   service nginx enable
+
+2.
+Для изучения логов
+jornalctl -xn
+jornalctl -u <unit> # смотрю по сервису
+jornalctl -b
+jornalctl -f
+jornalctl --since "10- min ago" ## смотрю что было 10 минут назад
+
+
+ОСНОВНЫЕ УРОКА ШАГИ
+   systemd
+   systemctl status mysql  # подробная информация
+   service mysql status    # старый синтаксис меньше информации old
+   systemctl start nginx php7.0-fpm monit # запускаю смотрю можно и так service php7.0-fpm start (прежде чем запускать проверяй версию php-fpm7.0 -v)
+   systemctl status nginx
+   systemctl enable mysql nginx php7.0-fpm monit ### ошибка
+
+cd /etc/default/ ## там vi locale и введи код ошибки:C_TIME = "ru_RU.UTF-8",
+LC_MONETARY = "ru_RU.UTF-8",
+LC_ADDRESS = "ru_RU.UTF-8",
+LC_TELEPHONE = "ru_RU.UTF-8",
+LC_NAME = "ru_RU.UTF-8",
+LC_MEASUREMENT = "ru_RU.UTF-8",
+LC_IDENTIFICATION = "ru_RU.UTF-8",
+LC_NUMERIC = "ru_RU.UTF-8",
+LC_PAPER = "ru_RU.UTF-8",
+LANG = "en_US.UTF-8"
+https://raivis.com/fix-locale-warning-on-new-digitalocean-droplet/
+И перезайди в терминал.
+==================================
+  
+
+
+ИТОГО!!!!!
+Все шаги по очереди:
+Итого настройка сервера по шагам
+1.apt-get update  #
+2.apt-get upgrade # установка
+3.apt-get install mysql-server
+введи пароль рута в сервера база данных 2 раза
+4.apt-get install php-mysql php-fpm monit
+5.add-apt-repository ppa:nginx/stable
+  Enter  как подтверждение
+  apt-get update
+  apt-get install nginx
+6. netstat -tupln # смотрю открытые порты должен быть открыть 80 порт на сервере
+когда порт 80 открыт в браузере 178.172.235.75 должна страница nginx открыта
+
+Его ответ:
+You probably want to run sudo systemctl start nginx -- the service will start, bind to port 80, and then you'll see it in your netstat or ss output.
+
+Have fun!
+
+
+ИТОГО ШАГИ 2
+   systemd
+   systemctl status mysql  # подробная информация
+   service mysql status    # старый синтаксис меньше информации old
+   systemctl start nginx php7.0-fpm monit # запускаю смотрю можно и так service php7.0-fpm start (прежде чем запускать проверяй версию php-fpm7.0 -v)
+   systemctl status nginx
+   systemctl enable mysql nginx php7.0-fpm monit ### ошибка
+
+cd /etc/default/ ## там vi locale и введи код ошибки и сохрани:
+C_TIME = "ru_RU.UTF-8",
+LC_MONETARY = "ru_RU.UTF-8",
+LC_ADDRESS = "ru_RU.UTF-8",
+LC_TELEPHONE = "ru_RU.UTF-8",
+LC_NAME = "ru_RU.UTF-8",
+LC_MEASUREMENT = "ru_RU.UTF-8",
+LC_IDENTIFICATION = "ru_RU.UTF-8",
+LC_NUMERIC = "ru_RU.UTF-8",
+LC_PAPER = "ru_RU.UTF-8",
+LANG = "en_US.UTF-8"
+https://raivis.com/fix-locale-warning-on-new-digitalocean-droplet/
+И перезайди в терминал.
+
+
+3  Простая конфигурация сервера wordpress
+1 cd /etc/nginx
+mv nginx.conf nginx.conf.org ### копию резервную делаю
+2 vim nginx.conf
+user www-data
+http { ## что есть
+error_log ## где лежит
+ssl
+gzip on ## сожмем
+fastcgi_cache_path /usr/share/nginx/cache/fcgi levels=1:2 keys_zone=microcache:10m max_size=1024m inactive=1h;
+#ускорим работу!!
+include /etc/nginx/conf.d/*.conf; ### ищи все файлы формата .conf
+}
+
+
+https://github.com/groovemonkey/hands_on_linux-self_hosted_wordpress_for_linux_beginners/blob/master/4-basic-nginx-configuration.md
+конфиг wordpress!!!!
+
+3 mkdir -p /usr/share/nginx/cache/fcgi### создаю папку -p так как несколько папок, cache создаю для скорости!!!
+просто открытую страницу пользователем делаю ее cache не надо включать базу данных php при обращение второй к странице !!!
+
+4 nginx -t ### проверка конфига на синтаксис внес изменения в конфиг файл
+systemctl reload nginx ## если все в команде выше
+
+
+4 Настройка http basics
+как выглядит запрос
+1 GET/HTTP/1.1 ## запрос страницы
+Host:www.example.org
+
+2 HTTP
+1 HTTP METHOD (HEAD,GET,PUT,POST,DELETE,OPTIONS,CONNECT,TRACE)
+2 PATH ## это просто /
+3 Protocol Version
+4 Header name (or key)
+5 Host header value
+
+3 HTTP RESPONSE             
+HTTP/1.1 200 OK     ##Protocol version Status Code
+Content-Type:text/html ###Header Key Content type # какой тип данных перенаправлялся html
+Content-Length:1270    ### Header Value Content-length сообщает какая длина данных в байтах передавалась методом POST
+<!doctype html>        ### body
+<html>
+
+1 GET означает запрашиваемая страница
+2 POST нужен для переадачи загрузки информации серверу
+
+#############################################################
+5 BASIC php-fpm Configuration
+
+Рабочий блокнот
+
+1 wordpress это php приложение
+sudo -i
+apt-get install php-json php-xmlrpc php-curl php-gd php-xml php-mbstring
+важные модули php для wordpress
+2 mkdir /run/php-fpm
+
+mv /etc/php/7.4/fpm/php-fpm.conf /etc/php/7.4/fpm/php-fpm.conf.ORIG ## переименовываю файл, вернее делаю резервную копию php-fpm.conf.ORIG
+nano /etc/php/7.4/fpm/php-fpm.conf ## захожу в чистый conf file
+
+2.1 Добавляю следующие:
+
+[global]
+pid = /run/php/php7.4-fpm.pid
+error_log = /var/log/php-fpm.log
+include=/etc/php/7.4/fpm/pool.d/*.conf ###*все файлы *.conf такого формата
+
+3 rm /etc/php/7.4/fpm/pool.d/www.conf ##удаляю оригинальный файл
+
+4 nano /etc/php/7.4/fpm/pool.d/www.conf ## создаю новый конфигурационный файл и добавляю следующие.
+Данный файл содержит информацию пользователе, все процессы будут запускать www-data пользователь
+
+
+[default]
+security.limit_extensions = .php
+listen = /run/php/yourserverhostname.sock
+listen.owner = www-data
+listen.group = www-data
+listen.mode = 0660
+user = www-data
+group = www-data
+pm = dynamic
+pm.max_children = 75
+pm.start_servers = 8
+pm.min_spare_servers = 5
+pm.max_spare_servers = 20
+pm.max_requests = 500
+
+echo "" > php-fpm.conf ## очищаю файл
+echo "" >> php-fpm.conf ## добавляю новую строку
+
+5 новый php.ini
+
+mv /etc/php/7.4/fpm/php.ini /etc/php/7.4/fpm/php.ini.ORIG
+nano /etc/php/7.4/fpm/php.ini ###новый файл
+
+[PHP]
+engine = On
+short_open_tag = Off
+asp_tags = Off
+precision = 14
+output_buffering = 4096
+zlib.output_compression = Off
+implicit_flush = Off
+unserialize_callback_func =
+serialize_precision = 17
+disable_functions =
+disable_classes =
+zend.enable_gc = On
+expose_php = Off
+max_execution_time = 30
+max_input_time = 60
+memory_limit = 128M
+error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT
+display_errors = Off
+display_startup_errors = Off
+log_errors = On
+log_errors_max_len = 1024
+ignore_repeated_errors = Off
+ignore_repeated_source = Off
+report_memleaks = On
+track_errors = Off
+html_errors = On
+variables_order = "GPCS"
+request_order = "GP"
+register_argc_argv = Off
+auto_globals_jit = On
+post_max_size = 8M
+auto_prepend_file =
+auto_append_file =
+default_mimetype = "text/html"
+default_charset = "UTF-8"
+doc_root =
+user_dir =
+enable_dl = Off
+cgi.fix_pathinfo=0
+file_uploads = On
+upload_max_filesize = 25M
+max_file_uploads = 20
+allow_url_fopen = On
+allow_url_include = Off
+default_socket_timeout = 60
+[CLI Server]
+cli_server.color = On
+[Date]
+[filter]
+[iconv]
+[intl]
+[sqlite]
+[sqlite3]
+[Pcre]
+[Pdo]
+[Pdo_mysql]
+pdo_mysql.cache_size = 2000
+pdo_mysql.default_socket=
+[Phar]
+[mail function]
+SMTP = localhost
+smtp_port = 25
+mail.add_x_header = On
+[SQL]
+sql.safe_mode = Off
+[ODBC]
+odbc.allow_persistent = On
+odbc.check_persistent = On
+odbc.max_persistent = -1
+odbc.max_links = -1
+odbc.defaultlrl = 4096
+odbc.defaultbinmode = 1
+[Interbase]
+ibase.allow_persistent = 1
+ibase.max_persistent = -1
+ibase.max_links = -1
+ibase.timestampformat = "%Y-%m-%d %H:%M:%S"
+ibase.dateformat = "%Y-%m-%d"
+ibase.timeformat = "%H:%M:%S"
+[MySQL]
+mysql.allow_local_infile = On
+mysql.allow_persistent = On
+mysql.cache_size = 2000
+mysql.max_persistent = -1
+mysql.max_links = -1
+mysql.default_port =
+mysql.default_socket =
+mysql.default_host =
+mysql.default_user =
+mysql.default_password =
+mysql.connect_timeout = 60
+mysql.trace_mode = Off
+[MySQLi]
+mysqli.max_persistent = -1
+mysqli.allow_persistent = On
+mysqli.max_links = -1
+mysqli.cache_size = 2000
+mysqli.default_port = 3306
+mysqli.default_socket =
+mysqli.default_host =
+mysqli.default_user =
+mysqli.default_pw =
+mysqli.reconnect = Off
+[mysqlnd]
+mysqlnd.collect_statistics = On
+mysqlnd.collect_memory_statistics = Off
+[OCI8]
+[PostgreSQL]
+pgsql.allow_persistent = On
+pgsql.auto_reset_persistent = Off
+pgsql.max_persistent = -1
+pgsql.max_links = -1
+pgsql.ignore_notice = 0
+pgsql.log_notice = 0
+[Sybase-CT]
+sybct.allow_persistent = On
+sybct.max_persistent = -1
+sybct.max_links = -1
+sybct.min_server_severity = 10
+sybct.min_client_severity = 10
+[bcmath]
+bcmath.scale = 0
+[browscap]
+[Session]
+session.save_handler = files
+session.use_strict_mode = 0
+session.use_cookies = 1
+session.use_only_cookies = 1
+session.name = PHPSESSID
+session.auto_start = 0
+session.cookie_lifetime = 0
+session.cookie_path = /
+session.cookie_domain =
+session.cookie_httponly =
+session.serialize_handler = php
+session.gc_probability = 1
+session.gc_divisor = 1000
+session.gc_maxlifetime = 1440
+session.referer_check =
+session.cache_limiter = nocache
+session.cache_expire = 180
+session.use_trans_sid = 0
+session.hash_function = 0
+session.hash_bits_per_character = 5
+url_rewriter.tags = "a=href,area=href,frame=src,input=src,form=fakeentry"
+[MSSQL]
+mssql.allow_persistent = On
+mssql.max_persistent = -1
+mssql.max_links = -1
+mssql.min_error_severity = 10
+mssql.min_message_severity = 10
+mssql.compatibility_mode = Off
+mssql.secure_connection = Off
+[Assertion]
+[COM]
+[mbstring]
+[gd]
+[exif]
+[Tidy]
+tidy.clean_output = Off
+[soap]
+soap.wsdl_cache_enabled=1
+soap.wsdl_cache_dir="/tmp"
+soap.wsdl_cache_ttl=86400
+soap.wsdl_cache_limit = 5
+[sysvshm]
+[ldap]
+ldap.max_links = -1
+[dba]
+[opcache]
+[curl]
+[openssl]
+
+помни cgi.fix_pathinfo=0 ### 0 Иначе уязвимость
+
+systemctl restart php7.4-fpm ## не забудь
+
+Interprocess Communication (IPC) and Linux/Unix Filetypes
+
+6 /etc/php/7.4/fpm/php.ini ## тут важные и интересные параметры
+1 display_errors = Off # ошибки на экран
+2 log_errors = On
+3 log_errors_max_len = 1024 # когда ddos логами идет можно заблокировать атаку уменьшив размер лога
+4 cgi.fix_pathinfo=0 ### ставлю 0 для безопасности
+5 pdo_mysql.cache_size = 2000 ## кэширование mysql
+6 smtp_port = 25 # отправка почты с сайта
+7 mysql.cache_size = 2000
+8 mysqli.default_port = 3306
+9 session.gc_maxlifetime = 1440 ## время сессии меняю
+
+
+
+6 Interprocess Communication (IPC) and Linux/Unix Filetypes
+Interprocess Communication (IPC) and Linux/Unix Filetypes
+Cyber Security in Cloud Computing
+
+1 Everything is file in linux
+socket is a file where process can read and write
+как пожарный кран там где надо вода открывается и течет
+
+2 Nginx and php-fpm communicate with a unix socket. Niginx communicate with website visitors over a TCP socket
+
+3 2 типа
+unix socket это те что на локальной машине очень быстрый
+tcp socket can be exposed to the network.(подвержен воздействию сети) Slower недостаток медленней
+
+
+4  самые важные директории
+etc ## конфиги
+proc ## инфа о система
+boot ## где операционная система живет
+dev ## То что при монтировали диски
+
+7 How databases work
+
+How Relational Databases Work
+насройка базы данных mysql
+https://github.com/groovemonkey/hands_on_linux-self_hosted_wordpress_for_linux_beginners/blob/master/6-set-up-mysql-database.md
+
+1 echo -n @ && cat /dev/urandom | env LC_CTYPE=C tr -dc [:alnum:] | head -c 15 && echo
+Создаю хороший пароль для базы данных для root
+@kGB9vTM5aKep55l ### Выведит пароль можно passwgen использовать
+
+
+2 sudo /usr/bin/mysql_secure_installation
+sudo mysql_secure_installation ####или так
+1 y новый пароль ввожу для root
+
+2 remove anonymous users y ## удалм анонимов
+
+3 dissalow root login remotely y ##запретить удаленною подключение к roo пользователь к базе данных
+
+4 remove test databases and access to it y ## тестовые удаляем
+
+5  Reload privilege tables now [Y/n] y ### да перезагрузка привилегий
+
+6 systemctl restart mysql (service mysql restart) ### перезагружаем mysql
+
+8 Настройка сервера под wordpress (35)
+
+Configuring an nginx Virtual Host for your Website
+https://github.com/groovemonkey/hands_on_linux-self_hosted_wordpress_for_linux_beginners/blob/master/7-set-up-wordpress-site.md
+настройка wordpress
+
+1 adduser tutorialinux # добавляю пользователя создаю пароль
+номер телефона и т.д необязательны
+correct information # yes
+ls /home ### увидим папку tutorialinux и websiteuser
+cd /home/tutorialinux
+mkdir logs public_html ## создаю папки
+
+/home/tutorialinux ## в директории даю все права пользователю
+chown tutorialinux:tutorialinux ./* # опасная команда на публичном сервере
+
+
+
+mkdir -p /home/tutorialinux/logs
+Создаю пользователя для отдельного сайта
+
+2 nano /etc/nginx/conf.d/tutorialinux.conf ### torialinux название сайта
+Конфиг nginx
+
+server {
+    listen       80;
+    server_name  www.tutorialinux.com;  #### название сайта, можно поддомен
+
+    client_max_body_size 20m;
+
+    index index.php index.html index.htm;
+    root   /home/tutorialinux/public_html; ### здесь указываю имя пользователя и его папку владельца сайта
+
+    location / {
+        try_files $uri $uri/ /index.php?q=$uri&$args;
+    } ## ищет php файлы
+
+    # pass the PHP scripts to FastCGI server
+    location ~ \.php$ {
+            # Basic
+            try_files $uri =404;
+            fastcgi_index index.php;
+
+            # Create a no cache flag
+            set $no_cache "";      ### правило кэша
+
+            # Don't ever cache POSTs
+            if ($request_method = POST) {
+              set $no_cache 1;
+            }
+
+            # Admin stuff should not be cached
+            if ($request_uri ~* "/(wp-admin/|wp-login.php)") {
+              set $no_cache 1;
+            }
+
+            # WooCommerce stuff should not be cached
+            if ($request_uri ~* "/store.*|/cart.*|/my-account.*|/checkout.*|/addons.*") {
+              set $no_cache 1;
+            }
+
+            # If we are the admin, make sure nothing
+            # gets cached, so no weird stuff will happen
+            if ($http_cookie ~* "wordpress_logged_in_") {
+              set $no_cache 1;
+            }
+
+            # Cache and cache bypass handling
+            fastcgi_no_cache $no_cache;
+            fastcgi_cache_bypass $no_cache;
+            fastcgi_cache microcache;
+            fastcgi_cache_key $scheme$request_method$server_name$request_uri$args;
+            fastcgi_cache_valid 200 60m;
+            fastcgi_cache_valid 404 10m;
+            fastcgi_cache_use_stale updating;
+
+
+            # General FastCGI handling
+            fastcgi_pass unix:/var/run/php/tutorialinux.sock;
+            ##тут tutorialinux название сайта конкретный socket
+            fastcgi_pass_header Set-Cookie;
+            fastcgi_pass_header Cookie;
+            fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+            fastcgi_intercept_errors on;
+            include fastcgi_params;         
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|woff|ttf|svg|otf)$ {
+            expires 30d;
+            add_header Pragma public;
+            add_header Cache-Control "public";
+            access_log off;
+    } ## пожалуйста кэшируй эти файлы 30 дней
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    #location ~ /\.ht {
+    #    deny  all;
+    #}
+}
+
+server {
+    listen       80;
+    server_name  tutorialinux.com;
+    rewrite ^/(.*)$ http://www.tutorialinux.com/$1 permanent;
+}
+
+
+2 rm /etc/nginx/sites-enabled/default ### удаляю конфиг, который по умолчанию от nginx настроен, страница от nginx стандартная
+
+3 nano /etc/php/7.4/fpm/pool.d/tutorialinux.conf
+создаю новый pool для php-fpm 
+
+[tutorialinux]
+listen = /var/run/php/tutorialinux.sock
+listen.owner = tutorialinux ### system user пользователь
+listen.group = www-data ####
+listen.mode = 0660
+user = tutorialinux
+group = www-data
+pm = dynamic
+pm.max_children = 75
+pm.start_servers = 8
+pm.min_spare_servers = 5
+pm.max_spare_servers = 20
+pm.max_requests = 500
+
+php_admin_value[upload_max_filesize] = 25M ## макс размер загружаемых файлов
+php_admin_value[error_log] = /home/tutorialinux/logs/phpfpm_error.log ### куда логи ошибки ложить
+php_admin_value[open_basedir] = /home/tutorialinux:/tmp
+###безопасноть дальше этой директории доступа нету
+
+
+========================================================================================
+
+4 Create database and db user in Mysql
+1 mysql -u root -p ## авторизация от рута в базе данных
+
+echo -n @ && cat /dev/urandom | env LC_CTYPE=C tr -dc [:alnum:] | head -c 15 && echo
+создание пароля для ного пользователя
+
+2 CREATE DATABASE tutorialinux; ## создаю базу
+CREATE USER 'tutorialinux'@'localhost' IDENTIFIED BY 'chooseapassword'; ## создаю пользователя и пароль
+GRANT ALL PRIVILEGES ON tutorialinux.* TO tutorialinux@localhost; ## даю все права
+FLUSH PRIVILEGES;  ### обновляю
+
+Рекомендательно создавать пользователя и базу данных по имени одинаковыми
+
+5 Cкачиваем wordpress и настраиваем
+
+1 su - tutorialinux
+2 cd public_html
+
+3 wget https://wordpress.org/latest.tar.gz ## скачиваю устновочный файл, latest всегда последния версия
+
+4 tar -zxvf latest.tar.gz ## можно zxf без v verbose видеть что происходит разахивирую архив
+
+5 rm latest.tar.gz ## удалил скаченный архив
+
+6 /home/user/public_html ## нахожусь в public_html
+mv wordpress/* . ## развернул содержимое из папки wordpress в public_html (когда создалось папка но нужно перенести на директорию выше!!!!!!)
+
+ls -al wordpress/ ## она будет пустой после команды выше
+rmdir wordpress ## удаляем пустую папку
+
+7 в public_html файлы wordpress
+
+8 whoami ## покажет tutuoriallinux пользователь не root
+ctrl-d # выхожу в root
+Запускаю:
+systemctl restart php7.4-fpm
+systemctl restart nginx
+
+9 ifconfig ### могу узнать свой ip 
+могу зайти по ip на страницу а могу по домену 
+http://example.com/wp-admin/setup-config.php
+Настройка wordpress 
+1 continue
+2 lets go
+3 база данных, пользователь, пароль
+Database tutorialinux
+User name tutorialinux
+Password ## пароль базы данных
+Databasehost localhost ## база на самом сервере
+Table Prefix не трогаю
+
+4 run install it
+site title ## название сайта
+username admin (secretadmin лучше admin не безопасно)
+Password
+your email: filin@kat.of.by
+search ingine visibility не трогай### 
+discourage отключить индексаци в поисковых системах
+
+Install Wordpress
+log in
+
+5 в Админке 
+update plugins ## обновление всех плагинов
+
+6 ownership and permissions
+cd /home/tutorialinux/public_html
+chown -R tutorialinux:www-data .                   # www-data - nobody
+find . -type d -exec chmod 755 {} \;
+find . -type f -exec chmod 644 {} \;
+
+ls -lah /home/tutorialinux/public_html           #  смотрю права папки обязательно помни про права и пользователя
+
+============================================================
+
+wordpress configuration
+
+1 ls /var/www  # обычно когда один пользователь но если несколько пользователей   
+2 /home/tutorialinux/public_html       ##  так лучше когда несколько пользователей 
+3 wp-config.php 
+  wp-admin # админка 
+  wp-content ## themes uploads plugins
+  wp-includes 
+core wordpress ядро wordpress информация о базе данных пользлователеле
+DB_HOST localhost ## база находится на данном сервере
+WP_DEBUG false (true)  # очень важно можно определить причину проблемы  одно из важных
+
+43 
+
+
+
