@@ -1429,6 +1429,17 @@ for name in names:
 print(names)
 ['John', 'Paul', 'Ringo']  # цикл дойдет до George и остановиться на этом поэтому Ringo не убрал  
 
+1.1 хороший пример mosh
+
+numbers = [2, 2, 4, 6, 3, 4, 6, 2]
+uniques = [] # дублирую пустой список uniques
+for number in numbers: # создаю number (в numbers)
+    if number not in uniques: # если нету number добавить в unique, тогда number добавить в unique number 
+        uniques.append(number)
+print(uniques)
+[2, 4, 6, 3]
+
+
 2  Удаление полностью всех значений кроме тех что тебе надо
 names = ['John', 'Paul', 'Geroge', 'Ringo']
 names_to_remove = []
@@ -1491,6 +1502,244 @@ while True:
 2
 1
 
+
+
+
+Итого for
+for item in 'Python':
+        print(item)
+   
+
+P
+y
+t
+h
+o
+n
+
+for item in ['Mosh', 'John', 'Sarah']:
+        print(item)
+
+Mosh
+John
+Sarah
+
+
+for item in range(10): #range функция
+    print(item)
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+for item in range(5, 10):
+    print(item)
+
+5
+6
+7
+8
+9
+
+for item in range(5, 10, 2):
+    print(item)
+
+5 # разница с предудущим в том что на 2 следующие число больше
+7
+9
+
+
+for x in range(4):
+    print(x)
+0
+1
+2
+3
+
+for x in range(4):
+    for y in range(3):
+         print (f'({x}, {y})')
+
+C:\Users\nicer\PycharmProjects\HelloWorld\venv\Scripts\python.exe C:/Users/nicer/PycharmProjects/HelloWorld/app.py
+(0, 0) # просто прогонт от 0-3(4) с от 0-2(3)
+(0, 1)
+(0, 2)
+(1, 0)
+(1, 1)
+(1, 2)
+(2, 0)
+(2, 1)
+(2, 2)
+(3, 0)
+(3, 1)
+(3, 2)
+
 =============================
 
-Словари   140 страница
+Словари (по сути обычный словарь переводчик)
+Задача словаря поиск нужного значения по  ключевому слову. Состоит из слов и определений, они называются ключами и значениями
+Быстрый поиск по ключу, но по значению поиск в словаре более медленный.
+
+Python 3.6 у словарей появилась новая особенность клчи теперь сортируются по порядку вставки(раньше порядок был произвольным)
+
+Словари связывают ключ со значение(другие языки они могут называться с хешами, ассоциативный массив)
+
+
+Пример словаря, информация о человеке 
+1 >>> info = {'first': 'Pete', 'last': 'Best'}
+>>> info
+{'first': 'Pete', 'last': 'Best'}
+
+2 Можно делать и так 
+info = dict([('first', 'Pete'),      # обрати внимание на скобки dict([()])   значения внутри  имеют свои скобки (), отсуствие :
+              ('last', 'Best')])
+print(info)
+# {'first': 'Pete', 'last': 'Best'}   # вывод значения 
+
+3 можно и так 
+>>> info = dict(first='Pete', last='Best')         # обрати внимание что first last без кавычек и без пробелов
+>>> info
+{'first': 'Pete', 'last': 'Best'}
+
+
+4 вставка значений 
+1 info = {'first': 'Pete', 'last': 'Best'}
+info['age'] = 20           # так вставляю значения в словарь, age это ключ далее значение 20
+info['occupation'] = 'Drummer'
+print(info)
+# {'first': 'Pete', 'last': 'Best', 'age': 20, 'occupation': 'Drummer'}
+print(info['age'])     # быстрый поиск значения по его ключу  !!!!!!!!!!!!
+# 20  значение кллюча age 
+[] # используются как для вставки значения по ключу так и поиску по ключу 
+
+
+Выборка значений из словаря 
+1 Обращение по ключу
+>>> info = {'first': 'Pete', 'last': 'Best'}
+>>> info['first']
+'Peter'
+
+2 first = 'Peter'
+info = {'name' : first}
+Словарь не копирует переменную а только создает ссылку на нее(указатель)
+
+3 При обращении к ключу, который отсуствует в словаре будет ошибка 
+
+===========
+
+1 Оператор in  можно использовать в словарях
+>>> info = {'first': 'Pete', 'last': 'Best'}
+'first' in info
+True
+
+2 't' in {"a", "e", "i"}   # in можно использовать не только в словарях
+False
+
+3 >>> 'p' in 'Paul'
+False
+
+===========================
+2 Сокращенный синтаксис словарей 
+>>> genre = info.get('Genre', 'Rock')
+>>> genre
+'Rock
+Если вы хотите, чтобы genre по умолчанию присваивалось значение 'Rock'
+
+
+2.1 setdefault
+Хочу подсчитать количество людей с одинаковым именем 
+1 способ 
+names = ['Ringo', 'Paul', 'John', 'Ringo']
+count= {}
+for name in names:
+    count.setdefault(name, 0)
+    count[name] += 1
+
+2 способ 
+names = ['Ringo', 'Paul', 'John', 'Ringo']
+count= {}
+for name in names:
+    if name not in count: # если имени нету в count 
+        count[name] = 1   # тогда равно 1 
+    else:
+        count[name] += 1  # иначе 1 + 1 
+
+print(count['Ringo'])
+#2                 # вывод 2 человека с таким именем
+
+
+3 Хочу подсчитать количество людей с одинаковым именем
+класс collections.Counter       !!!!!!
+
+import collections  # спец класс который нам позволяет посчитать пользователей или людей
+count = collections.Counter(['Ringo', 'Paul', 'John', 'Ringo'])
+
+>>> count                  ## смотрю сколько посчитано
+Counter({'Ringo': 2, 'Paul': 1, 'John': 1})
+>>> count['Ringo']
+2 
+>>> count['Fred']
+0          ## так такого нету 
+
+===========================
+Удаление ключей 
+del names_to_bands['Ringo']    # удаление в словаре по конкретному ключу
+
+===========================
+Перебор словаря 
+
+Перебор по ключу словаря !!!!!!!!!
+1 data = {'Adam': 2, 'Zeek': 5, 'Fred': 3}
+for name in data:
+    print(name)
+#Adam
+#Zeek
+#Fred
+
+2 Перебор по значению словаря !!!!!!!!!!!!
+data = {'Adam': 2, 'Zeek': 5, 'Fred': 3}
+for value in data.values():
+    print(value)
+2
+5
+3
+
+3 Перебор по значению и ключю словаря !!!!!!!!!!
+
+data = {'Adam': 2, 'Zeek': 5, 'Fred': 3}
+for value in data.items():
+    print(value)
+('Adam', 2)
+('Zeek', 5)
+('Fred', 3)
+
+4 превращаем data.items в список, список получится из последовательности кортежей 
+data = {'Adam': 2, 'Zeek': 5, 'Fred': 3}
+print(list(data.items()))     ## получим список с последовательностью кортежей
+#[('Adam', 2), ('Zeek', 5), ('Fred', 3)]
+
+4 Отсортированный список использования функции sorted
+Сортировка словаря при помощи sorted по алфвиту 
+data = {'Adam': 2, 'Zeek': 5, 'Fred': 3}
+for name in sorted(data.keys()):
+    print(name)
+#Adam        # по алфавиту 
+#Fred
+#Zeek
+
+5 
+data = {'Adam': 2, 'Zeek': 5, 'Fred': 3}
+for name in sorted(data.keys(), reverse=True):
+    print(name)
+#Zeek       # сортировка задом наперед 
+#Fred
+#Adam
+
+===================================================================================
+Функции 152  страница 
