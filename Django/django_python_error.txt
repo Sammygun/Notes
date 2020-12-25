@@ -24,6 +24,7 @@ p.append('Golden State')
 AttributeError: 'tuple' object has no attribute
 'append'   # у tuple (кортеж) нету такого атрибута как append
 
+9 UnicodeEncodeError         # Python не поддерживает данную кодировку
 
 
 Django
