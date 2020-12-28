@@ -2230,6 +2230,238 @@ unicode.org
 help() , а затем UNICODE .
 
 ===========================================================
-Классы 192 страница
+
+Классы 
+
+1 Все в python является объектом. Классы это состояния и методы которыми может владеть объект.
+>>> b = 'I am string'
+>>> b
+'I am string'
+b не является классом строки. b это тип строки 
+
+2 Хочу число преобраховать в строку
+>>> num = 42
+>>> answer = str(num)
+>>> answer
+'42'
+=====================================
+Планирование класса
+
+1 Прежде чем создавать класс подумай возможно можно обойтись просто функцией. Класс нужен когда мы хотим дать свойства нашему объекту:
+скорость, температура, среднее арифметическое, цвет.
+
+Основные вопросы 
+1 У него есть имя?
+2 Какими свойствами он обладает
+3 Присущи ли эти свойства всем экземлярам класса? А именно:
+Какие свойства являются общими для класса в целом?
+Какие из этих свойств уникальными для каждого экземпляра?
+4 Какие операции он выполняет?
+
+2 Моделирования кресла
+
+class Chair:                    #1  Chair: c большой буквы двоеточие 
+    'Chair on a chairlift'      #2  строка документации !!!! класса 
+    max_occupants = 4           #3 атрибут класс хранит инфу о состоянии общего для всех экземпляров только 4 места
+
+    def _init_(self, id):       #4 это функция но в классе она становится как метод так __init__ конструктор
+        self.id = id            #5 self экземляр класса id номер кресла, count сколько лыжников на одном кресле инициализация 0
+        self.count = 0
+
+    def load(self, number):     #6 метод load загрузка лыжников на кресло метод .load
+        self.count += number
+    
+    def unload(self, number):   #7 метод unload разгрузки лыжников   метод .unload
+        self.count -= number
+
+После того как класс будет определен, python создает переменную с именем класса
+>>> Chair
+<class '__main__.Chair'>
+
+>>>dir(Chair)           # смотрю методы класса
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__',
+'__eq__', '__format__', '__ge__', '__getattribute__', '__gt__',
+'__hash__', '__init__', '__le__', '__lt__', '__module__',
+'__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__',
+'__setattr__', '__sizeof__', '__str__', '__subclasshook__',
+'__weakref__', 'load', 'max_occupants', 'unload']
 
 
+>>> Chair.__class__
+<class 'type'>
+>>> Chair.max_occupants.__class__
+<class 'int'>
+>>> Chair.__init__.__class__
+<class 'function'>
+>>> Chair.load.__class__
+<class 'function'>
+>>> Chair.unload.__class__
+<class 'function'>
+
+help(Chair)
+
+
+Название класса
+Kitten # хорошо
+kitten # плохо с маленькой буквы
+SnowLeopard # хорошо
+White_Tiger # плохо _
+9Lives   # плохо начинается с цифры
+
+
+Пример метода 
+'matt'.capitalize()
+'Matt'   ## Matt c большой буквы
+
+Парадикма класса
+В один прекрасный момент
+прилетает аист, забирает ребенка с облака и доставляет его в колыбель
+в родительском доме. При вызове конструктора Python забирает ребен-
+ка с облака (получает объект). Он доставляет ребенка в дом, делает его
+членом семьи (присваивая атрибуту __class__ значение Chair или другое
+значение, соответствующее вашему классу). Когда ребенок окажется
+в доме, его можно будет одеть, помыть и т. д. Помните, что объекты хранят
+состояние, которое может изменяться при помощи операций.
+
+================================================
+
+class Chair:                    #1  Chair: c большой буквы двоеточие 
+    'Chair on a chairlift'      #2  строка документации !!!! класса 
+    max_occupants = 4           #3 атрибут класс хранит инфу о состоянии общего для всех экземпляров только 4 места
+
+    def _init_(self, id):       #4 это функция но в классе она становится как метод так __init__ конструктор
+        self.id = id            #5 self экземляр класса id номер кресла, count сколько лыжников на одном кресле инициализация 0
+        self.count = 0
+
+    def load(self, number):     #6 метод load загрузка лыжников на кресло метод .load
+        self.count += number
+    
+    def unload(self, number):   #7 метод unload разгрузки лыжников   метод .unload
+        self.count -= number
+
+Кресло с номером 21
+chair = Chair(21)
+
+>>>chair.count
+0
+>>> chair.id
+21
+>>> chair.max_occupants        # максимальное число мест
+4 
+>>> chair.load(3)   # вызов метода дообавляет 3 лыжников
+# chair экземпляр за которым следует . точка ищет атрибут python будет искать то что после точки сначало экземпляр потом в классе
+def load(self, number): # наш модуль .load(3)
+    self.count += number # 0  + 3 = 3  (self.count = 0 поэтому 0 + 3 )
+
+5 chair.load(3),
+во внутренней реализации выглядит это так
+Chair.load(chair, 3)  # но так писать не рекомендуется 
+====================================================================
+
+Анализ экземпляра 
+
+1
+class Chair:                    #1  Chair: c большой буквы двоеточие 
+    'Chair on a chairlift'      #2  строка документации !!!! класса 
+    max_occupants = 4           #3 атрибут класс хранит инфу о состоянии общего для всех экземпляров только 4 места
+
+    def _init_(self, id):       #4 это функция но в классе она становится как метод так __init__ конструктор
+        self.id = id            #5 self экземляр класса id номер кресла, count сколько лыжников на одном кресле инициализация 0
+        self.count = 0
+
+    def load(self, number):     #6 метод load загрузка лыжников на кресло метод .load
+        self.count += number
+    
+    def unload(self, number):   #7 метод unload разгрузки лыжников   метод .unload
+        self.count -= number
+>>>dir(chair) # экземпляр нужно узнать атрибуты
+2 фактическое состояние экземпляра хранится в атрибуте __dict__ словарь связывающий имена атрибутов со значениями
+chair.__dict__
+{'count': 3, 'id': 21}
+
+3 __class__
+>>>chair.__class__
+<class '__main__.Chair'
+
+
+
+4 
+>>> class CorrectChair:
+""" A chair on a chairlift """
+        max_occupants = 4
+
+        def __init__(self, id):
+            self.id = id
+            self.count = 0
+
+        def load(self, number):
+            new_val = self._check(self.count + number)
+            self.count = new_val
+        
+        def unload(self, number):
+            new_val = self._check(self.count - number)
+            self.count = new_val
+        
+        def _check(self, number):            # данный метод является приватным вызов метод load и unload
+            if number < 0 or number > self.max_occupants:
+                raise ValueError('Invalid count: {}'.format(number))
+            return number
+
+======================================================
+Простая программа моделирующая поток посетитетелей 
+
+>>> class CorrectChair:
+""" A chair on a chairlift """
+        max_occupants = 4
+
+        def __init__(self, id):
+            self.id = id
+            self.count = 0
+
+        def load(self, number):
+            new_val = self._check(self.count + number)
+            self.count = new_val
+        
+        def unload(self, number):
+            new_val = self._check(self.count - number)
+            self.count = new_val
+        
+        def _check(self, number):            # данный метод является приватным вызов метод load и unload
+            if number < 0 or number > self.max_occupants:
+                raise ValueError('Invalid count: {}'.format(number))
+            return number
+
+NUM_CHAIRS = 100
+chairs = []
+for num in range(1, NUM_CHAIRS + 1):
+    chairs.append(CorrectChair(num))
+
+def avg(chairs):
+    total = 0
+    for c in chairs:
+        total += c.count
+    return total/len(chairs)
+
+in_use = []
+transported = 0
+while True:
+    # загрузка
+    loading = chairs.pop(0)
+    in_use.append(loading)
+    in_use[-1].load(random.radiant(0, CorrectChair.max_occupants))
+
+    # выгрузка
+    if len(in_use) > NUM_CHAIRS / 2:
+        unloading = in_use.pop(0)
+        transported += unloading.count
+        unloading.unload(unloading.count)
+        chairs.append(unloading)
+    print('Loading Chair {} Count:{} Avg:{:.2} Total:{}'.format
+        (loading.id, loading.count, avg(in_use), transported))
+    time.sleep(.25)
+
+Объект создается специальным методом, который называется конструктором. Этому методу присваивается имя __init__ . Вы также можете
+определять собственные методы классов.
+
+======================================================================
+Субкласиирование 
