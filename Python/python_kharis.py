@@ -2465,3 +2465,339 @@ while True:
 
 ======================================================================
 Субкласиирование 
+
+class CorrectChair:
+""" A chair on a chairlift """
+        max_occupants = 4
+
+        def __init__(self, id):
+            self.id = id
+            self.count = 0
+
+        def load(self, number):
+            new_val = self._check(self.count + number)
+            self.count = new_val
+        
+        def unload(self, number):
+            new_val = self._check(self.count - number)
+            self.count = new_val
+        
+        def _check(self, number):            # данный метод является приватным вызов метод load и unload
+            if number < 0 or number > self.max_occupants:
+                raise ValueError('Invalid count: {}'.format(number))
+            return number
+
+>>> class Chair6(CorrectChair):
+... max_occupants = 6
+
+================================================================================================
+Исключения
+
+1
+>>> 3/0
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ZeroDivisionError: division by zero 
+
+2 Допустим файл содержит следующий код:
+def err():
+    1/0
+
+def start():
+    return middle()
+
+def middle():
+    return more()
+
+def more():
+    err()
+
+3 Трасировка как логи лучше читать снизу в вверх
+
+Traceback (most recent call last):
+File "/tmp/err.py", line 13, in <module>
+start()
+File "/tmp/err.py", line 5, in start
+return middle()
+File "/tmp/err.py", line 8, in middle
+return more()
+File "/tmp/err.py", line 11, in more
+err()
+File "/tmp/err.py", line 2, in err
+1/0
+ZeroDivisionError: division by zero
+
+4 
+Первый вид исключения 
+look before you leap  посмотри прежде чем прыгнуть
+"""Если divisor = 0 то сработает None """
+numerator = 10
+divisor = 0
+if divisor != 0:
+    result = numerator / divisor
+else:               # тогда 
+    result = None
+    print(result)
+
+5 Второй вид исключения 
+Easier to Ask fo Forgiveness than Permission,  "Проще попросить прощения чем разрешения "   если операция завершается неудачей, 
+исключение будет перехвачено в блоке исключения try...except  механизм для перехвата сключительных ситуаций
+
+1 
+numerator = 10
+divisor = 0
+try:
+    result = numerator / divisor
+except ZeroDivisionError as e:
+    result = None
+    print(result)
+
+1 Конструкция try создается блок, внутри блока выполняется команда блока, если произойдет исключение, python в блоке except перехватывает
+ это исключение  (или исключение его родительский класс)
+
+2 В данном примере в except есть исключение ZeroDivisionError, если в try поисходит указанное исключение выполняется блок except, а 
+результату присваивается None
+
+3 as e  # e это значение переменной которой присваиваится значение ошибки это необязательно в случае чего можно обратиться к 
+активному исключению
+
+4 В try должен быть включен код который только тот в котором может проийзоти ошибка 
+
+5 Рекомендации
+1 Обрабатывайте ошибки которые можно ожидать в программе 
+2 Не подавлять те исключения которые вы не можете обработать и те которые вряд ли возникнут в вашей программе
+3 Используйте глобальный обработчик исключений для корректной обработки непредвиденных ошибок
+
+6 Пример серверного приложения которое работает непрерывно
+
+while 1:
+    try:
+        result = process_input()
+    except Exception as e:
+        log_error(e)
+
+###############################################################################################
+Примеры еще try:
+
+try:
+    age = int(input('Age: '))
+    print(age)                   #Здесь пользователю предлагается попробовать вести данные, но если он указывает текст то ошибка 
+except ValueError:        #except ValueError не учитвается если пользователь захочет ввести строку вместо цифр
+    print('Invalid value')
+
+Age: вфывфв # к примеру  ввел строку мне выскочет такое сообщение 
+Invalid value
+
+try:
+    age = int(input('Age: '))
+    income = 20000
+    risk = income / age
+    print(age)
+except ZeroDivisionError:  #это для того чтобы исключить ошибку с указанием 0 смотри внизу терминала на тип ошибки
+    print('Age cannot be 0.')
+except ValueError:
+    print('Invalid value')
+
+# коментов должно быть поменьше и только там где это нужно
+##########################################################################################
+Исключения. Обработка ошибок для того чтобы не рухнула программа
+1 Обработка ошибки
+
+a = "hello"
+int(a) # будет ошибка мы не можем превратить строку в число и программа поломается
+# ValueError: invalid literal for int() with base 10: 'hello'
+
+
+2 Обаработка ошибок в коде
+a = "hello"
+
+try:
+	int(a) ### а так если такая ошибка произойдет то программа не поломается как выше а выдаст нам error
+except:
+	print("error")
+
+3 С указанием конкретной ошибки  
+a = "hello"
+
+try:
+	int(a) ### а так если такая ошибка произойдет то программа не поломается как выше а выдаст нам error
+except (ValueError): # только при такой ошибки сработает исключение другая ошибка программа рухнет
+	print("error")
+
+4 
+a = "hello"
+b = 0.1 
+a * b # будет ошибка TypeError число и строку умножить не можем 
+try:
+	int(a) ### а так если такая ошибка произойдет то программа не поломается а выдаст нам error
+except:
+	print("error")
+
+4.1  так сработает исключение 
+a = "hello"
+b = 0.1
+
+try:
+	a * b
+except:
+	print("error") 
+# error !!!! !cработает 
+
+4.2 
+
+a = "hello"
+
+try:
+	a * b
+except (ValueError): ## здесь указал исключение только для конкретной ошибки но прога поломается т.к NameError другой тип ошибки  
+# except (ValueError, NameError): !!!!! так программа не рухнет !!!!!!! так два исключения и выведит блок error
+	print("error")
+# NameError: name 'b' is not defined
+
+
+4.3 можно исключения вносить и так 
+
+a = "hello"
+
+try:
+	a * b
+except (ValueError):
+	print("error")
+except (NameError): # на этом блоке python сработает
+	print ("NameError") # 
+#NameError # вывод так как нету такой переменной  
+
+4.4
+
+a = "hello"
+b = 0.1 # будет ошибка TypeError так как нелья не int умножать с str строкой ,если не напишу except (TypeError)
+
+try:
+	a * b
+except (ValueError):
+	print("error")
+except (NameError):
+	print ("NameError")
+except (TypeError): # при такой ошибке напечатаем TypeError
+	print("TypeError") 
+
+5 as 
+a = "hello"
+b = 0.1 # будет ошибка TypeError так как нелья не int умножать с str строкой ,если не напишу except (TypeError)
+
+try:
+	a * b
+except Exception as e: ###большое исключение на все ошибки print(e) # распечатать значение
+# даже если except (NameError): ниже есть и другие обрабочтики выйдет этото большое исключение, если оно выше всех
+# прсто код не дойдет до него
+	print(e)
+# can't multiply sequence by non-int of type 'float' # выведит в чем проблема но программа не упадет
+
+5.1 
+a = "hello"
+b = 0.1 # будет ошибка TypeError так как нелья не int умножать с str строкой ,если не напишу except (TypeError)
+
+try:
+	a * b
+except (TypeError): # сработает данное исключение несмотря на то что есть большое исключение ниже, т.к. это выше 
+	print("TypeError") # python остановится на этом блоке
+except Exception as e: ###большое исключение на все ошибки print(e) # распечатать значение
+	print(e)
+except (NameError):
+	print ("NameError")
+# TypeError вывод 
+
+5.2
+# такой обработчик выгодно использовать в конце всех когда ты писал ошибки все которые не знаешь но на случай если появится неизвестная ошибка
+except Exception as e: ###большое исключение на все ошибки print(e) # распечатать значение
+	print(e) 
+
+5.3 Помни строки умножать можно на 2, в отличие от чисел от плавающей точки
+Помни что python идет по блокам и остановится там где указано в условии
+
+a = "hello"
+b = 2 # строки умножать можно на 2 
+
+try:
+	a * b  #python посмтрит увидет что это блок сработает
+except (TypeError):  
+	print("TypeError")
+except Exception as e:
+	print(e)
+except (NameError):
+	print ("NameError")
+else: 					 ## если не один сработчик не сработает то выведит else
+	print("i'm else")
+#finally:             # наконец-то этот блок срабатывает всегда даже если нету или есть ошибки
+#	print("finaly") # выведит наконец -то 
+# i'm else # вывод
+
+5.4 finally повторно
+
+a = "hello"
+b = 0.2 # опять будет ошибка сработает обработчик TypeError 
+
+try:
+	a * b  #python посмтрит увидет что это блок сработает
+except (TypeError):  
+	print("TypeError:")
+except Exception as e:
+	print(e)
+except (NameError):
+	print ("NameError")
+finally: 					 ## этот блок срабатывает всегда даже если нету или есть 
+# закрыть файл, закрыть подключение в базу данных и чтобы оно всегда срабатывала, или настроить логирование
+	print("finally") # выведит finally
+
+# TypeError:
+# finally
+
+#####################################################################################################
+
+Несколько возможных исключений
+1 
+try:
+    some_function()
+except ZeroDivisionError as e:
+    # обработка конкретного исключения
+except Exception as e:             # as e это переменная в которой будет указано активное искоючение 
+    # обработка других исключений Exceeption это субкласс исключения
+
+интерпретатор сначала проверяет, соответствует ли оно ошибке класса ZeroDivisionError или его субкласса. Если условие не выполняется, код проверяет, отно-
+сится ли исключение к субклассу Exception .!!!!! После входа в блок except Python уже не проверяет последующие блоки.!!!!!
+
+2 
+def _get_value(self, action, arg_string):
+    type_func = self._registry_get('type', action.type, action.type)
+    if not callable(type_func):
+        msg = _('%r is not callable')
+        raise ArgumentError(action, msg % type_func)
+
+# преобразование значения к соотвествующему типу
+try:
+    result = type_func(arg_string)
+
+# ArgumentTypeError признак ошибки 
+except ArgumentTypeError:
+    name = getattr(action.type, '__name__', repr(action.type))
+    msg = str(_sys.exc_info()[1])
+    raise ArgumentError(action, msg)
+
+# TypeError и ValueErrors тоже являются признаками ошибок
+except (TypeError, ValueError):                        ## !!!! сразу обработка двух ошибок 
+    name = getattr(action.type, '__name__', repr(action.type))
+    args = {'type': name, 'value': arg_string}
+    msg = _('invalid %(type)s value: %(value)r')
+    raise ArgumentError(action, msg % args)
+
+# возвращается преобразованное значение
+return result
+
+3 except (TypeError, ValueError):        ## перехватываем сразу два типа нескольких ошибок 
+
+########################
+finally
+
+
+
+
