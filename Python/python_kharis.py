@@ -1,3 +1,6 @@
+https://github.com/mattharrison/Tiny-Python-3.8-Notebook/blob/master/python38.rst
+справочиник по python удобный 
+
 0  ModuleNotFoundError: No module named 'lxml # решение ошибки 
 1 python3 -m venv venv # в папке проекта
 2 source venv/bin/activate # активировал 
@@ -2797,7 +2800,120 @@ return result
 
 ########################
 finally
+Это блок кода который будет выполняться всегда независимо сработало исключение или нет.  Блок finally выполняется всегда.
+
+Пример 
+try:
+    some_function()
+except Exception as e:
+    # Обработка ошибок
+finally:
+    # завершающие дейтсвия
+
+1 
+def timeit(self, number=default_number):
+"""Хронометраж 'number' выполнений основной команды.
+Для повышения точности команда подготовки выполняется однократно,
+после чего время, необходимое для многократного выполнения основной
+команды, возвращается как вещественное число (в секундах). Аргумент
+определяет количество выполнений цикла (по умолчанию один миллион).
+Основная команда, команда подготовки и используемая функция таймера
+передаются конструктору.
+"""
+it = itertools.repeat(None, number)
+gcold = gc.isenabled()
+gc.disable()
+try:
+    timing = self.inner(it, self.timer)
+    finally:
+        if gcold:
+            gc.enable()
+    return timing
+
+Помни try/finally c душком
+
+######################################################################
+
+Секция else 
+
+Else необязательно, но если есть то перед finally должна выполняться. Выполниться если в try если не выполнилось ниодного исключения 
+1 
+>>> try:       
+...     print('hi')    # выполним данное действи
+... except Exception as e: # если что-то не так то выполним исключение 
+...     print('Error')
+... else:                   # если исключение не сработало  то тогда выполниться else
+...     print('Success')
+... finally:                   # finally выполняется всегда 
+...     print('at last')
+hi
+Success
+at last
+
+2 
+def nsmallest(n, iterable, key=None):
+# ....
+# Если n>=size, быстрее использовать sorted()
+try:
+    size = len(iterable)
+except (TypeError, AttributeError) as e:
+    pass                                    # пропустить пройти мимо
+else:
+    if n >= size:
+        return sorted(iterable, key=key)[:n]
+# Часть кода пропущена .... Использовать более медленный способ
+########################################################################
+
+Выдача исключений 
+Если функция работает не правильно , то можно выдать исключение.
+
+raise BaseException('Program failed')
+except (TypeError, AttributeError) as e:
+    log('Hit an exception')
+    raise e
+но трассировка стека будет показывать, что исходное исключение теперь произошло
+в строке с командой raise e , а не там, где оно произошло сначала
+
+################################################################
+
+Упаковка исключений 
+
+def log(msg):
+    raise SystemError('Logging  not up')
+
+def divide_work(x, y):
+    try:
+        return x/y
+    except ZeroDivisionError as ex:
+        log('System is down')
+
+divide_work(5, 0)
+
+Ошибка:
+
+raceback (most recent call last):
+  File "hello.py", line 6, in divide_work
+    return x/y
+ZeroDivisionError: division by zero          # наше исключение которое говорит о том, что на ноль делить нельзя
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "hello.py", line 10, in <module>
+    divide_work(5, 0)
+  File "hello.py", line 8, in divide_work
+    log('System is down')
+  File "hello.py", line 2, in log
+    raise SystemError('Logging  not up')
+SystemError: Logging  not up                # будет последней ошибкой так как данная ошибка будет последней по очередности 
 
 
-
-
+3 
+>>> def log(msg):
+... print(msg)
+>>> def divide_work(x, y):
+...     try:
+...         return x/y
+...     except ZeroDivisionError as ex:
+            log("System is down")
+            raise ArithmeticError() from ex  # теперь два исключения исходное ZeroDivisionError и исключени ArithmeticError
