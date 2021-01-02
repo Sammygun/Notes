@@ -3051,3 +3051,72 @@ import recordconverter  # локальные библиотеки
 #############################################################################################
 Библиотеки: пакеты и модули 
 _библиотеки_
+
+Модули
+Модули .py , название модуля пишется в нижнем регистре  символы подчеркивания могут использоваться в нижнем регистре
+
+Пакеты 
+Пакет это каталог который содержит в себе файл __init_.py. 
+
+Пакет представляет собой каталог, в котором присутствует файл с именем __init__.py . Пакет также может содержать другие
+модули и пакеты
+
+Есть модули, когда нужно использовать собственные модули и их надо выделить в пакеты то модуль преобразуется  в пакет.
+
+Импортирование пакетов
+import sqlalchemy
+''' будет импортировано sqlalchemy/__init__.py в текущее пространство имен если пакет будет найден в PYTHONPATH или sys.path . ''' 
+
+1 Когда хочу использовать классы Column и ForeignKey из модуля schema.py 
+>>> import sqlalchemy.schema
+>>> col = sqlalchemy.schema.Column()
+>>> fk = sqlalchemy.schema.ForeignKey()
+
+2 from sqlalchemy import schema
+  col = schemf.Column
+  fk = schema.ForeignKey 
+
+3 Если вам нужен один класс Column 
+>>> import sqlalchemy.schema.Column
+>>> col = sqlalchemy.schema.Column()
+
+4 или 
+from sqlalchemy.schema import Column
+col = Column()
+#########################################################
+PYTHONPATH 
+Содержит список нестандартных каталогов в которых Python ищет модули или пакеты, лучше ее не трогать.
+
+$ PYTHONPATH=/home/test/a python3
+Python 3.6.0 (default, Dec 24 2016, 08:01:42)
+>>> import plot
+>>> plot.histogram()
+Чтобы из другого каталого импортировать модуль 
+#########################################################
+sys.path
+
+У модуля sys имеется атрибут path со списком каталогов, в которых Python ищет библиотеки.
+import sys
+sys.path
+
+['',
+'/usr/lib/python35.zip',
+'/usr/lib/python3.6',
+'/usr/lib/python3.6/plat-darwin',
+'/usr/lib/python3.6/lib-dynload',
+'/usr/local/lib/python3.6/site-packages']
+
+2
+>>> import plot
+Traceback (most recent call last):
+File "<stdin>", line 1, in <module>
+ImportError: No module named plot          ## когда такая ошибка просто добавляем
+>>> sys.path.append('/home/test/a')
+>>> import plot
+>>> plot.histogram() 
+
+3 Узнать местонахождение библиотеки в файловой системе, проверьте атрибут __file__:
+import json
+json.__file__
+'/usr/lib/python3.6/json/__init__.py'
+##############################################################3333
