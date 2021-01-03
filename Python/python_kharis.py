@@ -20,7 +20,6 @@ https://github.com/mattharrison/Tiny-Python-3.8-Notebook/blob/master/python38.rs
                                                         _классы_
                                                         _субкласиирование_
                                                         _исключения_
-
                                                         _импортирование_
                                                         _библиотеки_
 
@@ -104,6 +103,37 @@ print("Your age next year", next_age)
 
 Итого:
 вывод print , ввод input
+=====================================================================
+_git_
+Git
+1 git init  ## в папке проекта 
+Initialized empty Git repository in ~/djangogirls/.git/
+2 git config --global user.name "Sammygun" ### пользователь
+3 git config --global user.email sam.rybtsov@gmail.com ## почта
+4 git status ## смотрю какие изменения были
+5 git add --all .
+6 git commit -m "basics python" ## закоммитил изменения дал название изменениям
+
+7  github добавляю на сайте !!!!!!!!!
+(setings там можно удалить или переименовать репозиторий)
+1 add new my-first-blog ## на сайте github !!!!!! (галочки можеш не ставить)
+none везде добавляй
+2 выбирай https 
+(…or push an existing repository from the command line)
+
+8 У себя в теривнале 
+ git remote add origin https://github.com/Sammygun/Basic_python.git
+ git branch -M main
+ git push -u origin main
+
+
+9 ЕСЛИ СДЕЛАЛ УЖЕ ИЗМЕНЕНИЯ КАКИЕ НИТЬ на сайте то:
+1 git status ## смотрю что поменялось
+2 git add --all . ## находясь в папке djangogirls
+3 git status ### тут увижу что именно будет загружаться
+4 git commit -m "Changed the HTML for the site." ### коммитим с заметкой
+5 git push ### пушим на gut hub1
+
 ====================================================================================
 Глава ПЕРЕМЕННАЯ 
 _переменная_
