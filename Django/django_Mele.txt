@@ -1,0 +1,521 @@
+https://virtualenv.pypa.io/en/latest/
+virtualenv
+https://virtualenvwrapper.readthedocs.io/en/latest/
+virtualenvwrapper
+https://pip.pypa.io/en/stable/installing/
+установка настройка pip
+https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/
+how to deploy with WSGI
+Так как мы будем использовать Python 3, нет необходимости отдельно уста-
+навливать базу данных. В эту версию языка уже встроена система управления
+базами данных (СУБД) SQLite. SQLite­ – легкая СУБД, которую можно использо-
+вать вместе с Django для быстрой разработки.
+
+                                Содержанеи 
+                            _базовая настройка_
+                            _описание проекта_
+                            _setings.py_
+                            _проекты и создания приложения_ 
+                            _модель models.py blog_
+                            _makemigrations_
+                            _Создание администрирования Django_ _админка_
+                            _Добавление моделей в админку_
+                            _настройка отображения моделей_
+
+
+Первоначальная установка, базовая настройка
+_базовая настройка_
+1 pip install virtualenv
+2 virtualenv my_venv
+2.1 source my_venv/bin/activate
+2.2 deactivate         ## просто в терминале чтобы деактивировать 
+3 pip install Django==2.0.5 # установка Django
+3.1 pip install django==2.1.5  # потом если надо обновить django
+4 pip install --upgrade pip      # обновить pip
+4.1 python -m pip install --upgrade pip # команда аналог обновить pip
+5 python3 
+>>> import django
+>>> django.get_version()
+'2.0.5'           # проверка правильно ли произошла установка ы
+6 django-admin startproject mysite
+
+7 my_env/lib/python3.6/site-packages. # все библиотеки будут сохраняться сюда 
+7.1 which python3
+/home/sam/miniconda3/bin/python3
+
+8 _makemigrations_
+1 python manage.py makemigrations blog # после того как внес изменения в models.py делю миграции
+''' в папке migrations появляется файлы 0001_initial.py можно посмотреть как выглядит файл миграции'''
+2 python manage.py sqlmigrate blog 0001  # можем посмотреть сам sql код
+3 python manage.py migrate   # синхронизация базы данных
+  Applying blog.0001_initial... OK
+
+9 Админка 
+  python manage.py createsuperuser
+  username: admin
+  Email: admin@admin.com
+  Password: приветмир
+  Password(again): приветмир
+  Superuser created successfully
+
+  http://127.0.0.1:8000/admin/
+
+  10 проблема с полем slug на версии Django 2.0.5
+https://stackoverflow.com/questions/53637182/django-no-such-table-main-auth-user-old
+1 keep django version 2.1.5 (the issue addressed in this version) pip install django==2.1.5
+2 Delete the SQLite db  (dbslqlite3 удалить просто)
+3 Migrate again python manage.py makemigrations and then python manage.py migrate
+4 Start the server python manage.py runserver
+
+  11  python manage.py shell
+##########################################################3
+
+Описание проекта mysite
+_описание проекта_
+1 manage.py # утилита с помощью которой можно управлять проектом 
+2 mysite # папка нашего проекта 
+3 __init.py # пустой файл который говорит python, что mysite это пакет python
+4 setings.py # конфигурационный файл
+5 urls.py # здесь храняться шаблоны адресов
+6 wsgi.py # конфигурационный файл для запуска проекта как wsgi-приложения 
+
+В setings.py  содержит настройки приложегтя включая базу данных, INSTALLED_APPS  список приложений, надо сделать первую
+миграцию для всех приложений из списка INSTALLED_APPS.
+
+7 cd mysite
+python manage.py migrate   # первая миграция для приложений в INSTALLED_APPS
+python manage.py runserver # запуск сервера 
+python manage.py runserver 127.0.0.1:8001 --settings=mysite.settings   # с кастомным портом 
+
+#############################################################################################
+https://docs.djangoproject.com/en/2.0/ref/settings/.
+документация 
+
+_setings.py_ 
+1 DEBUG (True, False) # удобно когда надо понять что именно не работает
+
+2 ALLOWED_HOSTS  ## где указываются название домена  
+
+3 INSTALLED_APPS ## здесь указываются какие приложения активны какие работают на сайте 
+Приложения по умолчанию ради которых делали первую миграцию:
+1 django.contrib.admin # сайт администрирования 
+2 django.contrib.auth  # подсистема аунтефикации
+3 django.contrib.contenttypes  # подсистема для работы с типами объектов системы 
+4 django.contrib.sessions  # подсистема сессий 
+5 django.contirb.messages # подсистема сообщений 
+6 django.contrib.staticfiles # подсистема для управления статическим содержимым сайта
+
+4 MIDDLEWARE    # список подключеныых промежуточных слоев 
+
+5 ROOT_URLCONF   # указывает на python-модуль который содержит корневые шаблоны 
+
+6 DATABASES  # здесь информация о базе данных,какая именно здесь используется. Должна быть указана хотя бы одна
+СУБД SQLite3
+
+7 LANGUAGE_CODE  # определяет язык системы 
+
+8 USE_TZ   # Временная зона или поддержка временых зон 
+#######################################################################################
+_проекты и создания приложения_ 
+Проект это сам сайт, котороый состоит из приложений(блог, форум, вопросы)
+
+1 python manage.py startapp blog  # Создаем наше приложение 
+cd blog/
+ admin.py       
+ apps.py
+ __init__.py
+ migrations/
+ models.py
+ tests.py
+ views.py
+
+1 admin.py  #  здесь происходит регистрация моделей для добавления их в систему администрирования Django
+то что добавляем в админку 
+
+2 apps.py # основной конфиг приложения blog 
+
+3 migrations    # папка которая содержит миграции баз данных приложения. Миграция позволяет отслеживать изменение 
+моделей и синхронизировать их со схемой данных базы как git базы данных
+
+4  models.py    # модели данных приложения 
+
+5 tests.py     # предназначени для создания тестов 
+
+6 views.py     # вся логика приложения описывается здесь какждый обработчик получает Http-запрос обрабатывает его и
+возвращает ответ 
+###########################################################################
+_модель models.py blog_
+Модель это python класс, каждый атрибут это поле в базе данных. Создается таблица в базе данных для каждой модели,
+определенной в models.py 
+
+
+
+
+
+
+
+
+
+
+                                            Создание блога план 
+                                            _models.py_
+                                            _setings.py активация новоего приложения_
+                                            _makemigrations_
+                                            _Создание администрирования Django_ _админка_
+                                            _работа с QuerySet и менеджерами_
+                                            _QuerySet_
+                                            _создание обработчиков списка и страницы подробностей_
+                                            _views.py_
+
+
+_models.py_                                 
+1 models.py  # описание статей 
+from django.db import models
+from django.utils import timezone
+from django.contrib.auth.models import User
+
+class Post(models.Model):
+    STATUS_CHOICES = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    )
+    title = models.Charfield(max_length=250)
+    slug = models.SlugField(max_length=250,unique_for_date='publish')
+    author = models.ForeignKey(User,on_delete=models.CASCADE, 
+                                related_name='blog_posts')
+    body = models.TextField()
+    publish = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    status = models.Charfield(max_length=10,choices=STATUS_CHOICES,default='draft')
+
+    class Meta:
+        ordering = ('-publish',)
+    
+    def __str__(self):
+        return self.title
+
+    ''' title это поле заголовка статьи опеределено как Charfield, который сооотвествует VARCHAR в базе данных '''
+    """ slug поле для формирования URL'ов, нужно для построения семантических url для статаей, параметр unique_for_date
+    позволяет формировать дату публикаций статей slug используется для создания уникальных url  """
+    ''' author поле которое говорит о том, что у каждой статьи есть свой автор, параметр on_delete говорит о том, что
+    если мы удалим все пользователя, автора  то тогда все статьи будут удалены '''
+    '''body основное содержание статьи текстовое поле котрое будет сохранено в столбце с типом TEXT в sql базе данных ''' 
+    '''' publish поле даты, которое сохраняет дату публикации статьи. Параметр timezone.now. Она возвращает текущие дату 
+    и время при написании статьи'''
+    '''created указывает дату создания статьи auto_now_add дата будет сохраняться автоматически при создании объекта'''
+    '''updated дата и время, указывающая период когда статья была отредактирована'''
+    ''' status статус статьи '''
+    ''' https://docs.djangoproject.com/en/2.0/ref/models/fields/'''
+    ''' META порядок статей по убыванию -publish, только что опубликованные статьи будут первыми'''
+    ''' __str__()  возвращает отображение понятное человеку '''
+
+#########################################################
+2 
+_setings.py активация новоего приложения_
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'blog.apps.BlogConfig',
+]
+""" blog.apps это активация приложения для того что бы Django отслеживал наши модели и созадавал таблицы, BlogConfig
+это конфигурация приложения """
+
+##########################################
+3 _makemigrations_
+После активации приложения в setings.py можно сделать миграции для создания базы данных приложения blog
+1 python manage.py makemigrations blog
+
+blog/migrations/0001_initial.py
+    - Create model Post
+
+''' в папке migrations появляется файлы 0001_initial.py можно посмотреть как выглядит файл миграции'''
+2 python manage.py sqlmigrate blog 0001  # можем посмотреть сам sql код
+
+
+
+"""
+-- Create model Post
+--
+CREATE TABLE "blog_post" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "title" varchar(250) NOT NULL, "slug" varchar(250) NOT NULL, "body" text NOT NULL, "publish" datetime NOT NULL, "created" datetime NOT NULL, "updated" datetime NOT NULL, "status" varchar(10) NOT NULL, "author_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED);
+CREATE INDEX "blog_post_slug_b95473f2" ON "blog_post" ("slug");
+CREATE INDEX "blog_post_author_id_dd7a8485" ON "blog_post" ("author_id");
+COMMIT;
+"""
+
+3 python manage.py migrate   # синхронизация базы данных
+  Applying blog.0001_initial... OK
+##############################################################################################
+4 _Создание администрирования Django_ _админка_
+1 python manage.py createsuperuser
+  username: admin
+  Email: admin@admin.com
+  Password:   приветмир
+  Password(again): приветмир
+  Superuser created successfully
+  http://127.0.0.1:8000/admin/
+
+5 _Добавление моделей в админку_
+1 в папке приложения blog/admin.py необходими импортировать model Post
+from django.contrib import admin
+from .models import Post
+''' c models.py импортирую класс Post'''
+
+admin.site.register(Post)
+""" Регистрирую свою модель """
+
+2 http://127.0.0.1:8000/admin/
+увижу свою модель Post,  add добавить свой post 
+
+воспроизведи проблему и попробуй удалить базу и еще раз slug проблема
+https://stackoverflow.com/questions/53637182/django-no-such-table-main-auth-user-old
+
+########################################################################################
+_настройка отображения моделей_  
+admin.py
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', 'author', 'publish', 'status')
+    list_filter = ('status', 'created', 'publish', 'author')
+    search_fields = ('title', 'body')
+    prepopulated_fields = {'slug': ('title',)}
+    raw_id_fields = ('author',)
+    date_hierarchy = 'publish'
+    ordering = ('status', 'publish')
+
+"""1  list_display позволяет перечислить поля модели, которые мы хотим отображать на странице списка
+@admin.register() выполняет те же действия, что и функция admin.site.register() регистрирует декорируемый класс
+наследний ModelAdmin
+
+2 list_display    это дополнительные информация в поле где сделан наш пост увидеть автора, дату публикации
+3 list_filter     это фильтр справа в админке от нас
+4 search_fields  это поиск в админке
+5 prepopulated_fields словарь в котором ключ slug связан с полем title!!!!!!!!!
+ предварительно заполняемые поля, получается когда указываю название Post в title slug автоматом
+подтягивает если кирилица то переводит в латиницу
+6 raw_id_fields
+7 date_hierarchy иерархия даты над полем Action можем по дата публикациям смотреть
+8  ordering  сортировка статей по полю status 
+
+"""
+###############################################################################################
+_работа с QuerySet и менеджерами_
+_QuerySet_
+https://docs.djangoproject.com/en/2.0/ref/models/
+API
+###################################
+1 python manage.py shell
+
+>>> from django.contrib.auth.models import User
+"""импортируем пользователя """
+>>> from blog.models import Post
+""" импортирую нашу модель """
+
+>>> user = User.objects.get(username='admin')
+""" Получаю доступ к пользователю admin если объект admin не найден в базе DoesNotExist, если несколько то
+MultipleObjectsReturned """
+
+>>> post = Post(title='Another post', slug='another-post',
+...             body='Post body.', author=user)
+""" создаю объект статьи Post, указываю заголовок, слаг, контент и автора пользователя полученного на предыдущем шаге
+пока объект храниться в памяти"""
+>>> post.save()
+# сохраняем статью в базу данных формирует sql-запрос INSERT в базу данных
+
+Post.objests.create(title='One more post', slug='one-more-post', body='Post body.', author=user)
+"""Создание поста объединение создание и сохранение поста с помощью метода create()  будет сформирован sql запрос
+ INSERT  в базу данных"""
+###########################################
+2 Изменение объектов 
+>>> post.title = "New title"
+''' Изменили в переменной post заголвок title вместо Another post в New title в админке поменяется '''
+>>> post.save()
+""" сохраняем в базу данных изменения преобразование в SQL-выржение UPDATE """
+###########################################
+3 Получение объектов 
+
+>>> from django.contrib.auth.models import User
+>>> from blog.models import Post
+>>> all_posts=Post.objects.all() ## здесь мы просто присвоили значение переменной поэтому не было запроса в базу данных
+""" ORM основана на коллекции queryset это коллекция объектов полученных из базы данных, можно фильтровать и сортировать
+В django один менеджеров модели objects. Можно получить с помощью него объект запроса QuerySet.
+метод all() нужен нам для того чтобы получить все объекты из таблицы"""
+
+>>> Post.objects.all()     # без значения переменной тогда будет вывод всех наших постов
+<QuerySet [<Post: One more post>, <Post: New title>, <Post: Who was Django reinchardt?>, <Post: USER>]>
+
+##########################################
+
+4 1 Использование метода filter()
+>>> Post.objects.filter(publish__year=2021) # помни Post это класс который мы создали в models.py
+ ## фильтрация по году 21 __ два нижних подчеркивания
+<QuerySet [<Post: One more post>, <Post: New title>, <Post: Who was Django reinchardt?>, <Post: USER>]>
+
+2 """ Фильтрация статей по логину и году """
+Post.objects.filter(publish__year=2021, author__username='admin')
+<QuerySet [<Post: One more post>, <Post: New title>, <Post: Who was Django reinchardt?>, <Post: USER>]>
+
+2.1 """ Фильтрация по цепочке """
+>>> Post.objects.filter(publish__year=2021).filter( author__username='admin')
+<QuerySet [<Post: One more post>, <Post: New title>, <Post: Who was Django reinchardt?>, <Post: USER>]>
+
+# Всегда помни при фильтрация по полю два нижних подчеркивания __  пример publish__year=2021
+
+#######################################################
+
+5 Использование метода exclude()_работа с queryset и менедже_работа с queryset и менеджерами_
+""" настравиваем фильтрацию чтобы были все посты кроме начало на Who пример ниже"""
+>>> Post.objects.filter(publish__year=2021).exclude(title__startswith='Who')
+<QuerySet [<Post: One more post>, <Post: New title>, <Post: USER>]>
+#############################################
+6 Использование order_by()
+1 Сортируем статьи по заголовку в алфавитном порядке 
+
+>>> Post.objects.order_by('title')
+<QuerySet [<Post: New title>, <Post: One more post>, <Post: USER>, <Post: Who was Django reinchardt?>]>
+
+2 Сортировка в обратном порядке 
+Post.objects.order_by('-tite')
+<QuerySet [<Post: Who was Django reinchardt?>, <Post: USER>, <Post: One more post>, <Post: New title>]>
+###############################################
+7 Удаление объектов 
+post = Post.objects.get(id=1)  # переменной присвоили знчение 
+post.delete()     # запустили удаление 
+ """ удаление объекта также удаляет зависимые объекты определ, через ForeignKey и имеющие параметр on_delete равный 
+ CASCADE""" 
+#################################################
+8 Когда происходит выполнение запросо QuerySet
+QuerySet выполняется только в том случае 
+1 первая итерация QuerySet
+2 когда мы делаем срез по коллекции пример:
+Post.objets.all()[:3]
+3 при сериализации или кешировании
+4 при вызове методов repr() или len();
+5 когда использ. функцию list(), передавая ее аргументов QuerySet;
+6 при использовании QuerySet в логических выражениях таких как bool() or and if 
+
+##############################################
+Создание менеджера модели 
+Objects менеджер по умолчанию. Но мы можем создать свой менеджер для получения всех опубликованных статей.
+models.py
+
+1 class PublishedManager(models.Manager):
+    """Создаем своего менеджера вместо стандартного objects """
+    def get_queryset(self):
+        return super().get_queryset().filter(status='published')
+
+2 class Post(models.Model):
+#.....
+ objects = models.Manager()           # менеджер по умолчанию
+ published = PublishedManager()       # наш новый менеджер
+
+3 python manage.py shell
+Post.published.filter(title__startswith='Who')
+''' Получаю доступ к всем статьям которые начинаются с Who ''' 
+
+################################################################################
+_создание обработчиков списка и страницы подробностей_
+_views.py_
+Обработчики Django это простая функция, которая получает веб-запрос и возвращает веб-ответ. Вся логика ответе который 
+поступает от сервер  описывается внутри данной функции. Функция определяет каким образом поступит ответ.
+
+В начале создаются обработчики, затем шаблоны url для них, html-шаблоны для отображения результатов обработки.
+Каждый обработчик генерерирует шаблон, используя переменные контекста и возвращает HTTP-ответ со сформированной 
+html-страницей. 
+
+1 blog/views.py 
+from django.shortcuts import render, get_object_or_404
+from .models import Post 
+""" импортировали с models.py класс post """
+
+def post_list(request):
+    posts = Post.published.all()
+    return render(request, 'blog/post/list.html', {'posts': posts})
+"""создали обработчик - post_list аргумент request, который обязателен для обработчиков, будем обращаться к менеджеру
+published (Post.published.all()) вместо стандартоного менеджера objects 
+
+render(request, 'blog/post/list.html', {'posts': posts}) #  для формирования шаблона со списком статей 
+request принимает путь к html шаблону, в ответ вернется объект HttpResponse со сформированным текстом html-код. 
+"""
+
+def post_detail(request, year, month, day, post):
+    post = get_object_or_404(Post, slug=post, status='published',publish__year=year,
+                            publish_month=month,publish__day=day)
+    return render(request, 'blog/post/detail.html',{'post': post})
+
+"""Обработчик страницы статьи. Принимает на вход аргументы year, month, day, post для получения статьи по указанным слагу
+и дате. 
+get_object_or_404 Функция ищет объект если не находит возвращает 404 если не найдет ни одной статьи. 
+
+ !!!render!!! для формирования HTML-шаблона указан путь где наш шаблон находится 
+ """
+##############################################################
+Добавление шаблонов URL для обработчиков 
+Шаблоны URL позволяет сопоставлять адреса с обработчиками. Суть в том что Django ищет по всем шаблонам пока не найдет
+первый подходящий шаблон, который совпадал бы с URLOM запроса.  Django сможет импортировать соотвествующий обработчик и 
+выполнить его передав внутрь объекта запроса Httprequest
+
+blog/urls.py
+from django.urls import path
+from . import views
+
+app_name = 'blog'
+
+urlpatterns = [
+    # post views 
+    path('', views.post_list, name='post_list'),
+    path('<int:year>/<int:month>/<int:day>/<slug:post>/',
+        views.post_detail, name='post_detail'),
+]
+"""Мы определил пространство имен приложения в переменной app_name. Первый шаблон не принимает никаких аргументов. Он
+сопоставляется с обработчиком post_list, второй вызывает функцию post_detail и принимает в качестве параметров следующие:
+year ## целое число, задающие год публикации статьи;
+month  ## целое число задающие месяц
+day  ## день публикации
+post ##
+
+<int:year>/<int:month>/<int:day>/<slug:post>
+треугольные скобки для извлечения значения из URLa. <int:year>/<int:month>/<int:day>  для преобразования года, месяца, 
+дня в число slug:post будет как строка 
+
+https://docs.djangoproject.com/en/2.0/topics/http/
+
+Регулярные выражения 
+https://docs.python.org/3/howto/regex.html
+ """
+######################################
+2 mysite/urls.py
+from django.urls import path, include
+from django.contrib import admin
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('blog/', include('blog.urls', namespace='blog')),
+]
+"""Новый шаблон добавленный при помощи include подключит конфигурацию приложения блога, blog все его адреса начинаются
+с blog должно быть уникально по всему проекту, обращение к шаблонам приложения по пространству имен например 
+blog:post_list, blog:post_dettail
+https://docs.djangoproject.com/en/2.0/topics/http/urls/#url-namespaces
+#подключили как и админку только в главном urls.py
+#########################################################################
+Канонические urlы для моделей 41 
+1
+class Post(models.Model):
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', args=[self.publish.year,
+                        self.publish.month, self.publish.day, self.slug])
+    """ get_absolute_url возвращает канонический url объекта, для получения ссылки на статью """
+
+
+2 в папке блог создаем следующие папки
+templates/
+blog/
+base.html      # каркас верстки который делит на два блока основную и боковую панель
+post/
+list.html      # список статей
+detail.html    # список статей 
