@@ -5,6 +5,8 @@ https://losst.ru/ustanovka-mysql-centos-7
 https://losst.ru/sozdanie-polzovatelya-mysql
 https://ru.piliapp.com/mysql-syntax-check/
 проверка синтаксиса
+https://yournet.kz/blog/mysql/ispravlenie-oshibok-v-baze-mysql
+исправление ошибок в базе данных!!!!
 
 Узнать пароль автоматический при установке который был
 grep 'temporary password' /var/log/mysqld.log  # временный пароль посмотреть 
@@ -87,11 +89,20 @@ SHOW DATABASES;  		 # увижу company базу данных
 +----+--------+---------+------+-------------------+--------+
 ###############################################################################
 18 если база данных испортилась 
+https://yournet.kz/blog/mysql/ispravlenie-oshibok-v-baze-mysql
+
 myisamchk /var/lib/mysql/company/users.MYI # проверка базы данных на ошибки можно так посмотреть 
 
 29 myisamchk -r /var/lib/mysql/company/users.MYI # рекомендуется использовать для восстановления таблицы
    myisamchk -o /var/lib/mysql/company/users.MYI  # если -r не помог то тогда -o
 
+18.1 
+mysqlcheck -u root -p --optimize --auto-repair --all-databases 
+--optimize – Оптимизируем все базы.
+--auto-repair – Ремонтируем все базы.
+--all-databases – Проверяем ошибки у всех баз.
+
+18.2 mysqlcheck -r имя_базы имя_таблицы_в_базе -u root -p  # проверка отдельной таблицы в базе данных
 #################################################################
 
 настройка mysql
