@@ -1,0 +1,210 @@
+mysql
+
+Mysql
+https://losst.ru/ustanovka-mysql-centos-7
+https://losst.ru/sozdanie-polzovatelya-mysql
+https://ru.piliapp.com/mysql-syntax-check/
+проверка синтаксиса
+#############################################################
+Вопрос how to change TYPE in mysql?:
+Итого самое важное:
+
+1 DESCRIBE users;   # смотрю описание конкретной таблицы users (не базы данных)
+2 drop database test;  # удалил конкретную таблицу
+3 \s   # status инфа о базе данных (смотрим под кем зашли, какая база данных выбрана, пользователя)
+4 \q выйти 
+5 SELECT COUNT(*) FROM users;  # посчитал количество записей в таблице users
+6 GRANT SELECT,INSERT,DELETE,UPDATE ON company.* TO 'admin'@'localhost' IDENTIFIED BY 'Nq+hONHa<0GQ1';  # создаю пользователя с конкретными правами
+7 mysql -u root -p    # авторизация от рута ; точка с запятой не надо
+mysql -p # от рута подключаюсь  тоже так можно 
+HELP # подсказки по командам без точки с запятой;
+STATUS # аналог \s под кем зашел статус базы данных подключения к базе 
+8 mysql -u admin -p   # авторизация пользователя
+9 SHOW GRANTS FOR 'admin'@'localhost';  # смотрю права конкретного пользователя 
+10 ls -lah /var/lib/mysql # здесь можно посмотреть все базы данных на сервере company, и другие 
+ls -lah /var/lib/mysql/company/  ## тут вся инфа о бозе данных company
+
+11.1 FLUSH PRIVILEGES; # обновить права в mysql
+11 REVOKE ALL PRIVILEGES ON test_database . * FROM 'test_user'@'localhost'; # забираю права
+
+12 SHOW PROCESSLIST;		 # смотрю какие сейчас процессы происходят 
+
+13 find / -name my*.cnf # ищу конфиг mysql
+/etc/my.cnf   # для простого сайта править ничего не надо только для высоконагруженных систем
+Оптимизация mysql это очень тонкое дело зависит от ситуации
+
+cd /usr/share/doc/ # раньше тут были шаблоны конфигов mysql
+
+#################################################################
+
+настройка mysql
+sudo yum install wget
+
+yum -y install mysql-server
+
+1 systemctl start mysqld
+2 systemctl status mysqld
+
+
+Узнать пароль автоматический при установке который был
+grep 'temporary password' /var/log/mysqld.log
+Nq+hONHa<0GQ
+Nq+hONHa<0GQ1 #новый 
+
+
+3 mysql -u root -p  # авторизация
+
+\s   # status инфа о базе данных (смотрим под кем зашли, какая база данных выбрана, пользователя)
+
+Connection id:		15 # уникальный номер
+Current database:	 # текущая база данных
+Current user:		root@localhost # пользователь под кем зашли в базу данных
+Server characterset:	latin1  # кодировки
+Db     characterset:	latin1 
+UNIX socket:		/var/lib/mysql/mysql.sock # каким образом подключение происходит
+Queries per second avg: 0.001    # секунду в запрос
+
+
+\q   # выйти
+
+3 show databases; 					#; нужна так, как длинная команда может быть в mysql 
+drop database test;        # название  test базы которой удаляем
+information_schema       # удалять нельзя 
+
+#######################################################
+company
+
+4 CREATE DATABASE company;  # создал базу данных company
+
+5  USE company;    # сделал базу company текущей 
+\s
+
+Current database:	company          # текущая база данных
+Current user:		root@localhost   # под каким пользователем
+
+6  show tables;        # показать смотри какие есть таблицы в этой базе данных
+Empty set (0.00 sec)
+
+7 CREATE TABLE users ( id INT(5) AUTO_INCREMENT PRIMARY KEY, name VARCHAR(64), surname VARCHAR(64), age TINYINT(3), email VARCHAR(64), status VARCHAR(128)) DEFAULT CHARACTER SET UTF8;
+
+# создать таблица users, AUTO_INCREMENT PRIMARY KEY автопывашение на 1, имя размер 64 символа, фамилия 64 символа, возраст 3 символа,  email, status, кодировка по умолчанию DEFAULT CHARACTER SET UTF8 !!!
+
+8 show tables;
+появится users таблица своего рода шаблона
+
+9 DESCRIBE users;   # смотрю описание конкретной таблицы users (не базы данных)
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int(5)       | NO   | PRI | NULL    | auto_increment | # только id будет автоматом повышаться на единицу
+| name    | varchar(64)  | YES  |     | NULL    |                |
+| surname | varchar(64)  | YES  |     | NULL    |                |
+| age     | tinyint(3)   | YES  |     | NULL    |                |
+| email   | varchar(64)  | YES  |     | NULL    |                |
+| status  | varchar(128) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+6 rows in set (0.01 sec)
+
+10 INSERT INTO users VALUES(' ', 'Ivan', 'Petrov', '25', 'petrov@company.ru', 'work'); # вставляю значения по полям в таблице выше id, имя, фамилия, возраст, почта, статус
+
+1 INSERT INTO users VALUES('1', 'Ivan', 'Petrov', '25', 'petrov@company.ru', 'work');  # id 1 сделал
+
+2 INSERT INTO users VALUES('2', 'Sergey', 'Malevin', '29', 'serg@company.ru', 'tourism');
+
+3 INSERT INTO users VALUES('3', 'Fyodor', 'Karpin', '27', 'fyodor@company.ru', 'work');
+
+
+11  SELECT * FROM users;              # вижу что заполнял выше
++----+--------+---------+------+-------------------+---------+
+| id | name   | surname | age  | email             | status  |
++----+--------+---------+------+-------------------+---------+
+|  1 | Ivan   | Petrov  |   25 | petrov@company.ru | work    |
+|  2 | Sergey | Malevin |   29 | serg@company.ru   | tourism |
+|  3 | Fyodor | Karpin  |   27 | fyodor@company.ru | work    |
++----+--------+---------+------+-------------------+---------+
+
+
+12 SELECT * FROM users;  # может создать нагрузку на всю базу данных поэтому лучше делать выборку
+
+SELECT * FROM users WHERE status='work';  # выгрузить из таблицы users где статус равен work запрос с условием
++----+--------+---------+------+-------------------+--------+
+| id | name   | surname | age  | email             | status |
++----+--------+---------+------+-------------------+--------+
+|  1 | Ivan   | Petrov  |   25 | petrov@company.ru | work   |
+|  3 | Fyodor | Karpin  |   27 | fyodor@company.ru | work   |
++----+--------+---------+------+-------------------+--------+
+
+13 модифицируем нашу запись 
+UPDATE users SET status='work' WHERE surname='Malevin';  # SET установить статус work, где фамилия Малевин, для малевина статус work вкратце
+
+14 SELECT * FROM users;    # вижу что у всех статус work
+SELECT * FROM users WHERE status='work';  # тоже увижу что он под этот запрос поподает 
++----+--------+---------+------+-------------------+--------+
+| id | name   | surname | age  | email             | status |
++----+--------+---------+------+-------------------+--------+
+|  1 | Ivan   | Petrov  |   25 | petrov@company.ru | work   |
+|  2 | Sergey | Malevin |   29 | serg@company.ru   | work   |
+|  3 | Fyodor | Karpin  |   27 | fyodor@company.ru | work   |
++----+--------+---------+------+-------------------+--------+
+
+15 DELETE from users WHERE surname='Karpin';      # удаляю из таблицы users  пользователя с фамилией "Karpin"
+
+mysql> select * from users where status='work';  # проверяю 
++----+--------+---------+------+-------------------+--------+
+| id | name   | surname | age  | email             | status |
++----+--------+---------+------+-------------------+--------+
+|  1 | Ivan   | Petrov  |   25 | petrov@company.ru | work   |
+|  2 | Sergey | Malevin |   29 | serg@company.ru   | work   |
++----+--------+---------+------+-------------------+--------+
+
+16 INSERT INTO users VALUES('3', 'Fyodor', 'Karpin', '27', 'fyodor@company.ru', 'work');
+# вернул его обратно 
+
+17 SELECT COUNT(*) FROM users;  # посчитал количество записей в таблице users
++----------+
+| COUNT(*) |
++----------+
+|        3 |
++----------+
+=================================================
+
+18 GRANT SELECT,INSERT,DELETE,UPDATE ON company.* TO 'admin'@'localhost' IDENTIFIED BY 'Nq+hONHa<0GQ1';  
+# даю привиилегии на все таблицы базы данных company.* (если надо таблицу конкретную то после точки название таблицы), пользователю admin в локальной системе (localhost) и индифицированный  by пароль 
+
+19 \q    # выхожу от рута 
+
+20 mysql -u admin -p  # зашел под пользователем
+\s # смотрю под кем зашел какой статус
+
+21 SHOW GRANTS FOR 'admin'@'localhost';  # смотрю права конкретного пользователя 
+
+mysql> SHOW GRANTS FOR 'admin'@'localhost';
++----------------------------------------------------------------------------+
+| Grants for admin@localhost                                                 |
++----------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'admin'@'localhost'                                  |
+| GRANT SELECT, INSERT, UPDATE, DELETE ON `company`.* TO 'admin'@'localhost' |
++----------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+\q
+
+21 ls -lah /var/lib/mysql # здесь можно посмотреть все базы данных на сервере company, и другие 
+	ls -lah /var/lib/mysql/company/
+
+
+22 mysql -p
+HELP # подсказки по командам без ;
+STATUS # аналог \s
+
+23 SHOW PROCESSLIST; # смотрю какие сейчас процессы происходят 
++-----+------+-----------+------+---------+------+----------+------------------+
+| Id  | User | Host      | db   | Command | Time | State    | Info             |
++-----+------+-----------+------+---------+------+----------+------------------+
+| 155 | root | localhost | NULL | Query   |    0 | starting | SHOW PROCESSLIST |
++-----+------+-----------+------+---------+------+----------+------------------+
+
+
+24 find / -name my*.cnf # ищу конфиг mysql
+/etc/my.cnf
+Оптимизация mysql это очень тонкое дело зависит от ситуации
+
