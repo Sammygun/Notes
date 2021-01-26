@@ -5,6 +5,11 @@ https://losst.ru/ustanovka-mysql-centos-7
 https://losst.ru/sozdanie-polzovatelya-mysql
 https://ru.piliapp.com/mysql-syntax-check/
 проверка синтаксиса
+
+Узнать пароль автоматический при установке который был
+grep 'temporary password' /var/log/mysqld.log  # временный пароль посмотреть 
+Nq+hONHa<0GQ
+Nq+hONHa<0GQ1 #новый 
 #############################################################
 Вопрос how to change TYPE in mysql?:
 Итого самое важное:
@@ -35,6 +40,58 @@ ls -lah /var/lib/mysql/company/  ## тут вся инфа о бозе данн�
 
 cd /usr/share/doc/ # раньше тут были шаблоны конфигов mysql
 
+14 mysqldump --opt -p company  > company.sql   # пароль 
+mysqldump -u root -p company > company.sql
+
+less company.sql # почитать базу посмотрим что внутри 
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT NULL,
+  `surname` varchar(64) DEFAULT NULL,
+# тут говорится если будет сделан импорт то будет удалена текущая таблица и заменена на новую 
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Ivan','Petrov',25,'petrov@company.ru','work'),(2,'Sergey','Malevin',29,'serg@company.ru','work'),(3,'Fyodor','Karpin',27,'fyodor@company.ru','work');
+# во время импорта сделать следующие insert 
+
+15 DROP DATABASE company;  # удалил базу конкретную 
+##################################################################################################
+17 Импорт базы данных на сервере 
+1 mysql -p 
+2 DROP DATABASE company;
+show databases;   # вижу что уже нету 
+3 \q
+
+4 mysql -p
+CREATE DATABASE company; ## помни если базу удалил ее надо создать а потом импортировать
+SHOW DATABASES;  		 # увижу company базу данных 
+
+5 mysql -u root -p company < company.sql  # делаю импорт базы данных 
+
+6 mysql -p # смотрим что туда закачалось 
+7 USE company; 			# перехожу на нужную базу данных
+  SHOW TABLES;         #смотрю таблицы 
+  SELECT * FROM users;  # смотрию данные таблицы users 
+
+  +----+--------+---------+------+-------------------+--------+
+| id | name   | surname | age  | email             | status |
++----+--------+---------+------+-------------------+--------+
+|  1 | Ivan   | Petrov  |   25 | petrov@company.ru | work   |
+|  2 | Sergey | Malevin |   29 | serg@company.ru   | work   |
+|  3 | Fyodor | Karpin  |   27 | fyodor@company.ru | work   |
++----+--------+---------+------+-------------------+--------+
+###############################################################################
+18 если база данных испортилась 
+myisamchk /var/lib/mysql/company/users.MYI # проверка базы данных на ошибки можно так посмотреть 
+
+29 myisamchk -r /var/lib/mysql/company/users.MYI # рекомендуется использовать для восстановления таблицы
+   myisamchk -o /var/lib/mysql/company/users.MYI  # если -r не помог то тогда -o
+
 #################################################################
 
 настройка mysql
@@ -47,7 +104,7 @@ yum -y install mysql-server
 
 
 Узнать пароль автоматический при установке который был
-grep 'temporary password' /var/log/mysqld.log
+grep 'temporary password' /var/log/mysqld.log  # временный пароль посмотреть 
 Nq+hONHa<0GQ
 Nq+hONHa<0GQ1 #новый 
 
@@ -207,4 +264,76 @@ STATUS # аналог \s
 24 find / -name my*.cnf # ищу конфиг mysql
 /etc/my.cnf
 Оптимизация mysql это очень тонкое дело зависит от ситуации
+
+#skip-networking # чтобы нельзя было подключиться к базе по сети 
+####################################################################
+25 Восстановление пароль от базы данных
+
+1 systemctl stop mysqld
+2 mysqld_safe --skip-grant-tables &    # старый способ скипануть грант tables
+3 mysql # все в базе данных
+4 UPDATE mysql.user SET Password=PASSWORD('newpass') WHERE user='root';  # newpass новый пароль 
+# в базе меняем для пользователя root пароль 
+5 FLUSH PRIVILEGES;  # обновил привелегии 
+\q
+6 systemctl restart mysqld # или start
+7 mysql -p # и новый пароль вводишь
+
+суть останавливаешь сервер скип грант делаешь, задаешь пароль, обновляешь привилегии, рестартуешь сервер, и заходишь под пользователем
+##################################################
+Резервное копирование:
+26 mysqldump --opt -p company  > company.sql   # пароль 
+mysqldump -u root -p company > company.sql
+
+less company.sql # почитать базу посмотрим что внутри 
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT NULL,
+  `surname` varchar(64) DEFAULT NULL,
+# тут говорится если будет сделан импорт то будет удалена текущая таблица и заменена на новую 
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Ivan','Petrov',25,'petrov@company.ru','work'),(2,'Sergey','Malevin',29,'serg@company.ru','work'),(3,'Fyodor','Karpin',27,'fyodor@company.ru','work');
+# во время импорта сделать следующие insert 
+ 
+###############################################3
+27
+Импорт базы данных на сервере 
+1 mysql -p 
+2 DROP DATABASE company;
+show databases;   # вижу что уже нету 
+3 \q
+
+4 mysql -p
+CREATE DATABASE company; ## помни если базу удалил ее надо создать а потом импортировать
+SHOW DATABASES;  		 # увижу company базу данных 
+
+5 mysql -u root -p company < company.sql  # делаю импорт базы данных 
+
+6 mysql -p # смотрим что туда закачалось 
+7 USE company; 			# перехожу на нужную базу данных
+  SHOW TABLES;         #смотрю таблицы 
+  SELECT * FROM users;  # смотрию данные таблицы users 
+
+  +----+--------+---------+------+-------------------+--------+
+| id | name   | surname | age  | email             | status |
++----+--------+---------+------+-------------------+--------+
+|  1 | Ivan   | Petrov  |   25 | petrov@company.ru | work   |
+|  2 | Sergey | Malevin |   29 | serg@company.ru   | work   |
+|  3 | Fyodor | Karpin  |   27 | fyodor@company.ru | work   |
++----+--------+---------+------+-------------------+--------+
+########################################################
+28 если база данных испортилась 
+myisamchk /var/lib/mysql/company/users.MYI # проверка базы данных на ошибки можно так посмотреть 
+
+29 myisamchk -r /var/lib/mysql/company/users.MYI # рекомендуется использовать для восстановления таблицы
+   myisamchk -o /var/lib/mysql/company/users.MYI  # если -r не помог то тогда -o
+
+
+
 
