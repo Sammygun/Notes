@@ -1,0 +1,296 @@
+PostgreSQL
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-centos-7
+установка и настройка 
+реляционные базы данных sql relation связь сущности могут быть связаны друг с другом
+не реляционные nosql 
+
+Сущности
+1 
+customer
+id
+name
+phone
+email
+
+2 
+product 
+id       # уникальные поля 
+name
+description
+price
+
+3 product_photo
+id
+url
+product id     # ссылается на индитификатор product (id)
+
+4 cart      #корзина 
+id
+customer_id # ссылается на customer (id)
+
+
+5 cart_product
+cart_id    # ссылается на cart_id
+product_id # ссылается на product_id
+=======================================
+Итого
+1 sudo -i -u postgres # от рута просто подключиться
+psql 
+
+2 create database shop; # создаем базу shop
+3 \c shop       # connect коннектимся к базе данных
+4 \d       # вижу все таблицы в базе данных shop;
+4.1  \d product_photo       # смотрю отдельную табличку product_photo 
+
+
+5 связывание таблиц сущностями двух таблиц 
+
+shop=# create table product_photo(
+shop(# id serial primary key,
+shop(# url varchar(255),
+shop(# product_id integer references product(id));  # id integer это цифра references связана с другой таблицей product(id)
+
+6 \d cutomer  # посмотрим таблицу  # вставляем нужные значения 
+insert into customer(name, phone, email) values ('Василий', '02', 'vac@gmail.com');  ## вставить в customer в ячейки name, phone, email 
+следующие значения и перечисление 
+
+7 select * from customer;    # могу так посмотреть значения конкретной таблицы которые ранее добавлял
+ id |  name   | phone |     email      
+----+---------+-------+----------------
+  1 | Василий | 02    | vac@gmail.com
+  2 | Петр    | 03    | petr@gmail.com
+
+8 select * from product_photo; # выбор всех полей
+  select url from product_photo; # выбор конкретного поля 
+   id |     url      | product_id 
+----+--------------+------------
+  1 | iphone_photo |          1
+(1 строка)
+
+
+8.1 select url, product_id from product_photo;  # выбор несколько полей 
+     url      | product_id 
+--------------+------------
+ iphone_photo |          1
+(1 строка)
+
+
+9 select pp.*, p.name from product_photo pp left join product p on p.id=pp.product_id; # еще добавим выборку
+ id |     url      | product_id |  name      # соединили разные таблицы используя left join главная таблица левая которая у нас 
+----+--------------+------------+--------
+  1 | iphone_photo |          1 | Iphone
+(1 строка)
+
+======================================
+1 sudo vi /etc/yum.repos.d/CentOS-Base.repo
+Find the [base] and [updates] sections, enter insert mode by pressing i, and insert the exclude=postgresql*
+[base]
+exclude=postgresql*
+
+[updates]
+exclude=postgresql*
+
+2 sudo yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+
+3 yum list postgresql*
+
+4 sudo yum install postgresql11-server
+
+5 sudo /usr/pgsql-11/bin/postgresql-11-setup initdb
+
+6 sudo systemctl start postgresql-11
+  sudo systemctl enable postgresql-11
+
+
+7  sudo -i -u postgres
+8  psql 
+====================================
+10 create database shop; # создаем базу shop 
+11 \c shop       # connect коннектимся к базе данных
+12 \d # что есть в базе данных сейчас какие последовательности
+
+13 create table customer(               # enter создаем сущность (таблицу) customer 
+id serial primary key,            # id каждое значение уникальное enter
+name varchar(255),           # имя 255 символов enter
+phone varchar(30),          # телефон 30 символов enter
+email varchar(255)          # почта 255 символов enter 
+);							# закрыл таблицу enter уведомление CREATE TABLE
+
+14 
+shop=# \d   # смотрим на созданную табличку 
+                     Список отношений
+ Схема  |       Имя       |        Тип         | Владелец 
+--------+-----------------+--------------------+----------
+ public | customer        | таблица            | postgres
+ public | customer_id_seq | последовательность | postgres  # customer_id_seq уникальная последовательность сущность 
+
+
+
+15 
+\d customer   # смотрю табличку customer 
+                                            Таблица "public.customer"
+ Столбец |          Тип           | Правило сортировки | Допустимость NULL |             По умолчанию             
+---------+------------------------+--------------------+-------------------+--------------------------------------
+ id      | integer                |                    | not null          | nextval('customer_id_seq'::regclass)
+ name    | character varying(255) |                    |                   | 
+ phone   | character varying(30)  |                    |                   | 
+ email   | character varying(255) |                    |                   | 
+Индексы:
+    "customer_pkey" PRIMARY KEY, btree (id)    # у каждого клиента уникальный первичный ключь
+
+ 16 Табблица продукт создаем
+create table product(    # enter
+id serial primary key,   # уникальный ключь
+name varchar(255),       # name имя varchar символов 255 
+description text,        # описание это текст может его быть много
+price integer);          # цена integer это  цифра 
+CREATE TABLE
+
+
+17  \d product          # смотрим продукт
+   Столбец   |          Тип           | Правило сортировки | Допустимость NULL |            По умолчанию             
+-------------+------------------------+--------------------+-------------------+-------------------------------------
+ id          | integer                |                    | not null          | nextval('product_id_seq'::regclass)
+ name        | character varying(255) |                    |                   | 
+ description | text                   |                    |                   | 
+ price       | integer                |                    |                   | 
+Индексы:
+    "product_pkey" PRIMARY KEY, btree (id)
+
+
+18 shop=# create table product_photo(
+shop(# id serial primary key,
+shop(# url varchar(255),
+shop(# product_id integer references product(id));  # id integer это цифра references product(id) связана с другой таблицей product(id)
+
+19 \d       # вижу все таблицы в базе данных shop;
+
+                       Список отношений
+ Схема  |         Имя          |        Тип         | Владелец 
+--------+----------------------+--------------------+----------
+ public | customer             | таблица            | postgres
+ public | customer_id_seq      | последовательность | postgres
+ public | product              | таблица            | postgres
+ public | product_id_seq       | последовательность | postgres
+ public | product_photo        | таблица            | postgres
+ public | product_photo_id_seq | последовательность | postgres
+
+20 \d product_photo       # смотрю отдельную табличку product_photo 
+
+21 создаме таблицу cart 
+
+shop=# create table cart(
+shop(# customer_id integer references customer(id),     # это графа связана с customer id
+shop(# id serial primary key);
+
+22 \d cart # смотрю таблицу cart 
+
+23 shop=# create table cart_product(     # shop это строка терминала которая показывает что мы в базе данных shop
+shop(# cart_id integer references cart(id),
+shop(# product_id integer references product(id));
+CREATE TABLE
+
+24 \d cart_product # смотрим таблицу cart_product 
+
+
+25 \d
+                       Список отношений
+ Схема  |         Имя          |        Тип         | Владелец 
+--------+----------------------+--------------------+----------
+ public | cart                 | таблица            | postgres   # корзина 
+ public | cart_id_seq          | последовательность | postgres   
+ public | cart_product         | таблица            | postgres   # товары в корзине 
+ public | customer             | таблица            | postgres
+ public | customer_id_seq      | последовательность | postgres
+ public | product              | таблица            | postgres  # продукт 
+ public | product_id_seq       | последовательность | postgres
+ public | product_photo        | таблица            | postgres  # фото товаров
+ public | product_photo_id_seq | последовательность | postgres
+(9 строк)
+
+
+============================================
+
+26 \d cutomer  # посмотрим таблицу 
+ Столбец |          Тип           | Правило сортировки | Допустимость NULL |             По умолчанию             
+---------+------------------------+--------------------+-------------------+--------------------------------------
+ id      | integer                |                    | not null          | nextval('customer_id_seq'::regclass)
+ name    | character varying(255) |                    |                   | 
+ phone   | character varying(30)  |                    |                   | 
+ email   | character varying(255) |                    |                   | 
+
+  
+27 создадим какое-то количество customer смотрю на таблицу выше и делаю запись 
+1 insert into customer(name, phone, email) values ('Василий', '02', 'vac@gmail.com');  ## вставить в customer в ячейки name, phone, email 
+следующие значения и перечисление 
+
+2 insert into customer(name, phone, email) values ('Петр', '03', 'petr@gmail.com');
+
+=======================================================
+Создаем записи в продукте product 
+
+28 \d product
+                                              Таблица "public.product"
+   Столбец   |          Тип           | Правило сортировки | Допустимость NULL |            По умолчанию             
+-------------+------------------------+--------------------+-------------------+-------------------------------------
+ id          | integer                |                    | not null          | nextval('product_id_seq'::regclass)
+ name        | character varying(255) |                    |                   | 
+ description | text                   |                    |                   | 
+ price       | integer                |                    |                   | 
+Индексы:
+    "product_pkey" PRIMARY KEY, btree (id)
+Ссылки извне:
+    TABLE "cart_product" CONSTRAINT "cart_product_product_id_fkey" FOREIGN KEY (product_id) REFERENCES product(id)
+    TABLE "product_photo" CONSTRAINT "product_photo_product_id_fkey" FOREIGN KEY (product_id) REFERENCES product(id)
+
+
+29  insert into product(name, description, price) values ('Iphone', 'крутой телефон', '100000');
+
+	insert into product(name, description, price) values ('apple watch', 'крутой часы', '50000');
+
+30 shop=# select * from product;
+ id |    name     |  description   | price  
+----+-------------+----------------+--------
+  1 | Iphone      | крутой телефон | 100000
+  2 | apple watch | крутой часы    |  50000
+======================================================================
+
+31 вставляем фото в нашу таблицу 
+\d product_photo
+  Столбец   |          Тип           | Правило сортировки | Допустимость NULL |               По умолчанию                
+------------+------------------------+--------------------+-------------------+-------------------------------------------
+ id         | integer                |                    | not null          | nextval('product_photo_id_seq'::regclass)
+ url        | character varying(255) |                    |                   | 
+ product_id | integer                |                    |                   | 
+Индексы:
+
+
+insert into product_photo(url, product_id) values ('iphone_photo', 1);   #id 1 у нашего iphone 
+
+32 shop=# select * from product_photo;
+ id |     url      | product_id 
+----+--------------+------------
+  1 | iphone_photo |          1
+
+============================================================================
+join объеддиняем две таблицы сразу 
+
+33 select pp.* from product_photo pp; # алиас
+
+select pp.* from product_photo pp left join product p on p.id=pp.product_id;
+
+ select pp.* from product_photo pp left join product p on p.id=pp.product_id;
+ id |     url      | product_id 
+----+--------------+------------
+  1 | iphone_photo |          1
+(1 строка)
+
+
+34 select pp.*, p.name from product_photo pp left join product p on p.id=pp.product_id; # еще добавим выборку
+ id |     url      | product_id |  name      # соединили разные таблицы используя left join
+----+--------------+------------+--------
+  1 | iphone_photo |          1 | Iphone
+(1 строка)
+
+
+21:12
