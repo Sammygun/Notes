@@ -4,6 +4,11 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgres
 реляционные базы данных sql relation связь сущности могут быть связаны друг с другом
 не реляционные nosql 
 
+https://www.postgresqltutorial.com/postgresql-joins/
+есть также не русском
+
+
+
 Сущности
 1 
 customer
@@ -81,6 +86,110 @@ insert into customer(name, phone, email) values ('Василий', '02', 'vac@gm
   1 | iphone_photo |          1 | Iphone
 (1 строка)
 
+
+10 select pp.*, p.name from product_photo pp right join product p on p.id=pp.product_id;   # теперь правая таблица главная 
+ id |     url      | product_id |    name     
+----+--------------+------------+-------------
+  1 | iphone_photo |          1 | Iphone
+    |              |            | apple watch   # правая таблица главная продукт, apple watch появился но пусто photo так как нету фото
+
+11 left outer join, right outer right #разницу можно увидеть ввиде кружков 
+https://www.postgresqltutorial.com/postgresql-joins/
+(left join, right join)
+left join  # главная левая таблица если нету записи в правой добавяться нулями
+right join # главная правая таблица если нету в левой добавиться нулями
+inner join # это когда два значения которые есть и там выводятся
+
+
+12 select pp.*, p.name from product_photo pp inner join product p on p.id=pp.product_id;  # inner join выведит записи которые присуствуют 2  таблицах
+ id |     url      | product_id |  name  
+----+--------------+------------+--------
+  1 | iphone_photo |          1 | Iphone
+(1 строка)
+
+
+13 Удаление фотографии которая никуда не ссылается
+select * from product_photo;
+ id |      url      | product_id 
+----+---------------+------------
+  1 | iphone_photo  |          1
+  2 | unknown_photo |        100
+
+
+ delete from product_photo where id=2;   # удаление конкретной ячейки из таблицы product_photo по номеру id
+
+
+14 update product_photo set url='iphone_image_2' where id=1;     # обновил конкретное значение по id в таблице iphone_image_2
+
+ select * from product_photo;
+ id |      url       | product_id 
+----+----------------+------------
+  1 | iphone_image_2 |          1     # iphone_image поменялся
+
+
+ 15 select * from cart;    # выбрать все значения из таблицы cart видим, что она пустая 
+ customer_id | id 
+-------------+----
+
+16   select c.name, cart.id as cart_id, cp.product_id, p.price from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id left join product p on p.id=cp.product_id; # обращение к нескольким таблицам 
+  name   | cart_id | product_id | price  
+---------+---------+------------+--------
+ Василий |       1 |          1 | 100000
+ Василий |       1 |          2 |  50000
+ Петр    |         |            |       
+(3 строки)
+
+
+17  select c.name, sum(p.price) from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id left join product p on p.id=cp.product_id group by c.name;   # выводим стоимость про суммированную sum(p.price), c.name в конце это name из customer 
+
+  name   |  sum   
+---------+--------
+ Петр    |       
+ Василий | 150000
+(2 строки)
+
+
+18  select c.name, sum(p.price) from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id left join product p on p.id=cp.product_id group by c.name;   # выводим стоимость про суммированную sum(p.price), c.name в конце это name из customer 
+
+  name   |  sum   
+---------+--------
+ Петр    |          
+ Василий | 150000     # про суммировали благодаря функции
+(2 строки)
+
+18.1 select c.name, coalesce(sum(p.price), 0) as orders_sum from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id left join product p on p.id=cp.product_id group by c.name;   
+  name   | orders_sum 
+---------+------------
+ Петр    |          0     # coalesce(sum(p.price), 0) as orders_sum благодаря этой записи появится вместо null 0
+ Василий |     150000
+(2 строки)
+
+
+
+19 select c.name, coalesce(sum(p.price), 0) as orders_sum from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id left join product p on p.id=cp.product_id group by c.name having sum(p.price)>0; # сортировка больше нуля 
+having sum(p.price)>0 фильтрует группы, where строки фильтруют
+
+  name   | orders_sum 
+---------+------------
+ Василий |     150000
+(1 строка)
+
+
+20 1 select * from customer order by name;   # сортировка по имени в алфавитном порядке 
+   2 select * from customer order by name using ~<~;  # если выводит некорректно делай так может быть из-за проблем с кодировкой
+
+   3 select * from customer order by name limit 1;      # вывожу какой-то лимит записей  
+ id |  name   | phone |     email     
+----+---------+-------+---------------
+  1 | Василий | 02    | vac@gmail.com
+
+  4 select * from customer order by name limit 2;  # только 2 значения 
+
+  5 select * from customer order by name limit 1 offset 1; # смещение на 1 поэтому с двух начинаем 
+ id | name | phone |     email      
+----+------+-------+----------------
+  2 | Петр | 03    | petr@gmail.com
+ 
 ======================================
 1 sudo vi /etc/yum.repos.d/CentOS-Base.repo
 Find the [base] and [updates] sections, enter insert mode by pressing i, and insert the exclude=postgresql*
@@ -293,4 +402,225 @@ select pp.* from product_photo pp left join product p on p.id=pp.product_id;
 (1 строка)
 
 
-21:12
+
+35  \d product_photo
+                                              Таблица "public.product_photo"
+  Столбец   |          Тип           | Правило сортировки | Допустимость NULL |               По умолчанию                
+------------+------------------------+--------------------+-------------------+-------------------------------------------
+ id         | integer                |                    | not null          | nextval('product_photo_id_seq'::regclass)
+ url        | character varying(255) |                    |                   | 
+ product_id | integer                |                    |                   | 
+Индексы:
+    "product_photo_pkey" PRIMARY KEY, btree (id)
+Ограничения внешнего ключа:
+    "product_photo_product_id_fkey" FOREIGN KEY (product_id) REFERENCES product(id)
+
+35.1 alter table product_photo drop constraint product_photo_product_id_fkey; # убираем forignkey 
+
+36 select * from product_photo;       # смотрим таблицу photo
+ id |     url      | product_id 
+----+--------------+------------
+  1 | iphone_photo |          1
+(1 строка)
+
+
+37 
+select pp.*, p.name from product_photo pp left join product p on p.id=pp.product_id;
+ id |      url      | product_id |  name  
+----+---------------+------------+--------
+  1 | iphone_photo  |          1 | Iphone
+  2 | unknown_photo |        100 | 
+
+
+37 insert into product_photo (url, product_id) values ('unknown_photo', 100); # делаем фото на не существующий продукт product_id 100 
+
+
+38 select * from product_photo;
+ id |      url      | product_id 
+----+---------------+------------
+  1 | iphone_photo  |          1
+  2 | unknown_photo |        100
+(2 строки)
+
+
+39 select pp.*, p.name from product_photo pp left join product p on p.id=pp.product_id;
+ id |      url      | product_id |  name  
+----+---------------+------------+--------
+  1 | iphone_photo  |          1 | Iphone
+  2 | unknown_photo |        100 |        # видим, что таблицы связались но раздел name пусто так как нету такого товара
+
+
+40 select pp.*, p.name from product_photo pp right join product p on p.id=pp.product_id;   # теперь правая таблица главная 
+ id |     url      | product_id |    name     
+----+--------------+------------+-------------
+  1 | iphone_photo |          1 | Iphone
+    |              |            | apple watch   # правая таблица главная продукт, apple watch появился но пусто photo так как нету фото
+
+
+
+41 select pp.*, p.name from product_photo pp inner join product p on p.id=pp.product_id;  # inner join выведит записи которые присуствуют 2  таблицах
+ id |     url      | product_id |  name  
+----+--------------+------------+--------
+  1 | iphone_photo |          1 | Iphone
+(1 строка)
+
+
+
+42 Удаление фотографии которая никуда не ссылается
+
+select * from product_photo;
+ id |      url      | product_id 
+----+---------------+------------
+  1 | iphone_photo  |          1
+  2 | unknown_photo |        100
+
+
+ delete from product_photo where id=2;   # удаление конкретной ячейки из таблицы product_photo по номеру id
+
+
+ 43 update product_photo set url='iphone_image_2' where id=1;     # обновил конкретное значение по id в таблице iphone_image_2
+UPDATE 1
+shop=# select * from product_photo;
+ id |      url       | product_id 
+----+----------------+------------
+  1 | iphone_image_2 |          1
+
+
+44 \d cart 
+                                       Таблица "public.cart"
+   Столбец   |   Тип   | Правило сортировки | Допустимость NULL |           По умолчанию           
+-------------+---------+--------------------+-------------------+----------------------------------
+ customer_id | integer |                    |                   | 
+ id          | integer |                    | not null          | nextval('cart_id_seq'::regclass)
+
+select * from cart;    # выбрать все значения из таблицы cart видим, что она пустая 
+ customer_id | id 
+-------------+----
+(0 строк)
+
+
+45  insert into cart (customer_id) values (1);     # делаем заказ для василия 
+	select * from product; 				 # товары которые надо будет добавить
+ id |    name     |  description   | price  
+----+-------------+----------------+--------
+  1 | Iphone      | крутой телефон | 100000
+  2 | apple watch | крутой часы    |  50000
+
+  insert into cart_product (cart_id, product_id) values (1, 1), (1, 2);
+
+45.1  select * from cart_product;  # появилось в карточки товара наш iphone и apple watch 
+ cart_id | product_id 
+---------+------------
+       1 |          1
+       1 |          2
+
+46 Боевая задачка имена клиентов по сумме заказа достаем
+
+select * from customer;
+ id |  name   | phone |     email      
+----+---------+-------+----------------
+  1 | Василий | 02    | vac@gmail.com
+  2 | Петр    | 03    | petr@gmail.com
+
+
+47 select c.name from customer c;     # делаю алиас для имени в таблице customer 
+  name   
+---------
+ Василий
+ Петр
+(2 строки)
+
+48 select c.name from customer c left join cart on cart.customer_id=c.id;
+  name   
+---------
+ Василий
+ Петр
+(2 строки)
+
+49 select c.name, cart.id from customer c left join cart on cart.customer_id=c.id; # cart.id вставили 
+  name   | id 
+---------+----
+ Василий |  1
+ Петр    |   
+(2 строки)
+
+
+50 select c.name, cart.id as cart_id from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id;
+  name   | cart_id 
+---------+---------
+ Василий |       1  # для василия две записи два товара есть 
+ Василий |       1
+ Петр    |        
+(3 строки)
+
+51  select c.name, cart.id as cart_id, cp.product_id, p.price from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id left join product p on p.id=cp.product_id; # обращение к нескольким таблицам 
+  name   | cart_id | product_id | price  
+---------+---------+------------+--------
+ Василий |       1 |          1 | 100000
+ Василий |       1 |          2 |  50000
+ Петр    |         |            |       
+(3 строки)
+
+
+52 select c.name, p.price from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id left join product p on p.id=cp.product_id;
+  name   | price  
+---------+--------
+ Василий | 100000
+ Василий |  50000
+ Петр    |       
+(3 строки)
+
+
+53 select c.name, sum(p.price) from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id left join product p on p.id=cp.product_id group by c.name;   # выводим стоимость про суммированную sum(p.price), c.name в конце это name из customer 
+
+  name   |  sum   
+---------+--------
+ Петр    |          
+ Василий | 150000     # про суммировали благодаря функции
+(2 строки)
+
+54 select c.name, coalesce(sum(p.price), 0) as orders_sum from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id left join product p on p.id=cp.product_id group by c.name;   
+  name   | orders_sum 
+---------+------------
+ Петр    |          0     # coalesce(sum(p.price), 0) as orders_sum благодаря этой записи появится вместо null 0
+ Василий |     150000
+(2 строки)
+
+
+55 select c.name, coalesce(sum(p.price), 0) as orders_sum from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id left join product p on p.id=cp.product_id group by c.name order by orders_sum;  
+# сортировка самых жирных order by orders_sum;
+
+  name   | orders_sum 
+---------+------------
+ Петр    |          0
+ Василий |     150000
+(2 строки)
+
+56 select c.name, coalesce(sum(p.price), 0) as orders_sum from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id left join product p on p.id=cp.product_id group by c.name order by orders_sum desc;  # сумма в самом вверху desc  
+  name   | orders_sum 
+---------+------------
+ Василий |     150000
+ Петр    |          0
+(2 строки)
+
+57 select c.name, coalesce(sum(p.price), 0) as orders_sum from customer c left join cart on cart.customer_id=c.id left join cart_product cp on cp.cart_id=cart.id left join product p on p.id=cp.product_id group by c.name having sum(p.price)>0; # сортировка больше нуля 
+having sum(p.price)>0 фильтрует группы, where строки фильтруют
+
+  name   | orders_sum 
+---------+------------
+ Василий |     150000
+(1 строка)
+
+
+48 select * from customer order by name;   # сортировка по имени в алфавитном порядке 
+   select * from customer order by name using ~<~;  # если выводит некорректно делай так может быть из-за проблем с кодировкой
+ id |  name   | phone |     email      
+----+---------+-------+----------------
+  1 | Василий | 02    | vac@gmail.com
+  2 | Петр    | 03    | petr@gmail.com
+
+ 49  select * from customer order by name limit 1 offset 1; # смещение на 1 поэтому с двух начинаем 
+ id | name | phone |     email      
+----+------+-------+----------------
+  2 | Петр | 03    | petr@gmail.com
+
