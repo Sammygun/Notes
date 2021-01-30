@@ -7,11 +7,40 @@ nginx-server
 2 apache скрипты, nginx статика 
 3 nginx + fastcgi  # fastcgi скрипты написаны на языке который понимает fastcgi (php, perl как пример) apache не нужен
 
+
+
 ################################################################
 Итого:
 1 netstat -nlp | grep :9000   # смотрю что слушает порт 9000 вижу php-cgi
-2 
+2  /etc/init.d/nginx restart  ## перестартую сервер nginx в момент рестарт если кто-то подключится может увидеть ошибку
+   /etc/init.d/nginx reload   ### reload создает перезагруку создаются новые воркеры которые обрабатывают запросы, а старые убиваются
+   systemctl reload nginx # аналог  reload лучше 
 
+ 
+3 nginx -t  ##проверка на синатксис 
+
+4 telnet sam.linux.of.by 80 
+GET /index.html HTTP/1.0     ## два раза enter  делаю запрос через командуню строку смотрю ответ
+
+4.2 telnet sam.linux.of.by 80
+
+GET /index.html HTTP/1.1     # здесь уже другая версия протокола 
+Host: sam.linux.of.by        # обязательно надо указать к какому виртуальному хосту надо подключиться
+
+4.3 telnet sam.linux.of.by 80  ## тут неважно какой из доменов расположенных на сервере указывается
+
+GET /index.html HTTP/1.1
+Host: web.kis.im               # здесь указываю к какому реально виртуальному хосту необходимо обратиться 
+
+WEB
+
+
+5 curl # cat url расшифровка 
+
+6 mv default.conf sam.linux.of.by.conf # виртуальные хосты необходимо переименовывать в название сайтов который описан в них 
+cp sam.linux.of.by.conf web.kis.im.conf # создал копию виртуального хоста для второго домена  
+
+7 
 #################################################################
 
 https://losst.ru/ustanovka-nginx-v-centos-7
@@ -227,4 +256,98 @@ lrwxrwxrwx  1 root root   22 Dec 15 16:59 modules -> /usr/lib/nginx/modules/
 Если использовать package manager дистрибутива то тогда будет  /etc/nginx/sites-available и /etc/nginx/sites-enabled. Что по сути тоже самое что и выше.
 В этом варианте, конфигурационный файл хранится в каталоге sites-available, а в каталоге sites-enabled создается симлинк на него, что позволяет при необходимости подключать/отключать часть конфигурации без удаления самого файла (путем добавления/удаления симлинка на него).
 
-18:32
+5 include       /etc/nginx/mime.types 
+vim  /etc/nginx/mime.types  # какие расширения файлов которому соотвествуют 
+
+6    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+Здесь указан формат логов как его можно настраивать 
+
+7 include /etc/nginx/conf.d/*.conf;   # типо как было с симлинками avaible enable 
+все конфиги размещаем здесь здесь находятся наши виртуальные хосты 
+
+8 cd  /etc/nginx/conf.d
+vim default.conf  # полностью все очищаю и начинаю заново
+
+server {
+  listen 80;
+
+  server_name sam.linux.of.by;
+
+  return 200 "APP";
+}
+
+
+9 nginx -t  # проверка синтаксиса
+10 /etc/init.d/nginx restart  ## перестартую сервер nginx в момент рестарт если кто-то подключится может увидеть ошибку
+   /etc/init.d/nginx reload   ### reload создает перезагруку создаются новые воркеры которые обрабатывают запросы, а старые убиваются 
+   клиенты не отрубаются
+
+11 curl # cat url расшифровка 
+   
+1 telnet sam.linux.of.by 80
+Trying 185.179.83.171...
+Connected to sam.linux.of.by.
+Escape character is '^]'.
+GET /index.html HTTP/1.0     ## два раза enter 
+
+HTTP/1.1 200 OK         # код ответа 
+Server: nginx/1.19.6    # версия сервера 
+Date: Sat, 30 Jan 2021 17:52:26 GMT  # дата и время
+Content-Type: text/html
+Content-Length: 3                     # 3 символа передали APP
+Connection: close
+
+APPConnection closed by foreign host. # APP тут есть 
+
+
+2 telnet sam.linux.of.by 80
+Trying 185.179.83.171...
+Connected to sam.linux.of.by.
+Escape character is '^]'.
+GET /index.html HTTP/1.1     # здесь уже другая версия протокола 
+Host: sam.linux.of.by        # обязательно надо указать к какому виртуальному хосту надо подключиться
+
+
+12 mv default.conf sam.linux.of.by.conf  # виртуальные хосты необходимо переименовывать в название сайтов который описан в них 
+13 cp sam.linux.of.by.conf web.kis.im.conf
+
+vim web.kis.im.conf
+
+server {
+  listen 80;
+
+  server_name web.kis.im;
+
+  return 201 "WEB";
+
+14 Однако мы все може хранить в одном виртуальном хосте 
+rm -rf web.kis.im.conf
+
+vim sam.linux.of.by.conf # добавим еще конфиг для второго домена 
+server {
+  listen 80;
+
+  server_name sam.linux.of.by;
+
+  return 200 "APP\n";  # чтобы строки не слиплись 
+}
+
+
+server {
+  listen 80;
+
+  server_name web.kis.im;
+
+  return 201 "WEB\n"; # чтобы строки не слиплись
+}
+
+
+15 telnet sam.linux.of.by 80
+
+GET /index.html HTTP/1.1
+Host: web.kis.im        # тут указываю к какому виртуальному хосту надо обратиться 
+
+WEB
