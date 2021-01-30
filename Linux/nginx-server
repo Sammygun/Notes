@@ -1,0 +1,230 @@
+nginx-server 
+
+1 используется для более экономного расходование ресурсов сервера используется в связке с apache 
+
+виды использования nginx:
+1 stand alone на разных ip-адресах и портах nginx apache
+2 apache скрипты, nginx статика 
+3 nginx + fastcgi  # fastcgi скрипты написаны на языке который понимает fastcgi (php, perl как пример) apache не нужен
+
+################################################################
+Итого:
+1 netstat -nlp | grep :9000   # смотрю что слушает порт 9000 вижу php-cgi
+2 
+
+#################################################################
+
+https://losst.ru/ustanovka-nginx-v-centos-7
+
+Установка
+1  yum install epel-release
+2 yum install nginx
+3 systemctl start nginx
+4 systemctl enable nginx # автозагрузка 
+
+5  yum -y install php-cli # тут будет пакет fastcgi 
+
+6 yum -y install spawn-fcgi #  
+
+7 spawn-fcgi -a 127.0.0.1 -p 9000 -u nginx -g nginx -f /usr/bin/php-cgi & # запускаю сервер fcgi, указываю на каком ip-адресе слушать, -p port 9000, -u nginx -g nginx юзер и его группа, -f указываю путь к файлу php-cgi  #
+
+8 ps -aux | grep php # проверяю работает или нет
+
+9 netstat -nlp | grep :9000   # смотрю что слушает порт 9000 вижу php-cgi
+tcp        0      0 127.0.0.1:9000          0.0.0.0:*               LISTEN      12661/php-cgi  
+==========================================
+
+10 Структура nginx.conf 
+1 user nginx;      # от какого пользователя запускается nginx 
+  worker_processes auto   # 
+
+2 error_log /var/log/nginx/error.log;   # где логи храним
+
+3 worker_connections 1024;     количество соединений 
+
+4 include /usr/share/nginx/modules/*.conf; # подключаем конкретны файл 
+
+5 access_log  /var/log/nginx/access.log # где журналы храним
+
+
+6 Если вы уже выполняли эту операцию, удалите своп-файл ".nginx.conf.swp"
+=============================================
+1 nginx.conf 
+
+1 main # базовые директивы конфига 
+Пример:
+### Секция main
+user www-data;
+worker_processes auto;      # рекомендуют устанавливать по количеству ядер выставлят каждому worker свое ядро 
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+
+2 events # какую библиотеку подключать 
+events {
+	worker_connections 768;
+	# multi_accept on;
+}
+
+3 mail # прокисрование почтовых протоколов
+
+4 http     #  MIME types, sendfile и другие
+http {
+	sendfile on;
+	tcp_nopush on;
+	tcp_nodelay on;
+	keepalive_timeout 65;
+	types_hash_max_size 2048;
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
+	ssl_prefer_server_ciphers on;
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
+	gzip on;
+
+5 server     # это виртуальные хосты название домена и так далее 
+    server {
+      listen 80;
+
+      server_name example.com;
+
+      location / {
+        return 200;
+
+ 6 client_max_body_size  # говорит о том, что какого размера запросы может отправлять клиент на сервере.
+ значения могут быть примеры:
+ 128m
+ 4096k
+ 1024
+ 0 
+
+ 7 server  # это виртальный хост
+
+ 8 server_name  название домена 
+ server_name example.com www.example.com;
+ server_name example.com; # можно и так 
+ server_name "";
+
+9 listen какой порт слушает сервер так же можно указать ip-адреса сервера.
+Примеры:
+listen 80;         # просто порт 
+listen 127.0.0.1:80 default_server; # тут уже указываем ip-адрес
+
+10 return вернуть
+return 200 "hello from nginx"; - вернет соответствующий текст с кодом 200;
+return 301 http://example.com; - редирект на конкретную страницу 
+также можно настроить редирект с http на https 
+#################################################
+
+
+11 http 1.1. протокол
+Пример имитация браузера ввожу yandex.ru 
+
+1 host yandex.ru
+87.250.250.242
+2 telnet 87.250.250.242 80  #браузер подключается на 80 порт 
+GET /index.html HTTP/1.0
+X-Api-Token:123 
+
+# два раза enter 
+
+HTTP/1.1 406 Not acceptable    # сервер не принял ответ 
+Content-Length: 0 			   # никакого контента не было передано 	
+# методы могут быть разные PUT POST DELETE OPTIONS HEAD
+
+2 Попытка номер 2 
+1 host yandex.ru
+87.250.250.242
+
+2 telnet 87.250.250.242 80
+GET /index.html HTTP/1.1
+Host: yandex.ru
+X-Api-Token:123 
+
+
+Вернет нам ответ получили страничку:
+HTTP/1.1 302 Moved Temporarily
+Content-Length: 154
+Content-Type: text/html
+Date: Sat, 30 Jan 2021 14:47:18 GMT
+Location: http://yandex.ru/
+X-Content-Type-Options: nosniff
+set-cookie: is_gdpr=0; Path=/; Domain=.yandex.ru; Expires=Mon, 30 Jan 2023 14:47:18 GMT
+set-cookie: is_gdpr_b=CLLbGBD5GigC; Path=/; Domain=.yandex.ru; Expires=Mon, 30 Jan 2023 14:47:18 GMT
+
+<html>
+<head><title>302 Found</title></head>
+<body bgcolor="white">
+<center><h1>302 Found</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+#################################################3
+
+3  1xx продолжение получения запросов
+   2хх успех
+   3хх  редирект какой -то # в ответе от сервера будет Location: http://yandex.ru/ # куда редиректит 
+   4хх  # клиент ошибся, 406 неприменимо на стороне клиент
+   5хх  ошибка на стороне сервера 
+
+4 что отдает браузер network = нажми запрос = headers 
+
+Request URL: https://ya.ru/
+Request Method: GET
+Status Code: 200 Ok
+Remote Address: 87.250.250.242:443
+
+Cache-Control: no-cache,no-store,max-age=0,must-revalidate # что здесь сделать с кэшем на этой странице 
+Content-Encoding: gzip 			 # все сжимается 
+
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36  # какой user-agent использовался с какого браузера подключались 
+
+viewport-width: 1536
+
+5 HTTP/1.1    # в рамках одного соединения несколько запросов 
+  HTTP/1.0     # одно соединение один запрос 
+  HTTP/2.0      # сжатие headerov, server push от сервера могут идти доп картинки так они могут быть нужны 
+
+###########################################
+ лучше nginx устанавливать из его официального репозитория там по новее 
+
+1 Установка mainline nginx  # последние релизы и все про тестированы лучше всего 
+  stable # cстабильная версия 
+
+2  nginx apt rep # в поиск 
+в разделе ubuntu # 
+https://nginx.org/ru/linux_packages.html
+
+1 echo "deb http://nginx.org/packages/mainline/ubuntu `lsb_release -cs` nginx" \
+    | sudo tee /etc/apt/sources.list.d/nginx.list
+
+2 curl -fsSL https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+
+3 sudo apt-key fingerprint ABF5BD827BD9BF62
+
+4 sudo apt update
+sudo apt install nginx 
+
+
+3 apt-cache show nginx | head # смотрю версию nginx 
+Package: nginx
+Version: 1.19.6-1~focal
+
+
+4 Структура 
+la -lah /etc/nginx  
+drwxr-xr-x  2 root root 4096 Jan 30 18:33 conf.d/
+-rw-r--r--  1 root root 1007 Dec 15 16:59 fastcgi_params
+-rw-r--r--  1 root root 2837 Dec 15 16:59 koi-utf
+-rw-r--r--  1 root root 2223 Dec 15 16:59 koi-win
+-rw-r--r--  1 root root 5231 Dec 15 16:59 mime.types
+lrwxrwxrwx  1 root root   22 Dec 15 16:59 modules -> /usr/lib/nginx/modules/
+-rw-r--r--  1 root root  643 Dec 15 16:59 nginx.conf
+-rw-r--r--  1 root root  636 Dec 15 16:59 scgi_params
+-rw-r--r--  1 root root  664 Dec 15 16:59 uwsgi_params
+-rw-r--r--  1 root root 3610 Dec 15 16:59 win-utf
+
+Если использовать package manager дистрибутива то тогда будет  /etc/nginx/sites-available и /etc/nginx/sites-enabled. Что по сути тоже самое что и выше.
+В этом варианте, конфигурационный файл хранится в каталоге sites-available, а в каталоге sites-enabled создается симлинк на него, что позволяет при необходимости подключать/отключать часть конфигурации без удаления самого файла (путем добавления/удаления симлинка на него).
+
+18:32
