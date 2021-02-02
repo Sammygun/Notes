@@ -1,0 +1,116 @@
+
+1 Networking Concepts (23%)
+2 Infrastructure (18%)
+3 Network operations (17%)
+4 Network Security (20%)
+5 Network troubleshooting & tools (22%)
+
+support@diontraining.com
+############################################################################
+total things:
+1 ethernet (IEEE 802.3)!!! or WIFI (IEEE 802.11)!!!
+2 
+
+#############################################################################
+
+							_Networks and Their Basic Components_
+							  _Network Resources_
+							  _Network Geography_
+							  _Wired Network Topology_
+
+
+
+
+###############################################################################
+							_Networks and Their Basic Components_
+
+1 apple watch and iphone connection its network 
+2 phone wifi network 
+3 network uptime 99,999%, 5 minutes in year only down 
+4 file sharing, video? striming, youtube   # example network trafic 
+5 from one place to another place send data
+
+6 Client # tv, laptop, phone 
+  Server # email server, web server 
+  Hub # old technology if you talking every one hear you 
+  WAP # wireles Access Point 
+  Switch # hub but switch(smart hub) can learn with device has a port hub doesnt switch use one port and will send to another one port, hub using when use onet port he send date all ports 
+  router # connect two networks together 
+  Media # radio, example 
+  WAN link # internet example connections to the outside world
+######################################################
+_Network Resources_
+
+ Client/Server model we can configure our server and used it 
+1 centalized administration
+2 easy managment
+3 better scalability # масштабируемость 
+
+Peer-to-Peer model (share resources files directly with others)
+1 administraion hard, hard backup files nightmare
+
+Benefit
+1 who is part of network can share,easy to connect, easy to configure
+2 5 pc in office easy to make such model, one pc everybody can get access
+
+Drawbacks
+1 but if pc down no one access to it
+2 decentalized mangement 
+3 poor scalability(масштабируемость)
+
+For facebook better client/server technology 
+#######################################################
+_Network Geography_
+1 Personal Area network(PAN)
+ the least amount of area (few meters)
+ 
+bluetooth # example
+usb hard disk
+everything that i can touch using my nand 
+
+2 Local Area Network(Lan) (small office)
+office connects components within a limited distance 
+Up to a few hundred feett 
+
+2.1 ethernet (IEEE 802.3)!!! or WIFI (IEEE 802.11)!!!
+Home network example 
+
+3 Campus Area Network # CAN
+connections in university, industrial park, business park covers many square miles and buildings 
+military bases 
+
+diffrent colledges have their own campus map
+
+4 Metropolitan Area Network (Man)
+Connects locations a city or media area 
+up to 25 miles area or liitle bigger 
+MAN example police deparment 
+
+5 Wide Area Network (WAN)
+Virtual Private Networks tunneled over the Internet 
+across state, world 
+internet network exmaple 
+WAN can be not public, goverment USA have their small networks example 
+
+Total 
+1 PAN (arround personal) # pan bluetooth selphone and ipad
+2 LAN (room or Building) # car connect to wifi home network
+3 CAN (Campus or Business Park) # 
+4 MAN (City or Country)
+5 WAN (Country or Worldwide)  # internet car can connect to WAN
+##############################################################
+
+_Wired Network Topology_
+
+
+
+
+
+
+
+
+
+
+
+
+
