@@ -9,17 +9,64 @@ support@diontraining.com
 ############################################################################
 total things:
 1 ethernet (IEEE 802.3)!!! or WIFI (IEEE 802.11)!!!
-2 
+2  OSI MODEL
+1 _Layer 1 (Physical Layer)_
+на физическом уровне какой кабель мы используем 
+what cable type of cable 
+dumb devices they only repeat signal
+01 01 01 01 01  # one zero 
+lamp
+Лампочка горит 1 
+ламочка выключена 0
+
+2 _Layer 2 (Data Link Layer)_
+Уровень 
+сетевые карты 
+мосты
+свитчи
+mac-адреса 
+Они умней так могут использовать логику в отличие от первого уровня 
+
+48 битный уникальный номер у каждого производителя сетевого оборудования 
+D2:51:F1:3A:34:65 # mac adress
+первые 24 бита D2:51:F1 индетифицирует производителя сетевой карты social security card аналог
+apple dell .... vendor code
+2 24 бита
+3A:34:65    # уникальный номер определям устройство поэтому номеру 
+
+3  _Layer 3 (Network Layer)_
+Управление трафиком с логическими адресами ipv4, ipv6 
+уровень 3 ipv4 ipv6 most common
+routing путь как связаться из одной точки в другую, часто бывает несколько путей из точки А в точку G, routing как навигатор сообщает наиболее эффективный путь к конечной точке 
+ping -c 5 wwww.example.com # отправляем пакеты смотрим дошло ли и сколько это времени заняло
+trouble shooting 
+traceroute # покажет все роутеры через который проходят пакеты узнаем какие роуты подняты а какие упали использует udp показывает где обрыв произошел 
+ 
+Примеры:
+1 Роутеры (круг с разными стрелками в разные стороны)
+2 multilayer switches (remember switch layer 2, but multilayer layer 3 )(многослойные переключатели)
+3 ipv4
+4 ipv6
+5 Internet Control Message Protocol (ICMP) (ping) используем for troubleshooting
+
+4 _Layer 4 (Transport Layer)_
 
 #############################################################################
-
+							Section 2
 							_Networks and Their Basic Components_
 							  _Network Resources_
 							  _Network Geography_
 							  _Wired Network Topology_
+							  _Wireless Network Topology_
+							  _Internet of Things (IoT)_
 
-
-
+							  
+							 Section 3: OSI Model
+							 _Open Systems Interconnection (OSI) Model Overview_
+							 _Layer 1 (Physical Layer)_
+							 _Layer 2 (Data Link Layer)_
+							 _Layer 3 (Network Layer)_
+							 _Layer 4 (Transport Layer)_
 
 ###############################################################################
 							_Networks and Their Basic Components_
@@ -91,6 +138,7 @@ Virtual Private Networks tunneled over the Internet
 across state, world 
 internet network exmaple 
 WAN can be not public, goverment USA have their small networks example 
+big private networks 
 
 Total 
 1 PAN (arround personal) # pan bluetooth selphone and ipad
@@ -101,15 +149,197 @@ Total
 ##############################################################
 
 _Wired Network Topology_
+logical topology # рисунок сети network flow 
+physical topology реально как кабель проложен  
+
+bus topology # one cable and everybody connected it 
+
+ring topology # single cable circle around all data goes on circle
+if you cat cable ints will done network
+ring # FDDI and reduandancy answer ring 
+
+star topology  one switch everybody connected to the switch look like star
+
+Hub and spoke # similar star but huge and more hubs it like diffrent cyties 
+
+full-mesh-topology # optimal  number
+number connections 
+x = n(n-1)/2
+x = 6(6-1)/2 # x=15 connections very expensive 
+
+Partial-Mesh topology # hybrid full mesh and hub and spoke 
+
+
+#########################################################
+_Wireless Network Topology_
+
+Infrastructure Mode # most common home wifi 
+
+Ad hoc mode # no routers every one connect each other with laptops
+
+Wireles Mesh Topology # diffrent divices after hurricane people comes with their network if old network doesnt work
+cellur # thousand miles
+microwaves to go tens of miles 
+wireles # 10 - 100 fits 
+###############################################################
+
+_Internet of Things (IoT)_
+tv,server, and other
+
+802.11 #wifi 
+bluetooth # you can use your phone to find your key 
+rfid # radio hotel key for a door 
+nfc # two devices 4 cm distancy 
+infrared (IR) # Tv пульт 
+Z-wave # save battery home automation wi fi use a lot of power 
+ANT+ # collection and transfer of sensor data car tire pression 
+
+#############################################################
+Section 2 
+_Open Systems Interconnection (OSI) Model Overview_
+or OSI Stack 
+7 layers  # troubleshooting 
+TCP/IP model right now 
+
+OSI MODEL
+1 Physical
+2 Data link  # канал передачи 
+3 Network
+4 Transport
+5 Session
+6 Presentation
+7 Application 
+
+Please Do Not THrow Saysage Pizza Away !!!!
+
+1 Physical    # bits
+2 Data link   # frames
+3 Network     # Packets
+4 Transport   # Segments
+5 Session      # Data
+6 Presentation # Data
+7 Application  # Data
+
+Do some people Fear Birthdays ? снизу вверх 
+7 Application    Data
+6 Presentation   Data
+5 Session        Data
+4 Transport    	 Segments 
+3 Network        Packets
+2 Data link      Frames
+1 Physical       Bits
+
+#############################################
+_Layer 1 (Physical Layer)_
+на физическом уровне какой кабель мы используем 
+what cable type of cable 
+dumb devices they only repeat signal
+01 01 01 01 01  # one zero 
+lamp
+Лампочка горит 1 
+ламочка выключена 0
+cable Rj45 connect your comp or switch
+
+RJ-45 cable and ports
+tia/eia 568 b
+Crossover cables
+T-568A and T-568B
+
+Straight-thru cables
+Typically use T-568B on both ends but could also use T-568A
+
+
+Асинхронно делаешь запрос потом друзья услышают звуковое сообщения
+синхронно должны общать одновременно
+
+Time-division multiplexing 
+exmaple tv 4 members everyone want to watch tv and everyone want to take to turn
+use tv in some period of time 
+
+Statistical-Time-Division Multiplexing (StatTDM)
+i can use tv anytime what i want when tv free
+
+Frequency Division Multiplexing (FDM)
+
+examples at layer 1
+cables:
+1 ethernet 
+2 fiber optic 
+
+radio frequencies
+1 wifi
+2 bluetooth
+
+Infrastructure devices
+1 hubs
+2 wireless Access Points 
+
+dumb devices they only repeat signal 
+
+##############################################
+_Layer 2 (Data Link Layer)_
+mac Media Access control 
+физический адрес устройства в сети, теперь все что на логическом уровне а не на физическом уровне 
+48 битный уникальный номер у каждого производителя сетевого оборудования 
+D2:51:F1:3A:34:65 # mac adress
+первые 24 бита D2:51:F1 индетифицирует производителя сетевой карты social security card аналог
+apple dell .... vendor code
+2 24 бита
+3A:34:65    # уникальный номер определям устройство поэтому номеру 
+
+1 logical link control llc
+most basic form  (звонок поступил ли да поступил, и далее идем работать с информацией)
+provide basic error control functions 
+Уровень 
+сетевые карты 
+мосты
+свитчи
+mac-адреса 
+Они умней так могут использовать логику в отличие от первого уровня 
+##########################################################################
+_Layer 3 (Network Layer)_
+Управление трафиком с логическими адресами ipv4, ipv6 
+уровень 3 ipv4 ipv6 most common
+routing путь как связаться из одной точки в другую, часто бывает несколько путей из точки А в точку G, routing как навигатор сообщает наиболее эффективный путь к конечной точке 
+ping -c 5 wwww.example.com # отправляем пакеты смотрим дошло ли и сколько это времени заняло
+trouble shooting
+traceroute # покажет все роутеры через который проходят пакеты узнаем какие роуты подняты а какие упали 
+Примеры:
+1 Роутеры (круг с разными стрелками в разные стороны)
+2 multilayer switches (remember switch layer 2, but multilayer layer 3 )(многослойные переключатели)
+3 ipv4
+4 ipv6
+5 Internet Control Message Protocol (ICMP) (ping) используем for troubleshooting
+
+
+
+Network Layer 
+1 logical addressing (ipv4,ipv6)
+2 switching         
+3 route discovery and selection
+4 connection services # can control flow more less, packet recording 
+5 Bandwidth usage
+6 Multiplexing strategy
 
 
 
 
+1 logical addressing (ipv4,ipv6)
+ip internet protocol, ip most common 
 
+2 switching  # mail to someone address state city post office stree the same in network packets
+message swtiching more effective to us 
+everybody using packet switching 
 
+routing путь как связаться из одной точки в другую, часто бывает несколько путей из точки А в точку G, routing как навигатор сообщает наиболее эффективный путь к конечной точке 
 
+3 ICMP 
+ping -c 5 wwww.example.com # отправляем пакеты смотрим дошло ли и сколько это времени заняло
+trouble shooting
 
-
+traceroute # покажет все роутеры через который проходят пакеты узнаем какие роуты подняты а какие упали 
+#####################################################################
+_Layer 4 (Transport Layer)_
 
 
 
