@@ -10,6 +10,7 @@ support@diontraining.com
 total things:
 1 ethernet (IEEE 802.3)!!! or WIFI (IEEE 802.11)!!!
 2  OSI MODEL
+##############################################
 1 _Layer 1 (Physical Layer)_
 на физическом уровне какой кабель мы используем 
 what cable type of cable 
@@ -18,7 +19,7 @@ dumb devices they only repeat signal
 lamp
 Лампочка горит 1 
 ламочка выключена 0
-
+##############################################
 2 _Layer 2 (Data Link Layer)_
 Уровень 
 сетевые карты 
@@ -33,7 +34,7 @@ D2:51:F1:3A:34:65 # mac adress
 apple dell .... vendor code
 2 24 бита
 3A:34:65    # уникальный номер определям устройство поэтому номеру 
-
+##############################################
 3  _Layer 3 (Network Layer)_
 Управление трафиком с логическими адресами ipv4, ipv6 
 уровень 3 ipv4 ipv6 most common
@@ -41,15 +42,73 @@ routing путь как связаться из одной точки в дру�
 ping -c 5 wwww.example.com # отправляем пакеты смотрим дошло ли и сколько это времени заняло
 trouble shooting 
 traceroute # покажет все роутеры через который проходят пакеты узнаем какие роуты подняты а какие упали использует udp показывает где обрыв произошел 
- 
+
 Примеры:
 1 Роутеры (круг с разными стрелками в разные стороны)
 2 multilayer switches (remember switch layer 2, but multilayer layer 3 )(многослойные переключатели)
 3 ipv4
 4 ipv6
 5 Internet Control Message Protocol (ICMP) (ping) используем for troubleshooting
-
+##############################################
 4 _Layer 4 (Transport Layer)_
+1 TCP
+2 UDP
+3 Wan Accelerators 
+4 load balancers
+5 firewalls blocking the port 
+##############################################
+5 _Layer 5 (Session Layer)_
+Example 
+H.323  # streaming video facetime rtp streaming video
+NetBios # to share files over network
+
+Пример skype стреаминг facetime 
+##############################################
+6 _Layer 6 (Presentation Layer)_
+3 Exmaples
+1 html, xml,php, js
+2 ascii ebcdic unicode     # ascii помогает перевести информацию в нужный нам формат 
+3 gif jpg tif svg png 
+4 MP4 MPG MOV # вся инфа состоит из 0 и 1, потом она переводится в соотвествующий вид
+5 TLS and SSL # encrypting secure
+##############################################
+_Layer 7 (Application Layer)_
+Exmaples at layer 7 
+1 Email (POP3, IMAP, SMTP)
+2 Web browsing (http https)
+3 Domain name service (dns name to numbers)
+4 file transfer protocol (ftp sftp)
+5 Remote Access(telnet ssh)
+6 Simple Network managment Protocol
+SNMP 
+######################################
+8 _The OSI Model_
+_wireshark_
+1 frame  ethrnet layer 2 protocol
+	1 time how long its takes 
+	2 capture length
+ 2 Ethernet II
+   destination куда пытался попасть
+   source источник мой копи 
+3 IPV4 layer 4  # 
+4 TCP # layer 4 osi model 
+
+2 Также могу видеть протокол HTTP это layer 7:
+смотрю get запрос что они сделали 
+Правой кнопокой follow = HTTP Stream и увижу какю страницу получил пользователь 
+
+2.1 FTP подключение 
+tcp = Правой кнопокой follow stream = TCP 
+вниуз show and save data as Raw #  могу попытаться разобраться что за файл был передан
+wireshark помогает перехватить трафик и посмотреть что происходит 
+помни source = destination = protocol = length = port from to 
+
+2.2 Telnet (layer 7 )
+Правой кнопокой follow = tcp stream =  увижу как клиент подключится к серверу, логин и пароль и какую команду запустить
+снизу можно посмотреть трафик со стороны сервера и со стороны клиента  = show and save data as(ASCII)
+
+Wireshark показывает на каком уровне OSI Model происходит обрыв 
+also you can defence your self and understand what bad guy did in your system
 
 #############################################################################
 							Section 2
@@ -67,6 +126,12 @@ traceroute # покажет все роутеры через который пр
 							 _Layer 2 (Data Link Layer)_
 							 _Layer 3 (Network Layer)_
 							 _Layer 4 (Transport Layer)_
+							 _Layer 5 (Session Layer)_
+							 _Layer 6 (Presentation Layer)_
+							 _Layer 7 (Application Layer)_
+							 _The OSI Model_
+							 _wireshark_
+
 
 ###############################################################################
 							_Networks and Their Basic Components_
@@ -340,7 +405,104 @@ trouble shooting
 traceroute # покажет все роутеры через который проходят пакеты узнаем какие роуты подняты а какие упали 
 #####################################################################
 _Layer 4 (Transport Layer)_
+1TCP (Transmission control protocol) IP
+sending and controlling to you get packet
+Are you ready yes here its comes 
+
+1 Пакет они получают потом он возвращается тебе инфа что они получили 
+
+2 UDP user datagram protocol  
+TCP UDP(datagram) layer 4
+UDP хорош для аудио, стриминга в таком случае лучше чем tcp/ip 
+you can drop some packets and client will doesnt know it in TCP its will be problem
 
 
+3
+TCP  протоколы 											UDP протоколы прослушивание музыки 
+reliable												Unreliable
+Coonection-oriented										Connectionless
+Segment retransmission and flow control through        No window or retransmission
+windowing       (если не получил то можно дозапросить)     здесь если не получил ничего страшнго так большой поток сигналов 
+Segmen sequencing										No sequencing
+Acknowledge Segments                                    No acknowledgment 
+                                                        
+
+4 Windowing скорость загрузки показывает на самом компьютере 
+5 Buffering # буфер загрузка при просмотре фильмов в роутерах
+
+layer4 
+1 TCP
+2 UDP
+3 Wan Accelerators 
+4 load balancers
+5 firewalls
+
+######################################################################
+_Layer 5 (Session Layer)_
+1 when you start to talk with john its something like session 
+1 maintain session  # сохранение сессии
+2 Tearing Down a Session # (срыв сеанса)
+
+Example 
+H.323  # streaming video facetime rtp streaming video
+NetBios # to share files over network
+####################################################################
+_Layer 6 (Presentation Layer)_
+1 data formatting 
+ASCII # текст base language
 
 
+2  encryption # secure our data
+TLS #trasport layer Security encrypted tonnel nobody will see the password likin in you trafic
+HTML, xml, php,
+
+_Layer 6 (Presentation Layer)_s
+3 Exmaples
+1 html, xml,php, js
+2 ascii ebcdic unicode     # ascii помогает перевести информацию в нужный нам формат 
+3 gif jpg tif svg png 
+4 MP4 MPG MOV # вся инфа состоит из 0 и 1, потом она переводится в соотвествующий вид
+5 TLS and SSL # encrypting secure
+##############################################################################
+_Layer 7 (Application Layer)_
+
+1 file transfer network transfer 
+low level protocol that using to send messages exmpla mail 
+pop3 imap smtp 
+
+Exmaples at layer 7 
+1 Email (POP3, IMAP, SMTP)
+2 Web browsing (http https)
+3 Domain name service (dns name to numbers)
+4 file transfer protocol (ftp sftp)
+5 Remote Access(telnet ssh)
+6 Simple Network managment Protocol
+SNMP 
+###########################################################################
+_The OSI Model_
+_wireshark_
+1 frame  ethrnet layer 2 protocol
+	1 time how long its takes 
+	2 capture length
+ 2 Ethernet II
+   destination куда пытался попасть
+   source источник мой копи 
+3 IPV4 layer 4  # 
+4 TCP # layer 4 osi model 
+
+2 Также могу видеть протокол HTTP это layer 7:
+смотрю get запрос что они сделали 
+Правой кнопокой follow = HTTP Stream и увижу какю страницу получил пользователь 
+
+2.1 FTP подключение 
+tcp = Правой кнопокой follow stream = TCP 
+вниуз show and save data as Raw #  могу попытаться разобраться что за файл был передан
+wireshark помогает перехватить трафик и посмотреть что происходит 
+помни source = destination = protocol = length = port from to 
+
+2.2 Telnet (layer 7 )
+Правой кнопокой follow = tcp stream =  увижу как клиент подключится к серверу, логин и пароль и какую команду запустить
+снизу можно посмотреть трафик со стороны сервера и со стороны клиента  = show and save data as(ASCII)
+
+Wireshark показывает на каком уровне OSI Model происходит обрыв 
+also you can defence your self and understand what bad guy did in your system
