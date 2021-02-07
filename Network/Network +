@@ -133,6 +133,14 @@ also you can defence your self and understand what bad guy did in your system
 							 _wireshark_
 
 
+							 Section 4: TCP/IP Model
+							 _TCP/IP Model_
+							 _Data Transfer Over Networks_
+							 _Ports and Protocols_
+							 _Finding Open Ports_
+
+
+86 
 ###############################################################################
 							_Networks and Their Basic Components_
 
@@ -506,3 +514,81 @@ wireshark помогает перехватить трафик и посмотр
 
 Wireshark показывает на каком уровне OSI Model происходит обрыв 
 also you can defence your self and understand what bad guy did in your system
+
+
+#########################################################################################
+
+Section 4: TCP/IP Model
+_TCP/IP Model_
+4 layers 
+
+OSI MODEL         TCP/IP Model
+
+7 Application    4 Application
+6 Prsentation 
+5 Session 
+
+4 Transport      3 Transport  
+
+3 Network        2 Internet
+
+2 Data link      1 Network interface 
+1 Physical
+
+TCP/IP Model
+4 Application    # SMTP pop3 
+3 Transport    # session status connection udp, tcp
+2 Internet     # ip, diagram, hosts,
+1 Network interface 
+#########################################################################################
+
+_Data Transfer Over Networks_
+ports
+street adress my ip-address 
+badroom  - my port 
+
+2 Позовляют узнавать ip-адресу какое приложение слушает и ждет по определнному порту трафика
+от 0 до 65,535 портов
+
+3 well-known ports from 0 to 1023 
+
+4 epmlement  from 1024 to 65,535 
+
+5 Downloading files when you download ports open when its downloaded ports is closed
+
+6 communcation between two ports 
+
+7 ipv4 destination, source address
+8 tcp headr 20 bytes
+  udp header 8 bytes
+#########################################################################################
+_Ports and Protocols_
+1 File Transfer Protocol FTP (port 20, 21) # transfer file from pc to server go example 
+2 SSH Secure shell  (port 22 ) # secure remote control to machine 
+3 SFTP ssh file transfer protocol (port 22) # secure transfer protocol
+4 telnet (port 23)  # similar ssh but not secure
+5 SMTP simple mail transfer protocol (port 25)
+6 DNS domain name service (port 53) # convert name to ip-address
+7 DHCP Dynamic Host Control (Port 67, 68) # automatically ip-address
+8 Trivial File Transfer TFTP (Port 69)  # client server, server client, for booting system, config to our router
+9 Http hyper text transfer protocol port (80)  # not secure
+10 post office protocol POP3 (Port 110)     # получаем письма с почтовых ящиков 
+11 network time protocol NTP  (Port 123)    # часы синхронизация времения между разными компютерами
+12 Netbios (Port 139) # input output system 
+13 IMAP Internet mail application (Port 143)  # still on server doesnt download for few devices recieve emails
+14 Simple Network Management SNMP (Port 161)  # 
+15 LDAP lightweight Directory Access (Port 389) # стандарт по доступам к ресурсам определнных сервисов 
+Outlook контакты смотрю это своего рода ldap
+16 HTTP Secure HTTPS (Port 443)  # security for http protocol 
+17 Server Message block SMB (port 445) printers communication between devices on a network 
+18 LDAP secure LDAPS (Port 636)  # secure ldap
+19 Remote Desktop Protocol RDP (Port 3389)  # пождключение к рабочему удаленному столу
+20 Session Initiation Protocol SIP (Port 5060, 5061) # sip телефония скайп к примеру 
+#########################################################################################
+_Finding Open Ports_
+
+
+
+
+
+
