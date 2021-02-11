@@ -7,7 +7,7 @@
 
 support@diontraining.com
 ############################################################################
-total things:
+total things (Итого):
 1 ethernet (IEEE 802.3)!!! or WIFI (IEEE 802.11)!!!
 2  OSI MODEL
 ##############################################
@@ -109,7 +109,36 @@ wireshark помогает перехватить трафик и посмотр
 
 Wireshark показывает на каком уровне OSI Model происходит обрыв 
 also you can defence your self and understand what bad guy did in your system
+######################################
+9 _Finding Open Ports_ _nmap_
+1 nmap    # network map what is open port on server
 
+sudo nmap -sS -O 185.179.83.171 | more  # -sS sync packets, -O operating system узнаём, | more
+
+map scan report for 185-179-83-171.hosterby.com (185.179.83.171)
+Host is up (0.0048s latency).
+Not shown: 997 closed ports
+PORT   STATE    SERVICE
+22/tcp open     ssh
+25/tcp filtered smtp
+80/tcp open     http
+
+
+not shown: 977 closed ports 
+Далее те которые со статусом open
+telnet port должен быть всегда закрыт порт 
+zenmap # это графический интерфейс nmap,target ip-address, command nmap -T4 -F 10.0.2.6, profile intense scan # можно увидеть версию сервера 
+scanme.org  # можно потренироваться 
+sudo apt install zenmap 
+######################################
+10 _Building a Cable_
+how to male a cable 
+cat 5 and others cat using only 100 meters 
+######################################
+11 _Wiring a Network_
+practise 
+12_Testing the Network_
+practise 
 #############################################################################
 							Section 2
 							_Networks and Their Basic Components_
@@ -137,10 +166,24 @@ also you can defence your self and understand what bad guy did in your system
 							 _TCP/IP Model_
 							 _Data Transfer Over Networks_
 							 _Ports and Protocols_
-							 _Finding Open Ports_
+							 _Finding Open Ports_ _nmap_
 
+							 Section 5: Media and Cabling Distribution
+							 _Media (Copper)_
+							 _Building a Cable_
+							 _Media (Fiber)_
+							 _Transceivers_
+							 _Cable Distribution_
+							 _Wiring a Network_
+							 _Testing the Network_
+							
 
-86 
+							_Section 6: Ethernet Fundamentals_
+							_Ethernet Fundamentals_	
+							_Network Infrastructure Devices (Overview)_	
+							_Hands-on with Devices_
+							_Additional Ethernet Switch Features_			 
+
 ###############################################################################
 							_Networks and Their Basic Components_
 
@@ -586,9 +629,196 @@ Outlook контакты смотрю это своего рода ldap
 20 Session Initiation Protocol SIP (Port 5060, 5061) # sip телефония скайп к примеру 
 #########################################################################################
 _Finding Open Ports_
+1 nmap    # network map what is open port on server
+
+sudo nmap -sS -O 185.179.83.171 | more  # -sS sync packets, -O operating system узнаём, | more
+
+map scan report for 185-179-83-171.hosterby.com (185.179.83.171)
+Host is up (0.0048s latency).
+Not shown: 997 closed ports
+PORT   STATE    SERVICE
+22/tcp open     ssh
+25/tcp filtered smtp
+80/tcp open     http
 
 
+not shown: 977 closed ports 
+Далее те которые со статусом open
+telnet port должен быть всегда закрыт порт 
+zenmap # это графический интерфейс nmap,target ip-address, command nmap -T4 -F 10.0.2.6, profile intense scan # можно увидеть версию сервера 
+scanme.org  # можно потренироваться 
+sudo apt install zenmap 
+##################################################################
+Section 5: Media and Cabling Distribution
+_Media (Copper)_
+1 Coaxial Cbale (Coax) 
+rg 6 
+rg 59 
+
+2 twisted Pair Cable 
+utp # cheaper 
+stp  # metalic shield 
+same distance limitation 
+
+Connector rj45  # most popular connector
+Connector rj11 # for phone connectors usually 
+DB9 or DB25  # для rs232 кабеля 
+rj rejected jack  
+
+category 	 maximum throughput     maximum distance 
+cat 3 			10mbps					100 meters
+cat 5 			100mbps                 100 meters
+car 5e          1,000 mbps              100 meters
+cat 6           1,000 mbps              100 meters
+cat 6a          10,000 mbps 			100 meters
+cat 7 			10,000 mbps             100 meters 
+
+3 Crossover Cable # connet tow switches between each other 
+DTE DTE
+DCE DCE 
+the same type devices use Crossover Cable
+Only switches that support mdix must use 
+
+4 Plenum Cable 
+UTP/STP in walls in the floor where you can see it you must use plenum cable because it not fire up
+
+5 Non-plenum Cable      you can use it everythere where you can see it illegal
+####################################################################
+_Building a Cable_
+how to male a cable 
+cat 5 and others cat using only 100 meters 
+####################################################################
+_Media (Fiber)_
+1 Optic cables use light an led or laser to transmit information through a glass fiber
+cat hunderd meters
+
+optic hundred miles 
+greater speed and sending data
+
+MMF # mulrimode fiber MMF
+single mode fiber # one way can go 
+connectors
+sc subscriber connector          APC angled Physical Contact Connector
+st straight Tip connector
+lc lucent connector
+mtrj mechanical transfer-registered jack  UPC Physical Contact Connector
+######################################################################
+_Transceivers_
+1 fiber optic has better security longer distance 
+copepper less expensive, easy to install, not secure good for not big distance 
+
+2 Media converters layer1 devuces
+fiber and rj45  together using in special converter signals
 
 
+3 bidirectional #exmaple when someone talking you are listening walkie-talking
 
+4 duplex both communicate in same time like selphone
 
+5 gbic  #translate information in standard understanding 
+6 small form factor pluggable (SFP) 4,25 gbps
+7  sfp + # the same but faster speed 16 gbps
+8 quad small form-factor pluggable (qsfp) 100 gbps
+ they help network , they go from copper to fiber or fiber to ones and zeros 
+so I take cat cable plug in them convert data to the fiber and send data miles away form my home distance and end we have anotehr converter
+that translate from fiber to the cat signal
+#######################################################################
+_Cable Distribution_
+Cable Distribution System and how we put our cable in our building main communication center 
+
+1 punch down blocks # using in phones 
+2 66 blocks # old using in phones cat 3 networks nobody using such type of block
+3 110 block # now everybody is using such tupe of the block
+punc blocks will be find in main distribution,  intermediate distribution  making network connections
+
+4 patch panels (Copper)
+5 switch
+=========================
+_Wiring a Network_
+practise 
+####################################################3
+_Testing the Network_
+practise 
+#######################################################################
+_Section 6: Ethernet Fundamentals_
+_Ethernet Fundamentals_						 
+
+1 Ethernet dominant leadre in market 
+
+1 deterministic # когда кто-то поднял руку на уроке чтобы спросить 
+2 Contention based  # у каждого своя очередь разговора
+ethernet using contention based 
+
+Carrier Sense Multiple Access /Collision Detect (CSMA/CD)
+Ethernet devices transmit based on a principle called carrirer sense multiple access/collision detec (CSMA/CD)
+
+Ethernet слушает если никто не говорит по кабелю тогда он начинает говорить 
+If I go left and he goes left I will stop and wait when will go, then I will start.
+
+1 2 3
+4 5 6 
+3  want to communicate with 5 in the same time. wil work backoff 3 120 ms(возврат) and 5 30 ms(возврат), then 5 will start to talk after it 3 wil strat to talk  its liki walkie talkie
+
+Collision Domains with Switches  (bits per second (1 second) )
+1 ethernet 10 mbps  10 million bits per second
+
+2 Fast ethernet  100 mbps  100 million bits per second
+
+3 gigabit ehernet 1000 mbps (1 gps) 1 billion bits per second (1 0 can network transmit in network)
+
+4 10-Gigabit Ethernet  10 Gbps 10 billion bits per second 
+5 100 gigabit ethernet 100 gbps  100 billion bits per second 
+#######################################################################
+_Network Infrastructure Devices (Overview)_
+1 Hub  #  layer 1 devices connect devices/workstations. Known as multiport repeaters.
+
+1 Passive hub 
+repeats signal with no amplification 100 meters
+
+2Active hub 
+repeats signal with amplification can make more 150 meters 
+example cat 100 meters, i use 60-70 meters then hub and i have 60-70 meters (use 60-70 % of distance) passive can do it 
+
+3 Smart hub
+Active hub wit enhanced features like snmp
+
+Usually we use more switches 
+
+2 Collision Domains if you have 6 pc and two hubs you will have a problem
+
+3 Bridge analize source mac addresses in an internal mac address table.
+if I use hub and married hin with bridge its will be the same as switch 
+
+hub and bridge its a switch 
+
+4 Switch
+Layer 2 device ussed to connect multiple network segments together. Switches are essentially a multiport bridge 
+
+5 Router 
+layer 3 device use to connect multiple networks together. Routers make forwarding decisions based on logical network address information.
+for internet connection
+ipv4 ipv6 
+
+switches know only mac adressess 
+
+6 layer 3 Switch 
+switch and routers combine them  its called layer 3 Switch 
+20 - 30 pc it good if your network larger better dedicated router 
+in exzam if you see switch they mostly talk about switch layer 2 device  for exzam 
+In reality switch its a layer 3 device 
+
+######################################################################################
+_Hands-on with Devices_
+0 one device can be converter, switch, wifi devices
+
+1 media converter 
+hdmi => cat 5e/6 # convert video to the cat we must do it because hdmi has a short distance more then 20 feets you can have a problem
+50 foot run we can do it 
+
+2 Switch 
+unmanaged switch its hub and bridge  dum switch 
+
+3 Wireless Access Point (WAP)
+for wifi wirelles device. Как правило две антенки к примеру и разъем для кабеля cat чтобы конвертировать сеть в wifi
+######################################################################################
+_Additional Ethernet Switch Features_
