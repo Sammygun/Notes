@@ -182,7 +182,9 @@ practise
 							_Ethernet Fundamentals_	
 							_Network Infrastructure Devices (Overview)_	
 							_Hands-on with Devices_
-							_Additional Ethernet Switch Features_			 
+							_Additional Ethernet Switch Features_
+							_Spanning Tree Protocol (STP)_	
+							_Virtual Local Area Network (VLAN)_	 
 
 ###############################################################################
 							_Networks and Their Basic Components_
@@ -822,3 +824,71 @@ unmanaged switch its hub and bridge  dum switch
 for wifi wirelles device. Как правило две антенки к примеру и разъем для кабеля cat чтобы конвертировать сеть в wifi
 ######################################################################################
 _Additional Ethernet Switch Features_
+features to enhance network performance redundancy security management flexbility and scalability 
+
+1 link aggreagation (802.3ad) !!!!
+
+2 power over ethernet POE 802.3af POE+ 802.3at 
+supplies electrical power over Ethernet and requires CAT 5 or higher copper cable
+ power over ethernet POE 15,4 watts of power 
+ power over ethernet POE 25.5 watts of power
+
+3 Port monitorring port mirroring !!!! help to analyze trafic in your network
+network snifer in your hub to analyze the traffic 
+in switch  use port monitoring 
+
+4 user authentification (802.1x)
+
+5 management access and authentification 
+to configure and manage switches you can use SSH or Console port 
+
+6 Console port 
+allows for local administration of the switch using a separate laptop and rollover cable (DB-9 to RJ-45)
+
+7 Out-of-band (OOB) management involves keeping all network configuration devices on a separate network
+
+8 First Hop Redundancy 
+8.1 Hot Standly Router Protocol HSRP uses virtual Ip and MAC addresses to provide active router and standby router 
+most popular 
+
+8.2 Gateway load balancing protocol (GLBP)
+Cisco-propietary protocol
+
+8.3 Virtual Rouster Redundancy Protocol (VRRP)
+open-source protocol
+
+8.4 Common Address Redundancy Protocol (CARP) 
+open-source protocol
+
+9 MAC filtering 
+permits or denies traffic based on a device's MAC address to improve security 
+можно заблочить устройство по его макадресу к примеру 
+
+10 traffic filtering 
+по сути тоже самое, что выше только фильтрация по ip адресу, могу запретить один конкретный ip-адрес 
+
+11 Quality of service (Qos)
+Forwards traffic based on priority marking 
+phone usig udp protocol 
+============================================================================
+_Spanning Tree Protocol (STP)_
+1 Spanning Tree Protocol (STP) (802.1D)  # for small protocol
+prevent looping of network traffic 
+
+2 Shortest Path Bridging (SPB)
+is used instead ig STP for lager network 
+
+3 STP 
+sometihing electronic fixing porblem in our network 
+higher speed the lower cost 
+slower speed the higher cost 
+в сети можно создать бесконечный цикл или шторм, чтобы избежать этого надо использовать  
+
+
+4 ports
+1 blocking
+2 listening 
+3 learning 
+4 forwarding 
+############################################################
+_Virtual Local Area Network (VLAN)_
