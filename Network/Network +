@@ -184,7 +184,12 @@ practise
 							_Hands-on with Devices_
 							_Additional Ethernet Switch Features_
 							_Spanning Tree Protocol (STP)_	
-							_Virtual Local Area Network (VLAN)_	 
+							_Virtual Local Area Network (VLAN)_
+							_Specialized Network Devices_
+
+
+							_Section 7 Virtualization and Cloud Computing_
+							_Virtual Network Devices_
 
 ###############################################################################
 							_Networks and Their Basic Components_
@@ -892,3 +897,150 @@ slower speed the higher cost
 4 forwarding 
 ############################################################
 _Virtual Local Area Network (VLAN)_
+1 Allows different logical networks to share the same physical hardware and provides added security and efficiency
+vlan when we need to use 4 switches vlan can help us use 2 switches 
+
+2 VLAN trunking (802.1q) best for security 
+Vlans transmitted over the same physical cable 
+
+3 VLAN are each tagged with 4 byte identifier 
+1 Tag protocol identifier TPI
+2 Tag Control Identifier TCI
+#############################################################
+_Specialized Network Devices_
+1 Vpn cocentrators 
+2 Firewalls
+3 DNS server 
+4 DHCP servers
+5 Proxy servers
+6 Conternt engines and switches
+
+1 VPN virtual private network
+creates secure virtual network over an untrusted network like the internet 
+ Vpn cocentrators other can get to the vpn from pc vpn concentrators 
+
+
+2 firewalls can be software or hardware 
+blocks some traffic 
+pix firewall = lan = firewall = wan           router with firewall
+statefull firewall 
+
+2.1 next-generation firewall (NGFW)    # layer 7 analyze your traffic and prevent the attacks more powerfull
+
+2.2 Intrusion (второжение)) Detection or Prevention System (IDS/IPS)
+this devices can recognize attack they looking for network attacks 
+
+3 DNS-server convert name to ip-address
+по сути тот же телефонный справочник у каждого имени есть свой номер 
+
+fully qualified domain name (FQDN) top level domain and represents a web mail ro file server 
+.com, .org
+
+www.diontraining.com  # server 
+ftp.diontraining.com  # server 
+
+4 Uniform Resource Locator (URL)
+
+5 DNS 
+
+A  ipv4
+AAAA ipv6 
+CNAME синоним к примеру diontraining.com = www.diontraining.com
+MX mail exchange record maps domain name to email server 
+NS Deontes the authoritative name server for the domain дальше управление dns-записями уже тут ы
+PTR Pointer record refers to canonical name; used for reverse DNS lookups
+SOA dns zone ; contact information primary name server refresh times
+SRV requires specific protocol
+TXT spd, DKIM
+
+6 DHCP
+100 - 1000 machines I will have network that assign the automatically 
+automate proccess that all devices automatically will get they own ip addresses, subnet masks,default gaateways and DNS server addresses 
+
+7 DHCP   = D.O.R.A
+DHCPDISCOVER
+DHCPOFFER
+DHCPREQUEST
+DHCPACK
+
+8 Proxy Server 
+Device that makes a request to external network on behalf of a client
+Устройства которое далает запрос в сеть от имени клиента 
+прослойка межжду клиентом и сетью к примеру дети получают доступ к сети через proxy, proxy проверяет что можно а что нельзя им 
+Proxy server настройка кэширования 
+
+9 Content edngine 
+Also called Caching Engines these are dedicated appliances that perform the caching functions of a proxy server and are more efficient than a proxy server
+
+10 Content switches 
+распределяет запросы между кучей серверов известны также как load balancers. Amazon for example they have server farm.
+form internet request = amazon.com = router = content switches = handing them out different servers.
+
+###############################################################################################
+
+_Section 7 Virtualization and Cloud Computing_
+_Virtual Network Devices_
+1
+1.1 virual servers 
+1.2 virtual routers
+1.3 virtual switches
+1.4 virtual firewalls
+1.5 virtual desktops
+1.6 Voip  # virtual sound 
+1.7 Siftware-Defined Networking 
+1.8 Cloud Computing 
+
+2 Virtual servers one server can have for example to servers 
+a lot of savings cost 
+saving the power and space 
+
+3 Hypervizor  specialized software that enables virtualization to occur and emulates the physical hardware. It is also called a Virtual Machine Monitor (VMM)
+
+1 VMware ESXI  # the most popular free
+2 Microsoft Hyper-V 
+3 Virtual Box  
+
+4 Hypervizor type 1 
+guest os      guest os  # операционная система
+	Hypervisor          # гипервизор
+	hardware  			# железо 
+!!!!!!!for server better type 1 beecause we can increase higher performance  !!!!!	
+					
+
+hypervizor type 2 
+guest os      guest os 
+	Hypervisor 
+	Host OS                # тип 2 только операционная система нашего компа между гипером и железом  
+	Hardware 
+
+we must to use a lot of resurces in type 2
+type 2 for example i have mac processor = os  = virtual box(hypervizor)= windows os
+
+for servers better to use 
+##################################
+5 virtual storage solutions
+1 network attached storage (NAS)
+2 Storage Area Network (SAN)
+
+3 network attached storage (NAS) 
+disk storage is deliverd as a service over TCP/IP
+файловая хранилка к которой можно подключиться по tcp/ip
+
+4 Storage area network
+lan designed for data transfer/storage.
+
+5 fibre channel (FC)
+special purpose hardware providing 1 - 16 gbps storage for network
+
+6 fibre channel over ethernet (FCoE)
+runs over uoyr Ehernet networks 
+
+7 ISCSI (IP small Computer System Interface)
+lowers cost and built using Ethernet switches (<10 gbps). It relies on configuration allowing jumbo frames over the network.
+
+8 infiniband (Virtualized Storage)
+Switched fabric topology for high-perfomance computing which comes with very high throughput (>600 Gbps) and very low latency (0.5 msec)
+7 : 31 
+
+
+

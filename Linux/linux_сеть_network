@@ -1,0 +1,141 @@
+Сетевой интерфейс Linux
+1 cat /etc/modprobe.coni
+
+2 cat /etc/hosts
+127.0.0.1	localhost
+185.179.83.171	mysql.localdomain mysql
+
+3 cat /etc/host.conf
+
+# The "order" line is only used by old versions of the C library.
+order hosts,bind                                  # видим что приорете за файлом hosts далее потом идет bind 
+multi on
+
+4 cat /etc/resolv.conf  # файл в котором мы указываем наши dns-сервера используй 2 dns-сервера 
+nameserver 127.0.0.53
+options edns0 trust-ad
+
+5 nslookup www.ru  #  посмотрели его А запись !!!
+
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+Name:	www.ru
+Address: 31.177.80.70
+Name:	www.ru
+Address: 31.177.76.70
+
+6 less /etc/init.d/networking  # файл отвечает за включение отключение включение сети в linux 
+service network restart  # если внес изменения перезагрузил 
+ifdown eth0  # отключение интерфейса
+ifup eth0 # включение интерфейса  !!!!!
+
+
+7 cat /proc/sys/net/ipv4/ip_forward  # возможность форварда с одного интерфейса на другой 
+0    # смени на единицу 
+
+8 ifconfig  # смотрю шлюз
+
+9 less /etc/sysconfig/network  # есть некоторые настройки сети , hostname -
+less /etc/sysconfig/network-scripts/ifcig-eth0   # через dhcp настраивается 
+less /etc/sysconfig/network-scripts/ifcig-eth1  # кастомный 
+ipaddr  192.168.112.129 
+netmask 255.255.255.0  # резать сеть себе здесь ненужно 
+
+less /etc/sysconfig/network-scripts/ifcig-lo   #рабочий интерфейс всегда должен быть загружен и работал 
+
+10 ifconfig 
+1 inet 185.179.83.171  netmask 255.255.254.0  broadcast 185.179.83.255  # inet ip сервера 
+inet6 fe80::216:3eff:fec2:c14b  prefixlen 64  scopeid 0x20<link> # ipv6 
+inet 185.179.83.171  # находится в сети в 83 сети  185.179.83. на конце 171 
+
+2 мак адрес адрес нашей сетевой карты он уникальный 48 бит длина макадреса 
+у каждого производителя свой диапазон
+
+3 collision 0 значит на физическом уровне все норм 
+
+11 netstat -nr  # таблица маршрутизации сети 
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         185.179.82.1    0.0.0.0         UG        0 0          0 eth0
+185.179.82.0    0.0.0.0         255.255.254.0   U         0 0          0 eth0
+
+12 netstat -r
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+default         185-179-82-1.ho 0.0.0.0         UG        0 0          0 eth0
+185.179.82.0    0.0.0.0         255.255.254.0   U         0 0          0 eth0
+
+
+13 Шлюз для настройки данными между клиентами, серверами 
+eth0    # две сетевые платы 
+eth1 
+
+14 Настройка шлюзамежду двумя клиентами 
+
+1 netstat -nr  # маршрутизация по сети  1 клиент 
+Gateway         # маршрут по умолчанию 
+185.179.82.1
+
+2 netstat -nr # маршрутизация сети клиента 2 
+
+3 с одного клиента пингуем второго клиента ip берется из их сетевых интерфейсов
+
+4 Делаем сервер чтобы он стал шлюзом
+netstat -nr 
+
+5 cat /proc/sys/net/ipv4/ip_forward  # если 0 то ничего не включено единица включена
+1 
+
+15 iptables -t nat -A POSTROUTING -u 192.168.112.0/24 -j MASQUERADE   # включение маскарадинка 
+
+16 на клиенте 1 подключаемя к клиенту 2 по ssh, с одной сети получаем доступ в другую сеть 
+
+17 route add default qw 192.168.112.129  # прописываю маршрутизация gateway 
+file exist # файл присуствует 
+
+18 ifconfig # смотрю свой интерефейс eth1 
+cat /etc/sysycinfig/network-scripts/routte-eth1  # надо создавать такой файл чтобы после перезагрузки настройки сохранились
+vim /etc/sysycinfig/network-scripts/routte-eth1
+default via 192.168.112.129    # по умолчанию настроиваю
+
+
+19 netstat -nr # таблица маршрутизация  !!!
+   netstat -r  
+20 netstat -a # состояние сокетов каждый сокет ассоцируется с свои процессом
+
+21 netstat -na  # более подробно 
+
+22 netstat -i  # таблица сетевых интерфейсов 
+netstat -l  # смотрим что находится в состоянии listen 
+
+23 netstat -nl # pid процесса и названеи программы с которой взаимодействует сокет 
+
+24 netstat -nlp | grep :25 # смотрим слушается ли 25 порт 
+   netstat -nlp | grep :22 # проверяем работу ssh можно проверить любую службу  # nlp p process
+   tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      25620/sshd: /usr/sb 
+	tcp6       0      0 :::22                   :::*                    LISTEN      25620/sshd: /usr/sb 
+
+
+25 ps ux | grep 25620           # смотрим что за процесс в выводе выше 
+
+26 netstat -nt # смотри какие у нас пождключения в данный момент 
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0    300 185.179.83.171:22       37.215.2.235:52119      ESTABLISHED
+
+
+27 Состояние сокетов 
+ ESTABLISHED  # соединение установлено
+ closed   # закрыт
+ listen # ждет ожидания
+ unknown # статус неизвестен
+
+28 nmap -A -T5 192.168.146.150        # А узнать оперционную систему T агрессивно все запросим смотрим порты !!!!!!
+
+29 uname -a # узнаем ядро
+
+30 tcpdump -n -i eth1 "ether host 00:0C:29:25:04:SF "    # n , i (интерефейс )переводит сетевую карту в режим прослушивания позволяет слушать трафик eth1 сетевого интерфейса конкертного макадреса и все его пакеты будем ловить и слушать что он делает !!!!!!
+
+
+
+
