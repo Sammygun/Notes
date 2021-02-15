@@ -155,9 +155,37 @@ standard 		band(ghz) 		maximum Bandwidth             transmission       maximum 
 5 802.11n			2,4 5, both      300 mbps                         ofdm          70m in 250m out
 									channel banding 
 6 802.11ac				5 			3gbps 							ofdm            70m in 250m out 
+######################################################
+_Wireless Security_
+tool AirCrack-ng
+
+1 WEP !!! wired Equivalent Privacy # secure as wired network 802.11 very way back, its not secure protocol in nowadays 
+static 40 bit pre-sared ectryption key and upgraded t0 64 bit and 128 bit key iver time easy to brutforce 
+use 24 bit initialization vector (IV) sent in clear text (24 бита инициализация в этом проблема)
+brute force attcak with minutes using AirCrack-ng and other tools 
 
 
+2 Wi-Fi Protected Acces  WPA!!!   
+replaced wep and it weakness. It follows the Temporal Key Integrity Protocol (TKIP) and uses Message Integrity Check (Mic)
+uses 48-bit initialization Vector(IV) instead of 24 bit IV
+rivest cipher 4 (RC4) used encryption
+1 MIC message intergrity Check (MIC) to confirm data was not modified in transit
+2 Enterprice Mode WPA users can be required to authenticate before exchanging keys (keys between client and Ap are temporary)
 
+
+3 Wi-fi protected Access 2 (WPA2)!!! part of IEEE 802.11i standard and requires stronger encyption and integrity checking through Counter Mode with Cipher Block Chaining Message Authentication Code protocol (CCMP)
+1 stronger authentication 
+2 uses andvanced encryption Standard (AES) 128-bit key or above (или выше)
+
+3 WPA2 in 2020 still not broken, good long password will protect your network
+
+4 MAC address filtering 
+Configures an AP with a listing of permitted MAC addresses (like an ACL)
+for examply if iphone in denay list it will not able to connect to wifi, but it still easy to change mac addres or spoof it 
+5 seconds to do to use some tools:
+1 mac address changer (windows)
+2 MacDaddyX (OSX)
+3 Macchanger (linux)
 #############################################################################
 							Section 2
 							_Networks and Their Basic Components_
@@ -219,6 +247,8 @@ standard 		band(ghz) 		maximum Bandwidth             transmission       maximum 
 							_Hands-on with Antennas_
 							_Wireless Frequencies_
 							_Wireless Security_
+							_Hands-on with Wireless_
+
 
 
 ###############################################################################
@@ -1243,3 +1273,85 @@ ethernet uses CSMA/CD
 2 collision avoidance CA for wireless network
 ##################################################################
 _Wireless Security_
+
+1 pre-shared key
+scalability(масштабируемость) is difficult if key is compromised (скромпетирован)
+
+2 all clients (employes) use the same key but he is not working here
+
+3 
+1 WEP !!! wired Equivalent Privacy # secure as wired network 802.11 very way back, its not secure protocol in nowadays 
+static 40 bit pre-sared ectryption key and upgraded t0 64 bit and 128 bit key iver time easy to brutforce 
+use 24 bit initialization vector (IV) sent in clear text (24 бита инициализация в этом проблема)
+brute force attcak with minutes using AirCrack-ng and other tools 
+
+
+2 Wi-Fi Protected Acces  WPA!!!   
+replaced wep and it weakness. It follows the Temporal Key Integrity Protocol (TKIP) and uses Message Integrity Check (Mic)
+uses 48-bit initialization Vector(IV) instead of 24 bit IV
+rivest cipher 4 (RC4) used encryption
+1 MIC message intergrity Check (MIC) to confirm data was not modified in transit
+2 Enterprice Mode WPA users can be required to authenticate before exchanging keys (keys between client and Ap are temporary)
+
+
+3 Wi-fi protected Access 2 (WPA2)!!! part of IEEE 802.11i standard and requires stronger encyption and integrity checking through Counter Mode with Cipher Block Chaining Message Authentication Code protocol (CCMP)
+1 stronger authentication 
+2 uses andvanced encryption Standard (AES) 128-bit key or above (или выше)
+
+3 WPA2 in 2020 still not broken, good long password will protect your network
+
+4 1 Personal mode with pre-shared keys
+  2 Enterprise mode with centralized authentification 
+
+ 5 open   no security or protection
+   wep      IV is weak is bad 
+   WPA      TKIP and RC4  is weak also dont used 
+   WPA2 	CCMP and AES   
+            integruty protocol and AES encryption protocol 
+
+ 6 AirCrack-ng tool most popular used in kali linux to protect against this attacks we use network authentification 802.1x
+ every one have diffrent login and password  
+
+7 Extensible Authentication Protocol (EAP) # Authentication performed using 802.1x
+1 EAP-FAST
+flexible Authentication via Secure tunneling
+2 EAP-MD5 
+3 EAP-TLS
+part of 802.1x
+
+8 MAC address filtering 
+Configures an AP with a listing of permitted MAC addresses (like an ACL)
+for examply if iphone in denay list it will not able to connect to wifi, but it still easy to change mac addres or spoof it 
+5 seconds to do to use some tools:
+1 mac address changer (windows)
+2 MacDaddyX (OSX)
+3 Macchanger (linux)
+
+9 Network Admission Control (NAC) # we are making filter based on characteristics of the device instead of checking user credentials
+like passport checking
+checkin operation system, antivirus, if all fine its moved to network 
+
+10 Captive Portals
+web page that appears before the user is able to access the network resources (hotel, starbucks they have their own wep page and you must write your email, all basics thinks) They put you on container where you dont have any access to network untill you will give your data information aboout you.
+
+11 Geofencing (GPS or RFID) they will send me message if i leave area where is network working
+geoblocks  when someone from russia trying to conect to wi-fi coffee bar in washington dc but vpn will not save 
+
+12 DISABLE SSID Broadcast server set indetification (broadcast передача)
+storng password, mac filter , ssid broadcast will make your network stronger 
+
+13 Roque Access Point 
+some one with coffee => fake starbucks  => bad guy gathering information 
+public wi-fi must be very carefull
+
+14 war driving people was driving and looking for wi-fi network with out password and making attacks from their networks 
+
+15 war chalking remember weak network 
+#################################################################################
+_Hands-on with Wireless_
+
+
+
+
+
+

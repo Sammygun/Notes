@@ -14,7 +14,7 @@ Apache
 
 Установка
 1  sudo apt install apache2 		# ubuntu
-2 yum install httpd      			# centos
+2  yum install httpd      			# centos
 
 3 ls /etc/apache2/apache2.conf
 1 ServerRoot     ## корневой каталог в котором находятся файлы конфигурации и журналы
