@@ -139,6 +139,25 @@ cat 5 and others cat using only 100 meters
 practise 
 12_Testing the Network_
 practise 
+##############################################
+_Wireless Frequencies_  стандарты  band !!!!
+standard 		band(ghz) 		maximum Bandwidth             transmission       maximum range
+				 диапозон ГГЦ    пропускная способность			method          in=inddors out=outdoors
+
+1 802.11 			2.4 gnz  	1 mbps of 2 mbps   				dsss or fhss       20m in 100m out
+
+2 802.11a            5 ghz 	 		54mbps 							ofdm           35m in 120m out
+
+3 802.11b 			2,4 ghz 		11 mbps 						DSSS           32m in 140m out
+
+4 802.11g             2,4 ghz 	     54 mbps                        ofdm or dsss   32m in 140m out
+
+5 802.11n			2,4 5, both      300 mbps                         ofdm          70m in 250m out
+									channel banding 
+6 802.11ac				5 			3gbps 							ofdm            70m in 250m out 
+
+
+
 #############################################################################
 							Section 2
 							_Networks and Their Basic Components_
@@ -197,6 +216,9 @@ practise
 							_Section 8: Wireless Networks_
 							_Wireless Networking (WLAN)_
 							_Wireless Antennas_
+							_Hands-on with Antennas_
+							_Wireless Frequencies_
+							_Wireless Security_
 
 
 ###############################################################################
@@ -1142,3 +1164,82 @@ redspat meens what you have problems with wap (wireless access point) then you h
 #########################################################################################
 _Wireless Antennas_
 
+1 right antena 
+1 distance 
+2 pattern of wireless coverage 
+3 environment (indoor/outdoor)
+
+2 uniderectional antenna
+focus power in one direction for greater distance 
+focus in one direction my wireless network
+#######################################################################################
+_Hands-on with Antennas_
+
+1 omnidirectional (всенаправленный) пример мобильный телефон он может быть точкой доступа и по нему можно подключаться к wifi роутеру
+
+1.1 the longer antenna the longer distance i will get 
+
+2.2 the same i can do with wireless card 
+
+2 unf band old very old for tv we send our wireless(беспроводной) signal in one way 
+#######################################################################################
+_Wireless Frequencies_
+беспроводные частоты 
+
+1 direct-sequence spread spectrum (DSSS) !!!!!
+
+2 frequency-hopping spread spectrum (FHSS)  
+ 
+3 Orthogonal frequency-division multiplexing (OFDM)     !!!!!
+
+
+
+1  direct-sequence spread spectrum (DSSS)
+siries of signals known as chips 
+802.11b (DSSS) channel width 22 mhz # very popelar in 2,4 ghz 
+
+
+2 frequency-hopping spread spectrum (FHSS)
+better if you need eveything more secure
+
+3 Frequencies and Channels 
+Частоты и каналы
+IEEE 802.11 two standards:
+1. 2,4 ghz band 
+
+2. 5 ghz band 5,75 ghz to 5,875 ghz range 
+диапазон ГГЦ (band) имеет свои частоты для избежения перекрытия сигналов
+
+!!!!!
+standard 		band(ghz) 		maximum Bandwidth             transmission       maximum range
+				 диапозон ГГЦ    пропускная способность			method          in=inddors out=outdoors
+
+1 802.11 			2.4 gnz  	1 mbps of 2 mbps   				dsss or fhss       20m in 100m out !!!
+
+2 802.11a            5 ghz 	 		54mbps 							ofdm           35m in 120m out
+
+3 802.11b 			2,4 ghz 		11 mbps 						DSSS           32m in 140m out
+
+4 802.11g             2,4 ghz 	     54 mbps                        ofdm or dsss   32m in 140m out
+
+5 802.11n			2,4 5, both      300 mbps                         ofdm          70m in 250m out !!!
+									channel banding 
+6 802.11ac				5 			3gbps 							ofdm            70m in 250m out  !!! very fast
+
+
+
+4 radio frequency interference (RFI)
+1 other wi-fi devices 
+2 cordless phones and baby monitors (2.4 ghz)
+3 microwave ovens (2.4 ghz)
+4 wireless security systems (2.4 ghz)
+5 physical obstacles (walls appliances cabinets )
+6 signal strength (configuration on some devieces)
+
+5 carrier sense multiple access/collision avoidance   CSMA/CA  # for wireles
+ethernet uses CSMA/CD 
+
+1 collision detection CD for our network 
+2 collision avoidance CA for wireless network
+##################################################################
+_Wireless Security_

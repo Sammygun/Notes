@@ -1,0 +1,104 @@
+Apache-server 
+####################################
+total 
+1 ps -ylC httpd # смотрю какой процесс сколько оперативной памяти потрбляет 
+
+2 ps aux | grep httpd # запущен ли сервер
+
+3 sudo yum -y install mc # centos
+  sudo yum -y install vim
+
+4 vim /var/log/httpd/access_log (error_log) основные логи сервера apache 
+
+5 vim /etc/httpd/conf/httpd.conf  # основной конфиг сервера apche  
+
+6 httpd.conf 
+ServerAdmin root@localhost # почтовый адрес админа связанные с работой сервера особенно если будут ошибки на сервере 
+
+
+##################################
+Установка 
+1 yum -y install httpd httpd-devel php php-mysql mysql # centos
+2 chkconfig httpd on # добавляем apache в автозагрузку чтобы сервер стартовал после перезагрузки 
+
+3 httpd -l # смотрю какие модули устанвлены 
+apache2 -l # ubuntu
+  core.c
+  mod_so.c
+  mod_watchdog.c
+  http_core.c
+
+4 worker # поточный один паток каждый запрос но не так стабилен
+prefork # несколько процессов один запрос один процессор это фпм более стабилен но потребляет больше рессурсов
+
+5 ps aux | grep httpd
+
+6 service httpd start 
+
+7 ps -ylC httpd  # смотрю какой процесс сколько памяти потрбляет 
+RSS # сколько килобайтов потребляет процессс оперативной памяти 
+можно увидеть потребление ресурсов 
+
+8 vim /etc/httpd/conf.d/php.coni # при установки apache вместе с c php  подключается отдельным файлов 
+
+9 httpd.conf # главный конфиг apache 
+
+10 vim /var/log/httpd/access_log (error_log) основные логи сервера apache 
+
+11 vim /etc/httpd/conf/httpd.conf  # основной конфиг сервера apche 
+service httpd stop # прежде чем свой конфиг новый внести надо его остановить
+
+cp httpd.conf /etc/httpd/conf/httpd.conf
+
+1 секция глобальная 
+подключение виртуальных хостов, поэтому виртуальный хостинг так распространен и на одном ip-адресе может быть огромное количество клиентов 
+1 ServerTokens Full # стоит ли включать инфу о сервере и версии apache 
+2 ServerRoot "/etc/httpd" # путь директории где находятся файлы конфиграции
+
+3 PidFile  # файл в который записывается pid id уникальный номер процесса
+
+4 Timeout 120 # 120 секунд время соединения 
+5 KeepAlive off # можно ли держать постоянное соединение
+6 Maxkeepaliverequests 100
+7 KeepAlivetimeout 15 # сколько ждать повторного сединение от клиента на том же соединении 
+8 <IfModule prefork.c> # безопасная попытка загрузить данный модуль 
+все условия которые описны тут и они истина значить выполниться
+<IfModule>
+9 listen 80 # принимать на этом порту соединения но когда nginx в связке с apache тут меняем  
+10 load module # динамически подключаем модули 
+если что-то не надо то тут можно закоментить определенные модули что экономить потрбление памяти сервера  
+
+11 Include conf.modules.d/*.conf # подключаем все файлы к конфигурацинном файлу с расширением .conf
+
+12 ExtendedStatus On #  сгенирировать полную статистику 
+
+13  User apache  # под каким пользователем все запускается и с его правами все и выполняется на сервере 
+   Group apache # делается для безопасноти если сервер взломают то доступ можно было получить только под данным пользователем 
+
+2 Секция Main
+
+1 ServerAdmin root@localhost # почтовый адрес админа связанные с работой сервера особенно если будут ошибки на сервере 
+
+2 UseCanonical Name Off #будет использовать что  указано hostname
+если On то будет указывать то что в графе server name 
+
+3 DocumentRoot "/var/www/html" # откуда файлы сайта должны работать 
+
+4 <Directory />
+	Options FollowSymLinks  # серверу можно перемещаться по симлинкам 
+    AllowOverride None    # отключаем файл .htaccess 
+  </Directory>
+
+5 DirectoryIndex index.html index.htm  index.php  index.php5 
+# при обращении к конкретному каталогу будет отдан следующий файл
+если ну будет index.html то тогда будет искать index.htm и так до последнего 
+
+6  AccessFileName .htaccess 
+
+7 <Files ".ht*">      # запрещаю доступ из браузера к файлам начало .ht (чтобы не было доступа htacess htpasswd для безопасноти)
+    Oreder allow,deny
+    Deny from all
+</Files>
+
+
+23:39
