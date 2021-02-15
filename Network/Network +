@@ -190,6 +190,14 @@ practise
 
 							_Section 7 Virtualization and Cloud Computing_
 							_Virtual Network Devices_
+							_Voice Over IP (VoIP)_
+							_Cloud Computing_
+							_Virtualization and Cloud Computing_
+
+							_Section 8: Wireless Networks_
+							_Wireless Networking (WLAN)_
+							_Wireless Antennas_
+
 
 ###############################################################################
 							_Networks and Their Basic Components_
@@ -1040,7 +1048,97 @@ lowers cost and built using Ethernet switches (<10 gbps). It relies on configura
 
 8 infiniband (Virtualized Storage)
 Switched fabric topology for high-perfomance computing which comes with very high throughput (>600 Gbps) and very low latency (0.5 msec)
-7 : 31 
+
+9 Virtual firewalls and routers 
+fully we can virtualize network firewall and router manufacturer's offer virtualized versions of their most popular deviices
+PIX firewall cisco можно купить их вирутальную версию firewall
+
+10 Virtual Switches 
+Layer 2 control provides VLANs and trunking Quality of Service and security 
+
+virtual server => virtual switch = physical switch = physical router = connection to our internet 
 
 
+11 Virtual desktops 
+can be used everywhere from browser, in web, laptop, tablet or phone and is easier to admine them secure and upgrade 
+from starkburs i can connect to my virtual desktops 
+
+12 software defined networking (SDN)
+#################################################################################################
+_Voice Over IP (VoIP)_
+SIP protocol example skype, cisco phone, video
+
+#################################################################################################
+_Cloud Computing_
+1 private cloud   # secure network cloud.gov  only for goverment but they can be stored on servers amazon
+2 public cloud    # devices on public network   any one can used resources 
+3 hybrid cloud  # combination of private and public
+
+1 Network as a Service (Naas)
+2 Infrastructure as a Service (IaaS)  # outservice to hoster provider amazon
+3 Software as a Service (SaaS)      # web based application, google sheets, office 365 using only application
+4 Platform as a Service (PaaS)      # pivotal openshift apprenda
+
+1 Network as a Service (Naas) # allows outsourcing of a network to a service provider where it is hosted
+#################################################################################################
+_Virtualization and Cloud Computing_
+GNS3 tool можно подключать вирутальные машины 
+правой кнопкой по роутеру =console  = по паду в терминал роутера
+
+1 show configuration  # смотрю конфигурацию роутера 
+вижу сетевые интерфейсы какие eth1(net outside) eth0(DMZ) какие куда именно подключены 
+
+2 nmap 10.10.10.10  # вижу какие именно порты на сервере
+1 22 ssh 
+2 80 http
+3 8080 tcp http proxy 
+Целую сеть серверов можно виртуализировать внутри твоей рабочей машины с эмулировать и взаимодействовать 
+при этом мне не нужны не роутеры физические не свичи всем можно с виртуализировать в том же amazon что очень сильно экономит деньги и ресурсы
+##################################################################################################
+_Section 8: Wireless Networks_
+_Wireless Networking (WLAN)_
+
+1 IEEE 802.11 # most common standard 
+
+2 bluetooth
+3 Infrared (IR)
+4 Near-Field Communications(NFC)
+5 ANT +
+6 Z-wave
+
+
+2 Ad Hoc # we can use when we need to use to connect our devices between each other but not for etnernet connection
+
+3 wireless acces point (AP or WAP)
+
+4 Wireless router  # gateway wireless router, router 
+#################################################################################################
+_WLAN Service Sets_
+
+1 Ad hoc
+Independent Basic Service Set (IBSS)
+1 second floor two laptops
+2 first floor access to the internet 
+
+2 Basic Service Set (BSS)
+second floor two laptops = connected to my wireless access point = switch(connect all devices in our home) = router
+first floor router and switch 
+
+3 Extended Service Ser (ESS)
+two waps
+first floor 
+laptop = wap = switch = router = internet 
+
+second floor
+two laptops = wap = switch = router = internet 
+
+4 Mesh topology 
+microwave cellur and more to make our wifi
+redspat meens what you have problems with wap (wireless access point) then you have to move your wap
+
+5 wireless range extenders we use for big distance 
+репитер wifi
+
+#########################################################################################
+_Wireless Antennas_
 
