@@ -187,6 +187,58 @@ for examply if iphone in denay list it will not able to connect to wifi, but it 
 2 MacDaddyX (OSX)
 3 Macchanger (linux)
 #############################################################################
+_Hands-on with Wireless_
+router configure
+
+1 ipv4 using dhcp
+ip adress 192.168.1.2.
+маска подсети 255.255.255.0
+router 192.168.1.1
+
+2 192.168.1.1  # в браузере 
+Basic
+1 wireless = enable SSID broadcast # галочку убери тогда все желающие подключиться необходимо будет ввести название сети для подключения 
+2 enable wireless isolation # галочку поставь more like switch less like a hub 
+3 Name SSID       # DionTestWap 
+4 Channel Auto  # most common 1,6, 11, частоты но лучше 
+5 Mode up to 150 mbps # скорость для b и g 
+6 Security options # 
+none 
+WPA2-PSK[AES] # для домашней сети лучше выбрать 
+Passphrase # very long passsword 
+7 Apply # сохранима настройки 
+
+8 Advanced 
+1 wireless setup = 
+2 guest network = можно создать подключение для гостей 
+3 enable guest network
+4 enable wireless isolation
+5 guest wireless network name (SSID) ##название гостевого подключения 
+6 enable SSID broadcast # галочку ставь чтобы гости видели подключения 
+7 Allow guest to access My local Network # галочку убери тут чтобы доступ в интернет был изолирован от нашей сети 
+
+9 mac filter 
+advanced = advanced setup = wireless setings = !!!!wireless card Access List !!!!= turn access control on = Add = и тут добавляю мак адрес только свой  и других пользователей моей сети и только они получат доступ к сети  (дилетанта хорошая защита но не от разбирающегося) 
+wireless card Access List # галочку поставь тут 
+но нудобно когда кто-то в гости зашел не сможет подрубиться
+
+10 wps setings необходимо отключать:
+advanced = advanced setup = wireless setings = wps setings # так как это своего рода уязвимость 
+
+11 Remote managment  # удаленно могу подключаться и настраивать 
+1 присваиваю ip-адресс для удаленного подключения 
+2 ip address range = указываешь если надо 
+3 Лучше такой способ отключать включать если надо настроить кому-то удаленно сеть 
+
+Итого используй
+1 WPA2 (WPA2-PSK[AES]) # защищенный протокол
+2 disable the ssid broadcast  # надо постоянно будет вводить название сети и знать это название  
+3 enable wireless isolation   # включить изоляцию frequency and channel частоты и канал у каждого подключения будет изолирован отдельный от всех, станет как switch less like hub
+4 enable mac filtering # фильтрация по мак адресу или доступ только для конкретных мак адресов, но в реальности больше проблем от этого
+5 disable wps setting # обязательно отключить настройку
+#############################################################################
+
+
 							Section 2
 							_Networks and Their Basic Components_
 							  _Network Resources_
@@ -248,6 +300,8 @@ for examply if iphone in denay list it will not able to connect to wifi, but it 
 							_Wireless Frequencies_
 							_Wireless Security_
 							_Hands-on with Wireless_
+							_When Security Fails_
+
 
 
 
@@ -1349,9 +1403,63 @@ public wi-fi must be very carefull
 15 war chalking remember weak network 
 #################################################################################
 _Hands-on with Wireless_
+router configure
 
+1 ipv4 using dhcp
+ip adress 192.168.1.2.
+маска подсети 255.255.255.0
+router 192.168.1.1
 
+2 192.168.1.1  # в браузере 
+Basic
+1 wireless = enable SSID broadcast # галочку убери тогда все желающие подключиться необходимо будет ввести название сети для подключения 
+2 enable wireless isolation # галочку поставь more like switch less like a hub 
+3 Name SSID       # DionTestWap 
+4 Channel Auto  # most common 1,6, 11, частоты но лучше 
+5 Mode up to 150 mbps # скорость для b и g 
+6 Security options # 
+none 
+WPA2-PSK[AES] # для домашней сети лучше выбрать 
+Passphrase # very long passsword 
+7 Apply # сохранима настройки 
 
+8 Advanced 
+1 wireless setup = 
+2 guest network = можно создать подключение для гостей 
+3 enable guest network
+4 enable wireless isolation
+5 guest wireless network name (SSID) ##название гостевого подключения 
+6 enable SSID broadcast # галочку ставь чтобы гости видели подключения 
+7 Allow guest to access My local Network # галочку убери тут чтобы доступ в интернет был изолирован от нашей сети 
 
+9 mac filter 
+advanced = advanced setup = wireless setings = !!!!wireless card Access List !!!!= turn access control on = Add = и тут добавляю мак адрес только свой  и других пользователей моей сети и только они получат доступ к сети  (дилетанта хорошая защита но не от разбирающегося) 
+wireless card Access List # галочку поставь тут 
+но нудобно когда кто-то в гости зашел не сможет подрубиться
 
+10 wps setings необходимо отключать:
+advanced = advanced setup = wireless setings = wps setings # так как это своего рода уязвимость 
 
+11 Remote managment  # удаленно могу подключаться и настраивать 
+1 присваиваю ip-адресс для удаленного подключения 
+2 ip address range = указываешь если надо 
+3 Лучше такой способ отключать включать если надо настроить кому-то удаленно сеть 
+
+Итого используй
+1 WPA2 (WPA2-PSK[AES]) # защищенный протокол
+2 disable the ssid broadcast  # надо постоянно будет вводить название сети и знать это название  
+3 enable wireless isolation   # включить изоляцию frequency and channel частоты и канал у каждого подключения будет изолирован отдельный от всех, станет как switch less like hub
+4 enable mac filtering # фильтрация по мак адресу или доступ только для конкретных мак адресов, но в реальности больше проблем от этого
+5 disable wps setting # обязательно отключить настройку
+#############################################################################################
+_When Security Fails_
+wep extrimly not secure # если видишь wep сразу меняй на wpa2
+Пример атаки 
+
+1 airdump-ng wlan0mon  #  wlan0mon наша сетевая карта будет искать  и найдет 
+первая строка справа 
+C8:A7:0A:B5:2D:F8 #  там же будет виден канал ch 1 
+
+2 airdump-ng --channel 1 --bssid C8:A7:0A:B5:2D:F8 --write WirelessDump wlan0mon    # указываю канал, потом  bssid указываю мак адрес этой сети, потом указываю write записать в файл  WirelessDump  и потом укзываю сетевую карту 
+
+2:17 

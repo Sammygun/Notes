@@ -100,5 +100,44 @@ cp httpd.conf /etc/httpd/conf/httpd.conf
     Deny from all
 </Files>
 
+8  TypesConfig /etc/mime.type # mime типы 
+DefaultType text/plaon # если нам неизвестен формат выводим на экран
 
-23:39
+9 <IfModule mime_magic_module> # аккуратная загрузка модуля
+MIMEMagicFile conf/magic
+</IfModule>
+
+10 HostnameLookupu Off # лучше отключать а то каждый запрос будет смотреть на dns-сервер нагрузка на сервер
+
+11 ErrorLog "logs/error_log" # куда будет ложиться ошибки сервера 
+
+12 loglevel warn 
+    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+    LogFormat "%h %l %u %t \"%r\" %>s %b" common
+
+    <IfModule logio_module>  
+      # You need to enable mod_logio.c to use %I and %O
+      LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+# тут можно настроить формат лога 
+
+13 ServerSignature On # полезно использовать при использовании proxy сервера 
+
+14 Alias /icons/ "/var/www/icons/" # когда в браузере  кто-то задаст в пути linux.of.by / то искать реально будет здесь  /var/www/icons/  # псевдоним очень удобно 
+
+15  ScriptAlias /cgi-bin/ "/var/www/cgi-bin/" # в этом каталоге можно запускать cgi скрипты 
+
+16 IndexOptions # управлять кодировкой mime типом 
+
+17 AddIcon # какие иконки с каким расширением 
+
+18 ReadmeName README.html  # задать файл readme 
+   HeaderName HEADER.html
+
+19 AddLanguage # позволяет указать язык для документов 
+
+20 LanguagePriority 
+30:13
+
+
+
+
