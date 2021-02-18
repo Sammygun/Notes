@@ -15,7 +15,37 @@ total
 6 httpd.conf 
 ServerAdmin root@localhost # почтовый адрес админа связанные с работой сервера особенно если будут ошибки на сервере 
 
+7  netstat -nltp # смотрю 80 порт прослушивается какие порты прослушиваются
+tcp6       0      0 :::80                   :::*                    LISTEN      15708/httpd  
+##################################################
+8 vim /etc/httpd/conf.d/virt.conf #  к примеру виртульный хост 
+в каталоге conf.d должны содержаться конфиги virt.conf
 
+https://losst.ru/nastrojka-virtualnyh-hostov-apache#%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D1%85%D0%BE%D1%81%D1%82%D0%BE%D0%B2_Apache
+Теория 
+
+Пример виртуального хоста
+
+<Directory /var/sites/>  # речь идет именно об этом каталоге 
+  AllowOverride All    # возможность использовавния файла .htaccess
+  Options All  # здесь указываем какие опции мы можем использовать в файле htaccess
+</Directory>
+
+<VirtualHost *:80>  # помни в одном виртуальном хосте может быть много различных виртуальных хостов просто чуть ниже такую же секцию создаешь.
+  ServerName company.ru
+  SeverAlias www.company.ru
+  ServerAdmin support@company.ru
+  DocumentRoot /var/sites/company.ru/html/
+  DirectoryIndex index2.php
+  ScriptAlias /cgi-bin/ /var/sites/company.ru/html/cgi-bin/
+
+  ErrorLog /var/sites/company.ru/html/error.log
+  CustomLog /var/sites/company.ru/html/access.log combined
+</VirtualHost>
+##########################################################
+9 mkdir -p /var/sites/company.ru/html/{pages,logs,cgi-bin} # создаю каталоги из виртуального хоста, когда нам надо в одном каталоге создать несколько каталогов пишем вот так  {pages,logs,cgi-bin} появятся такие каталоги cgi-bin  logs  pages
+
+10 touch /var/sites/company.ru/html/logs/{access_log,error_log} # сразу же создаю несколько файлов в одном каталоге иначе сервер может не стартануть если в конфиге будут указаны но по факту их нету 
 ##################################
 Установка 
 1 yum -y install httpd httpd-devel php php-mysql mysql # centos
@@ -136,8 +166,129 @@ MIMEMagicFile conf/magic
 19 AddLanguage # позволяет указать язык для документов 
 
 20 LanguagePriority 
-30:13
 
+21 AddDefaultCharset UTF-8 # кодировку для сервера задаем
+
+
+22 AddType application/x-gzip .tgz # позволяет задать новый mymetype
+
+23 AddHandler cgi-script .cgi # назначаем обработчик для выполнения определенных файлов обработчик может уже встроен в сам сервер или определе директивой Action
+
+24 AddOutputFilter INCLUDES .shtml # директива назначаем фильтр файлам с определенным расширением фильтр обрабатывает страницы до того как их направить клиенту
+
+25 BrowserMatch "Mozila/2" nokeepalive # задаем поведение для конкретного браузера используются когда есть какие либо ошибки в браузере конкретном 
+
+26 
+<Location /server-status> # задаем поведение сервера 
+   SetHandler server-status
+   Order deny,allow
+   Deny from all        # остальным запрет
+   Allow from 192.168.146.1  # можно только поэтому ip зайти
+</Location>      # когда клиент жалуется почему его сервер не доступен в определенной сети тут можно копать в самом конфигурационном файле сервера 
+
+27 
+<Location /server-info>
+  SetHandler server-info
+  Order deny,allow
+  Deny from all
+  Allow from 192.168.146.1
+</Location>  
+###################################################################
+1 netstat -nltp # смотрю 80 порт не прослушивается
+tcp6       0      0 :::80                   :::*                    LISTEN      15708/httpd         
+
+2 /var/www/html/index.html # здесь файлы нашего сайта 
+
+3 company.ru/server-status  # статистика сервера нагрузка cpu запрос 
+
+4 company.ru/server-info  # о модулях что-то полезное помни про конфиг server-info, server-status
+
+5 vim /etc/httpd/conf.d/virt.conf #  к примеру виртульный хост 
+в каталоге conf.d должны содержаться конфиги virt.conf
+
+https://losst.ru/nastrojka-virtualnyh-hostov-apache#%D0%9D%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0_%D0%B2%D0%B8%D1%80%D1%82%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D1%85%D0%BE%D1%81%D1%82%D0%BE%D0%B2_Apache
+Теория 
+
+Пример виртуального хоста
+
+<Directory /var/sites/>  # речь идет именно об этом каталоге 
+  AllowOverride All    # возможность использовавния файла .htaccess
+  Options All  # здесь указываем какие опции мы можем использовать в файле htaccess
+</Directory>
+
+<VirtualHost *:80>  # помни в одном виртуальном хосте может быть много различных виртуальных хостов просто чуть ниже такую же секцию создаешь.
+  ServerName company.ru
+  SeverAlias www.company.ru
+  ServerAdmin support@company.ru
+  DocumentRoot /var/sites/company.ru/html/
+  DirectoryIndex index2.php
+  ScriptAlias /cgi-bin/ /var/sites/company.ru/html/cgi-bin/
+
+  ErrorLog /var/sites/company.ru/html/error.log
+  CustomLog /var/sites/company.ru/html/access.log combined
+</VirtualHost>
+
+
+6 mkdir -p /var/sites/company.ru/html/{pages,logs,cgi-bin} # создаю каталоги из виртуального хоста, когда нам надо в одном каталоге создать несколько каталогов пишем вот так  {pages,logs,cgi-bin} появятся такие каталоги cgi-bin  logs  pages
+
+7 touch /var/sites/company.ru/html/logs/{access_log,error_log} # сразу же создаю несколько файлов в одном каталоге иначе сервер может не стартануть если в конфиге будут указаны но по факту их нету 
+
+8 vim /var/sites/company.ru/html/index.html # создал мой index.html
+my virtual host 
+
+
+9 service httpd restart  # перезагружаю веб сервер 
+
+10 cgi-скрипты уже отошли в основном php скрипты 
+ в виртуальном хосте подключение cgi-скриптов
+
+ <Directory /var/sites/>  # речь идет именно об этом каталоге 
+  AllowOverride All    # возможность использовавния файла .htaccess
+  Options All  # уже прописан здесь указываем какие опции мы можем использовать в файле htaccess cgi -bin, follow symlinks переход симлинкам includes, index ,htaccess
+  
+  AloowOverride opitions специальные опции 
+  AloowOverride none # запрещаем использовать htaccess в этом каталоги и под каталоге 
+</Directory>
+
+11 vim /var/sites/company.ru/html/cgi-bin/test.cgi 
+#!/usr.bin/perl
+print "Content-type: text/html\n\n";
+print "Hello, world";
+
+chmod + x test.cgi # на php так не нужно 
+www.company.ru/cgi-bin/test.cgi # выведит Hell, World 
+
+12 htpasswd -c /var/sites/company.ru/.htpasswd user1  # -c create когда его вообще нету потом попросит пароль
+sam1234 
+Появится файл .htpasswd  
+user1:$apr1$YZpT2ik1$1dMdbLfwZegtJOzSLIGsH1
+
+13 vim /var/sites/company.ru/html/logs/.htaccess  # блокирую logs от публичного доступа
+
+AuthType Basic  # базовый 
+AuthName "Restricted Area" # текст
+AuthBasicProvider file    # каким способом аунтефикация 
+AuthUserFile /var/sites/company.ru/.htpasswd  #файл где прописаны кто может авторизоватся на странице 
+Require valid-user           # условия аунтификации любой валидный пользователь
+Require user1 прописать # что только один пользователь может авторизоваться на этой странице но так редко делают
+
+
+теперь при подключении к сайту company.ru/log меня попросит авторизоваться 
+
+Получается закрываю доступ к странице logs доступ к по имени пользователя 
+суть создаю .htpasswd и в нужном каталоге создаю htaccess и вношу внего условия выше после чего доступ к странице становится закрытым 
+
+14 Ограничение по конкретному ip-адресу к конкретной странице каталогу 
+vim /var/sites/company.ru/html/logs/.htaccess # с чистого листа 
+Order deny,allow  # сначало deny потом уже allow
+Deny from all     # запретить для всех
+Allow from 192.168.146.10 # разрешить только для конкретного ip обновиться данное правило моментально
+
+На странице будет forbidden you dont have permission 
+
+два основных способа ограничения к каталогу если статический ip то лучше второй способ, если динамический то лучше htpasswd 
+
+1:00
 
 
 
