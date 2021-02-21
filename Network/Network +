@@ -258,7 +258,7 @@ KEY FOUND! [ 17:25:83:AE:FA ]
 
 
 #############################################################################
-
+								_plan_
 
 							Section 2
 							_Networks and Their Basic Components_
@@ -333,6 +333,15 @@ KEY FOUND! [ 17:25:83:AE:FA ]
 							_Subnetting Practice_
 							_Subneting by Hand_
 							_IPv6 Addresses_
+
+
+							_Section 10: Routing_
+							_Routing Fundamentals_
+							_Routing Tables_
+							_Routing Protocols_
+							_Address Translation (NAT and PAT)_
+							_Multicast Routing_
+
 
 
 ###############################################################################
@@ -1704,3 +1713,137 @@ _Subneting by Hand_
 192.168.0.85 /29
 #################################################################
 _IPv6 Addresses_
+
+1 musch larger address space
+2 no broadcasts 
+3 no fragmentation 
+4 Can coexist with ipv4 during transition
+5 Simplified header
+
+2018:0:0:0000:0:000:4815:54ae
+2018::4815:54ae    # аналогичны
+
+1 global ipv6 
+begins 2000 to 3999
+
+2 link-local address
+begins with fe80
+
+3 multicast address
+begins with ff
+########################################################################
+_Section 10: Routing_
+_Routing Fundamentals_
+
+internal network     # внутренняя сеть 
+external network     # внешнияя сеть 
+
+1 main function of router 
+to route traffic # маршрут движения 
+to push traffic from one network to another 
+
+2 routers layer 3 devices 
+					pc2
+router  => WAN <=  router
+pc1                 pc3 
+
+router uses ip adresses instead macadresses in layer 2 (switch)
+###################################################
+_Routing Tables_
+
+1 Tables help router to understans whicjh route entry is the best fit for the network
+
+1 Directly connected routes # learned by physical connection between routers 
+
+r1 = r2 = r3 
+
+2 Static routes # manually cinfugured by an administrator 
+
+3 Dynamic routing protocols
+learned by exchanging information between routers
+
+
+4 Directly connected routes
+r1 <=> r2 
+sw1    sw2
+pc1     pc2 
+
+5 Split horizon 
+6 poison reverce  # high cast 
+ways to stop loop routing 
+#######################################################################
+_Routing Protocols_
+1 Interior Gateway protocols (IGP)
+operate within an autonimous system 
+
+2 Exterior Gateway protocols (EGP)
+operate  between authonimous systems 
+
+3 convergence time 
+
+4 (rip) routing information protocol interior gateway protocol. (oldest protocol)        
+
+5 open shortest path first (ospf) interior gateway protocol. it is also a link state protocol that uses cost.
+
+6 sintermediate system to intermediate system (is-is)
+interior gateway protocol/ It is also a link-state protocol that uses cost. Functions like ospf protocol but not as popular or widely utilized. 
+
+7 enhanced iterior gateway routing protocol (EIGRP) in cisco network only 
+
+8 border gateway protocol (BGP)
+
+9 Routing information source                Administartive distance 
+directly connected Network                            0
+statically configured network                         1
+eigrp                                                 90
+ospf                                                  110
+rip                                                   120
+external eigrp                                        170
+unknown or unbelievable                               255 (unreachable)
+
+################################################################
+_Address Translation (NAT and PAT)_
+1 network address translation NAT
+its translate private ip to public ip for routing network переводит приватный ip в публичный ip  
+
+2 Port address translation PAT
+
+2 NAT
+1 Dynamic NAT (DNAT)
+ip address and automatically assign it from a pool in one second you get public ip make request and then give it back
+пример 4 человека 2 машины 1 берет ключ едит по делам возвращается домой ложит ключи обратно и другой также 
+
+2 Static NAT (SNAT)    # ip address присваивается в ручном режиме, работает one to one translations
+одна машина для одного человека настраивается статически в ручном режиме more for security 
+
+
+
+3 Port address translation (PAT)
+multivate private ip share in one public ip. It is a many to one translation good for small network.
+
+4 inside local # private ip an inside device
+inside global # public ip referencing an inside device
+outside local # private ip an outside device
+outside global # ip address an outside devie
+
+global public
+local private
+
+5 10.0.1.1/24 # внутренний ip роутера к примеру 
+66.74.58.124  # ip сервера через который мы выходим в сеть 
+
+nat example can be static or dynamic
+6 inside local address       ==>>       inside global address    ==>>  internet server 
+10.0.1.101                                78.1.45.101                   66.74.58.124
+10.0.1.102 								  78.1.45.102 
+
+7 pat example using specific port more popular in our days 
+
+inside local 				==>>       inside global address 
+address:Port                                  address:Port 
+10.0.1.101:4125                                 66.74.58.124:4125                  
+10.0.1.102:4812 								66.74.58.124:4812 
+
+#########################################################################
+_Multicast Routing_
+

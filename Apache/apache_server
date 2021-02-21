@@ -257,7 +257,9 @@ print "Hello, world";
 
 chmod + x test.cgi # на php так не нужно 
 www.company.ru/cgi-bin/test.cgi # выведит Hell, World 
+###########################################################
 
+Блокировка доступа к конкретным страницам 
 12 htpasswd -c /var/sites/company.ru/.htpasswd user1  # -c create когда его вообще нету потом попросит пароль
 sam1234 
 Появится файл .htpasswd  
