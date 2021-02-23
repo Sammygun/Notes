@@ -342,6 +342,23 @@ KEY FOUND! [ 17:25:83:AE:FA ]
 							_Address Translation (NAT and PAT)_
 							_Multicast Routing_
 
+							_Section 11: Wide Area Networks (WANs)_
+							_Wide Area Networks (WAN)_
+							_WAN Technologies (Part 1)_
+							_WAN Technologies (Part 2)_
+
+							_Section 12: Network Security_
+							_The CIA Triad_
+							_Network Security Attacks (Part 1)_
+							_Network Security Attacks (Part 2)_
+							_Network Security Attacks (Part 3)_
+							_Protecting the Network_
+							_Multifactor Authentication_
+							_Firewalls_
+							_Hands-on Firewalls_
+							_Hands-on Software Firewalls_
+							_IDS and IPS_
+
 
 
 ###############################################################################
@@ -1847,3 +1864,319 @@ address:Port                                  address:Port
 #########################################################################
 _Multicast Routing_
 
+1 Internet group management protocol (IGMP) используется клиентом и роутером для того что роутер знал какой интерфейс многоадресный и  позволяет клиентам быть многоадресной группе
+IGMP v1 
+IGMP v2
+IGMP v3 
+
+2 Protocol independent Multicast (PIM)
+#########################################################################
+_Section 11: Wide Area Networks (WANs)_
+_Wide Area Networks (WAN)_
+1 80 % traffic goes out from network 20 % traffic in your local network
+
+2 router              <=>         router       # T1 connection 
+3 router              <=>         router       # isdn 
+
+4 Packet switched connection  # always on 
+
+5 unshielded twisted-pair utp 
+T1, DSL, Dial-up, and ISDN 
+
+6 Coaxial Cable 
+
+7 Fiber-optic cable 1 gbs 
+
+8 Electric Power Lines   2.7 mbps very slow 
+
+9 WAN wireless Media 
+
+10 HSPA + High-Speed Packet Access (HSPA+)
+84 mbps lte and 4g 
+
+11 WiMAX alterntaive to DSL/Cellular and wireless fixed location service faster GSM and HSPA+
+
+12 radio very old and slow 9.6 kbs
+##########################################################
+_WAN Technologies (Part 1)_
+
+1 
+carrier  signal     number of T1    Number of voice    Speed
+		 level      Signals         Channels
+	T1     DS1            1               24             1,544 mbps
+	T3     DS3           28             672              44.736 mbps 
+	E1     n/a          n/a              30              2.0 mbps 
+and other	
+
+2 metro ethernet 
+3 PPP Point to Point Protocol 
+4 Password Authentification Protocol (PAP)
+perfoms one authentication between client and server.  Sending text password.
+
+5 Challenge-handshake Authentification Protocol (CHAP)
+Preforms one-way authentification using a three-way handshake. Sending only hash of password. 
+
+6 DSL 
+1 Asymmetric DSL (ADSL)
+2 Symmetric DSL (SDSL) 
+3 Very High Bit-Rate DSL (VDSL)   !!!
+
+#################################################################
+_WAN Technologies (Part 2)_
+1 cable modems (HFC)
+2 Satellite Modems  streaming video is very bad idea
+
+3 Delays 
+4 weather conditions 
+
+5 Plain old telephone Service (POTS)
+dial-up is to old 
+
+6 Integrated Services Digital Network (ISDN)
+7 Synchronous Optical Network (SONET) very fast 
+cover large distances (20 km to 250 km or more) layer1 
+8 Asynchronous Transfer Mode (ATM)  layer2
+
+9 Multiprotocol Label Switching (MPLS)
+
+10 WAN data rates  (kbps, mbps, gbps)
+#################################################################################
+_Hands-on WANs_
+
+#################################################################################
+_Section 12: Network Security_
+_The CIA Triad_
+
+
+1 DES (Data encryption Standard)
+2 3DES (Triple DES)
+3 AES (Advanced Encryption Standard)
+
+4 Key pair 
+Public key   ==========  Private key(the most important) 
+Человек который имеет твой публичный ключь отправляет тебе сообщение, так как у тебя есть закрытый ключь ты можешь его принять 
+
+5 Hashing 
+
+6 SHA-1 # алгоритм шифврования 
+######################################################################################
+_Network Security Attacks (Part 1)_
+Type of attacks 
+1 confidentiality attack # нарушить конфиденциальность 
+
+2 integrity attack
+attempts to alter data 
+
+3 availability attack  # на доступность типо dos ddos 
+
+4 Packet capture
+  Wiretapping
+  Dumpster diving
+  Ping sweep
+  Port scan
+  Wireless
+  Man in the Middle
+  Social engineering
+  Malware/Spyware
+
+
+5 Man in the Middle
+Data diddiling
+Trust relationship 
+Salami attack
+Password attack
+Session hijacking 
+Botnet   # your pc become as zombie 
+
+6 Man in the middle
+Самый простой пример есть клиент  который хочет перевести 50 долларов в банк и когда он делает перевод человек который посередине перехватывает его запрос меняте на 5000 долларов с переводом на его счет в банке и отправляет видо измененный запрос в банк.
+
+7 Session hijacking  # когда пытаются перехватить сессию по session id доступно когда у кого получилось перехватить трафик
+
+8 Botnets # zombies pc 
+
+###################################################################
+_Network Security Attacks (Part 2)_
+1 Denial of servoce (Dos)
+2 Distributed Denial of Servoce (DDOS)
+3 TCP SYN flood
+4 Buffer overflow
+5 ICMP attacks (Smurf)
+6 UDP attacks (Fraggle)
+7 Ping of Death 
+8 Electrical disturbances 
+9 Physical environment attacks
+
+1 Denial of service (Dos)
+best example one kid mammy ok it when 5 kids mammy, mam can handle it 
+
+2 TCP SYN flood поступает большое количество запросов на сервер
+
+3 Smurf (ICMP Flood) # на сегодня уже устарело 
+
+4 Electrical disturbances  # cut the power off 
+
+5 Physical environment attacks # server room 
+
+####################################################################
+_Network Security Attacks (Part 3)_
+
+1 Insider threats  # strange employ 
+2 phishing  # письмо с логотипом pay pal очень похожие на оригинал но нет becarefull
+3 ransomware    # когда шифруют твои данные и требуют выкупа для расшифорвки 
+4 logic bombs       # код который может сработать со временем и что-то заблочить
+5 deauthentication  # in wireless network user отключают от сети wifi потом при повторной попытке авторизации пытаются перехватить его пароль 
+6 vlan hopping   # 
+switchport nonegotiate
+
+switchport mode access
+
+###############################################################
+_Protecting the Network_
+1 Physical controls
+2 User training 
+3 Patching 
+4 Vulnerability scanning 
+5 Honeypots and honeynets 
+6 Remote access security
+7 Security policies 
+8 Incident response 
+
+1 Physical controls  # camera and others 
+
+2 Nessus  !!! using for scaning all hosts in my network 
+3 Zenmap
+4 Nmap
+
+5 Patching looking for bugs 
+
+6 Remote access security # protecing routers, switches,servers and clients.
+SSH        
+RADIUS      udp based authentication protocol
+TACACS+        Cisco propietary TCP based authentification protocol
+Kerberos       authentification in windows domains 
+IEEE 802.1X       permits ir denies a wired or wireless client access to a lan
+Two factor authentication       #
+Single sign on  
+
+##########################################################
+_Security Policies_
+1 standards guidelines procedures  
+These are going to tell you what things are done in an organization 
+2 Bring your own device (BYOD)
+
+3 Bluetooth
+1 bluejacking of unauthorized messages over bluetooth
+2 bluesnarfing # provides unauthorized access to wireless through bluetooth
+3 bluebugging 
+unathorized backdoor to connect bluetooth back to attacker 
+
+4 System lifecycle
+1 Conceptual design
+2 Preliminary design 
+3 Detailed Design 
+4 Production and Installation
+5 Operations and Support 
+6 Phase Out
+7 Disposal 
+
+5 Incident Response # что будешь делать если что-то произойдет 
+Means 
+Did suspect have technical skills to perform the attack?
+
+Motive 
+Why would they perform the attack?
+
+Opportunity 
+Do they have the time and access ?
+
+################################################################
+_Multifactor Authentication_
+Something you know
+Something you have
+Something you are
+Something you do 
+Somewhere you are 
+
+1 Usernames
+2 Passwords 
+3 Pins
+4 Answers to personal questions 
+
+5 Geotagging # защита по местоположение, если местоположение не то то срабатает блокировка 
+6 Geofencing 
+##################################################################
+_Firewalls_
+1 permit traffic or denied through device 
+
+2 Network Address Translation NAT or Port Address Translation (PAT)
+
+3 Packet-Filetering Firewalls
+Permit or deny traffic based on packet header 
+
+1 source IP address/port nimber 
+2 destination Ip adress/port number 
+Пропускать ли трафик по тому или иному правилу 
+
+2 Stateful firewalls 
+
+3 NextGen Firewalls (NGFW)
+
+4 Access Control List (ACL) # set of rules typically applied tp router interfaces that permit or deny certain traffic 
+Source Ip,port, or Mac
+Destination Ip, Port, or Mac 
+
+Permit or denied traffic 
+
+5 Firewall Zones # 
+Inside  # corporate Lan
+Outside  # connectes ti the internet 
+DMZ  # connects to devices that should have restricted access from outside zone (like web servers )
+
+6 Unified Threat Management (UTM) devices 
+device that combines firewall router intrusion detection/prevention system antimalware and other security features into a single device 
+#############################################################################
+_Hands-on Firewalls_
+router настройка фаерволла 
+
+1 block services = always
+service type telnet  # указываешь тип сервиса,  диапозон портов здесь также задаешь поминшь что бывают нестандартные порты 
+
+2 ip address Range 10.0.0.2   
+10.0.0.10  # тут диапозон задаешь тут здесь указаны локальные ip   # add
+
+3 к примеру можно задать блокировку для всех ip  к примеру для подключения с различных ip 
+#################################################################################
+_Hands-on Software Firewalls_
+1 Windows defender firewall
+1 пуск = windows administration tools = windows defender 
+
+2 исходящее правило (outbound rules)
+
+3 входящее правило (inbound rules)
+
+Справа Actions тут можно импортировать и экспортировать настройки 
+
+4 inbound rules  можно посмотреть входящие правила 
+К примеру для ssh можно посмотреть настройки
+4.2 Справа  New rule = (тут можно выбрать программу, порт и т.д.) = Port = TCP (тут выбор для TCP (web server) или UDP traffic) = 
+указываешь для каких правило дейтсвует для всех локальных портов или специфичного порта = Specific local ports = 80, 443 = next = 
+тут выбираю:
+1 Allow the conection  # тут выбираю !!!!
+2 Allow the connection if it secure  # тут имеется если используется vpn 
+3 Block the connection  
+4.3 next = галочки ставлю  Domain, Private, Public (выбираю для каких сетей действуют) =  next = Name (Jason webserver) = description
+
+Потом во входящие правило (inbound rules) тут вижу правило Jason webserver 
+
+5 также можно сделать если я не хочу чтобы с моей сети (исходящее правило (outbound rules)) никто не мог запускать telnet =
+outbound rules = port = tcp = 23 (указываю порт) = next = block the connection = выбираю сразу всех Domain, Private, Public = next =
+name указываю = Blocking telnet  = finish = теперь никто не сможет пользоваться telnet 
+
+6 Слева в  windows defender Firewall  есть Monitoring =  тут можно посмотреть что на что срабоатло 
+############################################################
+2 Mac os 
+Справа вверху = System Preferences = Security & Privacy = Firewall = покажет что он включен = но нельзя редактировать = снизу слева замок = нажимаеш на него и вводишь свой логин и пароль = firewall options = можно = block all incoming connections куча других настроек = 
+ новое правило = выбираешь приложение = и добавляешь если не надо просто выбираю крестик 
+#################################################################
+_IDS and IPS_
