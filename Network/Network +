@@ -358,8 +358,22 @@ KEY FOUND! [ 17:25:83:AE:FA ]
 							_Hands-on Firewalls_
 							_Hands-on Software Firewalls_
 							_IDS and IPS_
+							_Virtual Private Networks (VPNs)_
+							_IPSec_
 
 
+
+							_Section 13: Network Availability_
+							_High Availability Networks_
+							_Designing Redundant Networks_
+							_Recovery Sites_
+																			
+							
+
+							_Section 16: Networking Tools and the Command Line_
+							_Networking Tools (Part 1)_
+							_Windows Command Line_
+							_UNIX Command Line_
 
 ###############################################################################
 							_Networks and Their Basic Components_
@@ -2180,3 +2194,245 @@ name указываю = Blocking telnet  = finish = теперь никто не
  новое правило = выбираешь приложение = и добавляешь если не надо просто выбираю крестик 
 #################################################################
 _IDS and IPS_
+1 Incoming data structure are analyzed for attacks using different detection methods
+1 Snort IDS
+scaning ports or something else that have in database its will send alert to system administrtion
+its can respond 
+
+2 Intrusion Prevention System # wil send alerts, drop or block the offending traffic its more active device 
+All traffic will go throw this device to your network 
+IPs most popular tool against DOS atacks 
+
+3 often IPS and IDS using for detection but not prevention 
+
+1 Signature based detection  (patterns the triggers detection)
+2 Policy-Based Detection # no telnet allowed for example port 23 
+3 Anomaly-Based Detection # statistical anomaly 
+non statistical anomaly 
+
+4 Host-based (HIDS/HIPS)
+Software-based and installed on servers/clients  
+######################################################
+_Virtual Private Networks (VPNs)_
+1 Secure Socket Layer (SSL) layer 5 -7 https, instead TLS now we are using ssl
+2 DTLS datagram transport layer security (DTLS) for udp video striming 
+
+3 layer 2 tunneling protocol (l2tp)
+
+4 layer 2 forwardiing (l2f)
+1 developed by cisco to provide for tunneling of point to point protocol (PPP)
+
+5 Point to Point tunneling protocol (PPTP)
+for dial-up networks 
+######################################################
+_IPSec_
+1 the most common
+2 Internet Key Exchange (IKE)
+uses encryption between authenticated peers to create a secure tunnel
+########################################################
+_Section 13: Network Availability_
+_High Availability Networks_
+
+1 availability and reability 
+Mean Time To Repair (MTTR)
+Mean Time Netween Failures (MTBF)
+
+2 закупка запчастей чтобы быстро можно что-то заменить про запас
+#########################################################
+_Designing Redundant Networks_
+1 virtual network you can use virtual router its will save you a lot of money 
+2 hat you will do if power will down 
+3 Time = cost = and quality 
+##########################################################
+_Recovery Sites_
+1 cold sites
+2 warm sites      building and equipment but no software 
+3 hot sites       building and equipment and software 
+3 hot sites
+
+Backup and Recovery 
+1 Full 
+2 Incremental
+3 Differntial
+4 Snapshots   (data frozen in time)
+#############################################################
+_Need for Quality of Service (QoS)_
+_QoS Categorization_
+1 General public 
+2 HOV  # if you trvael with someone in the car as example
+3 Toll # платные дороги 
+
+Трафик делим, на почтовый, видео, голосовой и т.д. Каждому трафику ставлю свой приоритет. 
+1 Best Effort
+2 integrated services 
+3 differentiated Services (DiffServ)
+
+_QoS Mechanisms_
+Email types
+1 pop3 
+2 imap
+3 smtp
+4 exchang
+
+Random Early Detection (RED)
+
+
+#############################################################
+
+
+
+
+
+
+
+_Section 16: Networking Tools and the Command Line_
+_Networking Tools (Part 1)_
+
+1 physical cabel 
+2 hardware 
+3 ESD electrostatic discharge (ESD) STRAP 
+4 multimeter         test
+5 loopback   #  
+6 Crimper # для подключения кабеля 
+7 cable tester  # проверка работы кабеля cat 3, 5 ,6 и т.д. rj45 
+8 cable certifier # определить какой тип кабеля
+9 punch down tool # 
+10 Time Domain Reflectometer TDR
+11 Optical Time Domain Reflectometer # для проверки где именно произошел разрыв на какой дистанции
+##################################################################
+_Networking Tools (Part 2)_
+software
+
+1 speed test sites (https://www.speedtest.net/)   # проверка реальной скорости в сети 
+2 bit-error rate tester (Bert)
+3 environment monitoring  # monitoring типо забикса 
+4 protocol analyzer (network sniffer)
+wireshark, ethereal 
+5 wireless analyzer # показывает где лучше всего точку доступа установить
+
+6 Looking glass Site # 
+7 remote connectivity software # allows to remote network access 
+##################################################################
+_Windows Command Line_
+1 пуск + r # cmd = командная строка 
+2 arp (Address Resolutin Protocol)
+показывает мак адреса второй уровень для всех изветных ip-адресов третий уровень
+
+3 arp -a # покажет arp table покажет интерфейсы
+
+  arp -d 192.168.1.1  # удалияем deletes the arp mapping for 192.168.1.1 on all interfaces
+  arp -s 192.168.1.1 00-AA-BB-4F-5C-23 # adds a static ARP entry to force the ip provided to resolve to the mac address provided 
+
+
+4 ipconfig # покахывает ip и конфигурация ПК
+  ipconfig /all # наиболее частая команда  # a lot ore information !!!!!!
+
+5 ipconfig /release # releases dhcp ip from PC  # drop
+
+6 ipconfig /renew # requests an ip address from dhcp server  # will get something new 
+
+7 ping www.jasondion.com # просто пинг отправит 4 запроса на хост 
+ping -n 10 www.jasondion.com # 10 пингов для проверки доступности 
+ping -t www.jasondion.com # ping forever ctrl + c to stop
+ping -6 www.jasondion.com  # мы используем ping для ipv6 
+
+8 tracert  # source distination from your ip to ip resource that you are connecting (traceroute linux)
+1 tracert 209.85.135.99         # смотрю по ip     # зная ip сервера на кором распложен сайт ты можешь увидеть на какой части происходит обрыв запроса от твоего ip до сервера где расположен сайт 
+ 
+1.1 !!!!если ping нету тогда используй !!!!traceroute (tracert))!!!чтобы увидеть где был обрыв!!!!!
+если пинг есть трасероут не нужен 
+
+2 tracert www.jasondion.com      # смотрю по домену 
+ 
+3 tracert -6 www.jasondion.com   # смотрю по ipv6 
+
+9 nbtstat # netbios information  !! for windows network 
+
+10 1 nbtstat -a IP # 
+	 nbtstat -A 10.3.1.6  # пример 
+   
+   2 nbstat -c # 
+
+11  netstat # network staticstics 
+   1 netstat -a # all conections and litening ports 
+   2 netstat -n # adresses and ports numbers 
+   3 netstat -s # all statistics on ipv4 and ipv6 вижу пакеты отправленны полученные и отклоненные 
+
+   4 netstat -ano # often !!! сообщает обо всех протоколах, локальные ip и какие порты они слушают
+   показывает foreign address и кто подключается, какие порты открыты какие закрыты, также тут виде PID процесс который происходит при подключении  o  (owner поэтому показывает pid )
+
+12 nslookup (name server lookup)
+nslookup www.diontraining.com 
+Name:	www.diontraining.com
+Address: 104.237.147.26
+
+12.1 nslookup # enter попаду в консоль nslookup тут могу менять dns-сервер и многое другое !!!! 
+server <name> # меняю сервер
+Server: google-public-dns-a.google.com  # указываю dns-сервер 
+Address: 8.8.8.8
+
+12.2 route print 
+route delete 192.168.1.1 
+route add 192.168.1.1 192.168.2.1 
+
+###################################################################
+_UNIX Command Line_
+ arp 
+1 arp (Address Resolutin Protocol)
+показывает мак адреса второй уровень для всех изветных ip-адресов третий уровень
+
+2 arp -a # покажет arp table покажет интерфейсы
+
+  arp -d 192.168.1.1  # удалияем deletes the arp mapping for 192.168.1.1 on all interfaces
+  arp -s 192.168.1.1 00-AA-BB-4F-5C-23 # adds a static ARP entry to force the ip provided to resolve to the mac address provided 
+
+2 ifconfig  # interface configuration
+ifconfig -a # подробная информация 
+ifconfig down # turn off your network interface card (card turn off)
+ifconfig up # turn network card up 
+en0 
+inet6 (ipv6)
+inet4 (ipv4)
+
+3 ping  # troubleshooting 
+ping www.jasondion.com # просто пинг бесконечно 
+ping -с 10 www.jasondion.com # 10 пингов для проверки доступности  count считать windows -n number
+ping -6 www.jasondion.com  # мы используем ping для ipv6 аналогичны с Windows в принципе если пинг идет то traceroute не нужен так связь есть если ping нету тогда используй taraceroute чтобы увидеть где был обрыв
+
+
+4 !!!!если ping нету тогда используй !!!!taraceroute !!!чтобы увидеть где был обрыв!!!!!
+если пинг есть трасероут не нужен 
+
+5 traceroute # путь от тебя до сервера до которого ты хочешь подрубиться 
+
+1 traceroute www.jasondion.com      # смотрю по домену 
+ 
+2 traceroute -6 www.jasondion.com   # смотрю по ipv6 
+
+
+7 netstat # анлогично как и с windows 
+ netstat # network staticstics 
+   1 netstat -a # all conections and litening ports 
+   2 netstat -n # adresses and ports numbers 
+   3 netstat -s # all statistics on ipv4 and ipv6 вижу пакеты отправленны полученные и отклоненные 
+
+   4 netstat -ano # often !!! сообщает обо всех протоколах, локальные ip и какие порты они слушают
+   показывает foreign address и кто подключается, какие порты открыты какие закрыты, также тут виде PID процесс который происходит при подключении  o  (owner поэтому показывает pid )
+
+8  nslookup (name server lookup)
+nslookup www.diontraining.com 
+Name:	www.diontraining.com
+Address: 104.237.147.26
+
+8.1 nslookup # enter попаду в консоль nslookup тут могу менять dns-сервер и многое другое !!!! 
+server <name> # меняю сервер
+Server: google-public-dns-a.google.com  # указываю dns-сервер 
+Address: 8.8.8.8
+
+13 Host
+host www.diontraining.com
+
+host linux.of.by       # host временами может быть очень подробным 
+linux.of.by has address 93.125.99.123
+
+
