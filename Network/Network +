@@ -367,6 +367,18 @@ KEY FOUND! [ 17:25:83:AE:FA ]
 							_High Availability Networks_
 							_Designing Redundant Networks_
 							_Recovery Sites_
+
+							_Section 14: Network Management_
+							_Simple Network Management Protocol_
+							_Network Logging_
+							_Remote Access_
+							_Configuration Management_
+
+
+							_Section 15: Troubleshooting_
+							_Network Troubleshooting Methodology_
+							_Troubleshooting (Layer 1)_
+
 																			
 							
 
@@ -2277,7 +2289,159 @@ Email types
 Random Early Detection (RED)
 
 
-#############################################################
+######################################################################################
+_Section 14: Network Management_
+_Simple Network Management Protocol_
+1 snmp 
+snmp v1 
+snmp v2 
+snmp v3 # more secure 
+hashes message before transmit 
+des-56 # encyrption key 
+validates source message 
+#######################################
+_Network Logging_
+1 syslog 
+2  syslog  server store logs from clients
+3  syslog clients 
+devices that send log information 
+
+4 Level  					name 					description
+0         					emergencies             unusable 
+1 							alerts                  то что должно привлечь внимание disk space !!!
+2                           Critical                some type of alerts  все равно быстро должны реагировать
+3 							Errors                  уведомление 
+4 							warnings                Notifications that specific operations failed to complete successfully
+5                           Notifications           non error
+6                           informational           detailed normal operation
+7 							debugging 				highly detailed information about clients packets
+
+4.1 первые 4 уровня очень важны 
+
+5 log то из чего состоит из syslog
+securuty logs 
+system log 
+
+########################################################
+_Remote Access_
+1 telnet port 23 # not secure все будет выслано в чистом виде в виде текста 
+2 ssh 22 port 
+3 RDP port 3389
+4 virtual network computing vnc port 5900  (5,900)
+5 HTTPS 
+6 FTP/FTPS,SFTP, TFTP)
+1 ftp 20/21
+2 ftps port 20/21 
+3 sftp # port 22 ssh
+4 tftp  # udp version ftp port 69
+7 vpns 
+8 VPN uses:
+1 IP sec 
+2 ssl/tls/dtls
+3 site to sit vpn
+4 client to site vpn 
+
+9 out of band management # внешние управление 
+##################################################################################
+_Configuration Management_
+1 prepare
+2 plan # когда закупка что именно
+3 design
+4 implement 
+5 Operate 
+6 Optimize 
+7 Cable managment # each cable label standard naming convection 
+HR_D_RM102_0012 # название кабеля  HR отдел кадров D desktop RM102 room 102 комната  0012 switch 12 подключений
+
+8 Change managment # как ты и что ты будешь менять как к этому готовиться
+
+9 network documentation #если что-то пойдет не так кому звонить если обновим какие уязвимости все должно быть задокументировано
+wiki пример тоже к этому относиться  
+############################################################################################
+_Section 15: Troubleshooting_
+_Network Troubleshooting Methodology_					
+
+1 problem report
+2 problem diagnostic
+3 problem resolution
+
+4 analyze all layers 
+
+5 problems with internet 
+1 ping the distant end 
+ping facebook # как пример 
+
+2 план от комптиа в решение проблем
+1 define the Problem
+2 Hypothesize the probable cause
+3 test hypothesis
+4 create an Action Plan
+5 Implement the action plan
+6 verify problem resolution
+7 create a post-modern report 
+
+6 В начале любой проблемы надо пробегаться по всем уровням модели ОСИ
+##############################################################################
+
+1 _Troubleshooting (Layer 1)_
+
+Physical layer
+Data link layer
+Network layer
+Wireless Network 
+
+2 !!!Physical layer !!!  # проблема с кабелем, проблема с дистанцией 
+2.1 bad cables or connections поврежден кабель или коннектор 
+2.2 проблема может быть в том что кабель находится генераторы, motors or radio transmitters
+должна быть минимальная дистанция 
+2.3 проверяй лимиты по дистанции твоего кабеля должно быть менее 100 метров для кабелей cat 5, 5e, 6, 6a, 7
+помни про медеа конвертер который может конвертировать сигнал с кабеля cat на fiber который имеет боле высокую дистанцию
+помни максимальная дистанция должна быть 70-80 -метров чтобы был запас по дистанции
+2.4 EMI crosstalk (перекрестные помехи) используй щиты чтобы закрывать воздействия на кабель 
+2.5 transport tx/rx (Physical layer)
+
+2.6 средний зависимый интерфейс кроссовер позволяет порту коммутатора настроить себя как кроссовер или обычный порт
+MDIX старые свичи не поддерживают mdix поэтому надо использовать crossover cable 
+#############################################################################
+_Troubleshooting (Layer 2)_
+1 Data link layer
+
+Most common problems 
+1 Bad module
+
+2 layer 2 loops  # spanning tree protocol (STP) fails 
+possible broadcast storm  #широковещательный шторм
+can be a loop 
+
+3 port misconfiguration
+
+
+4 vlan configuration
+
+###########################################################################
+_Troubleshooting (Layer 3)_
+1 Common issues:
+duplicate ip address
+incorrect default gateway 
+incorrect DNS configuration 
+Mismatched MTU
+
+2 duplicate ip address
+two hosts using one ip often because you have one static ip 
+будет ошибка ip address conflict 
+
+3 incorrect dns configuration 
+когда  ты можешь обратиться к ресурсу по его ip и сайт откроется но не по домену значит проблема с твоим dns сервером 
+dns server 8.8.8.8. google очень помогает в решении проблем с dns записями можно переключиться на него и проверить работу dns-записей
+
+4 mismatch mtu network layer 
+###########################################################################
+_Troubleshooting (Wireless)_
+layer 3 
+1 RFI radio frequency 
+2 verify ssid
+3 virufy channel 
+4 verify encryption
 
 
 
@@ -2285,6 +2449,8 @@ Random Early Detection (RED)
 
 
 
+
+###########################################################################################
 _Section 16: Networking Tools and the Command Line_
 _Networking Tools (Part 1)_
 
@@ -2434,5 +2600,11 @@ host www.diontraining.com
 
 host linux.of.by       # host временами может быть очень подробным 
 linux.of.by has address 93.125.99.123
+
+14 dig 
+dig -t mx google.com так можно узнать их dns-записи 
+
+15 1 route 
+   2 route -n 
 
 

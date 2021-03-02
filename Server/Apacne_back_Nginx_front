@@ -1,0 +1,253 @@
+											Content
+
+											_Manual1_
+
+
+
+											_Manual2_
+
+##########################################################################################
+https://aeb-blog.ru/linux/ustanovka-lamp-v-centos-7/
+Итого 
+1 apachectl -t # проверка на синатксис apache 
+Syntax OK
+2  systemctl restart httpd
+3  systemctl reload httpd
+systemctl start mariadb
+systemctl enable mariadb
+
+4 echo "Hello" >> /var/www/test.ru/site/index.html
+# проверка работы сервера в адресной строке браузера при вводе ip должен появится Hello если в конфиге путь прописан верно
+
+5 sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT # открытие портов чисто для справки 
+sudo iptables-save
+
+5.1 
+sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT  # 443 ssl порт
+sudo iptables-save
+
+5.2 добавляем в iptable свое правило сentos 7
+vim /etc/sysconfig/iptables
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT # добавить такую строку открываем 80 порт
+
+systemctl restart iptables
+systemctl restart httpd 
+###############################################
+_Manual1_
+
+
+Установка LAMP
+1 yum install httpd
+2 sudo systemctl start httpd
+3 sudo systemctl enable httpd # автозагрузка 
+
+4 mkdir -p /var/www/test.ru/{site,log}  # test.ru просто название сайта site эта каталог для нашего сайта, log где храним логи сервера 
+
+5 chown -R apache. /var/www/       # задаем права на директорию www владелецем становится apache 
+
+6 vim /etc/httpd/conf.d/test.ru.conf  # создаем конфигурационный файл нашего сайта test.ru
+<VirtualHost *:80>
+ServerName test.ru
+ServerAlias www.test.ru
+DocumentRoot /var/www/test.ru/site
+ErrorLog /var/www/test.ru/log/error.log
+CustomLog /var/www/test.ru/log/access.log common
+<Directory /var/www/test.ru/site>   			# настройки для нашей директории 
+Options FollowSymLinks
+AllowOverride All
+Require all granted
+</Directory>
+php_admin_value date.timezone 'Europe/Moscow'    #  настройки для php
+php_admin_value max_execution_time 60
+php_admin_value upload_max_filesize 30M
+</VirtualHost>
+
+
+7 Если есть ошибка epel-release = 7 is needed by remi-release-7.2-1.el7.remi.noarch
+Для remi надо нужен epel.То надо тогда установить epel 
+yum install epel-release
+
+7.1 Нужно подключить новые репозитории так как во внутреннем старые версии пакетов 
+
+rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+
+7.2 yum install yum-utils # lдополнительные утилиты для менеджера yum
+
+7.3 yum-config-manager --enable remi-php73 # активируем remi-php73
+
+7.4 yum install php php-cli php-mysqlnd php-json php-gd php-ldap php-odbc php-pdo php-opcache php-pear php-xml php-xmlrpc php-mbstring php-snmp php-soap php-zip 
+# установка php и его модулей 
+
+7.6. apachectl -t
+7.7. systemctl restart httpd
+
+7.8 echo "Hello" >> /var/www/test.ru/site/index.html
+# проверка работы сервера в адресной строке браузера при вводе ip должен появится Hello если в конфиге путь прописан верно
+
+
+7.9  Если hello не появится при вводе ip адреса тогда возможно проблема в iptable 
+добавляем в iptable свое правило
+vim /etc/sysconfig/iptables
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT # добавить такую строку открываем 80 порт
+
+systemctl restart iptables
+systemctl restart httpd 
+######################################################
+8 Установка mariadb
+Так в репозитории по умолчанию будет устаревшая mariadb в таком случае будем подключать репозитори с новой версией 
+
+8.1 Подключение репозитория с новой версией mariadb 
+cd etc/yum.repos.d/
+vim mariadb.repo
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.4/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+
+8.2 yum install MariaDB-server MariaDB-client
+systemctl start mariadb
+systemctl enable mariadb
+
+8.3 /usr/bin/mysql_secure_installation
+Создаём пароль для root, и на все вопросы отвечаем Y.
+vjqcthdfr # пароль
+##############################################################
+9 Установка phpmyadmin
+1 phpmyadmin это потенциальная уязвимость после стандартной установки phpmyadmin становится доступной по названию домена/phpmyadmin 
+
+2 Есть более безопасная установка через поддомен основного сайта
+но все равно это не конечное решение
+
+3 mkdir -p /var/www/myadmin.test.ru/{site,log}
+создаю каталог для поддомена на котором будет работать phpmyadmin
+
+4 vim /etc/httpd/conf.d/myadmin.test.ru.conf # создаю конфиг где указываю где информацию о поддомене получается при вводе в адресную строку браузера myadmin.test.ru будем направлены на этот конфиг
+
+<VirtualHost *:80>
+ServerName myadmin.test.ru
+ServerAlias www.myadmin.test.ru
+DocumentRoot /var/www/myadmin.test.ru/site
+ErrorLog /var/www/myadmin.test.ru/log/error.log
+CustomLog /var/www/myadmin.test.ru/log/access.log common
+<Directory /var/www/myadmin.test.ru/site>
+Options FollowSymLinks
+AllowOverride All
+Require all granted
+</Directory>
+php_admin_value date.timezone 'Europe/Moscow'
+php_admin_value max_execution_time 360
+php_admin_value upload_max_filesize 180M
+</VirtualHost>
+
+
+
+wget https://aeb-blog.ru/linux/ustanovka-lamp-v-centos-7/
+20:38
+
+
+######################################################################################
+_Manual2_ 
+Удобно настраивать когда на сервере изначалльно был настроен LAMP, получается что nginx будет впереди статику хватать, apache2 будем забирать динамику 
+
+1 vim /etc/apache2/ports.conf 
+Listen localhost:8080        # localhost чтобы извне никто достучаться на порт 8080 не смог
+
+2 sudo vim /etc/apache2/sites-enabled/000-default.conf  # тут для примера дефолтный конифг указан
+<VirtualHost *:8080>
+
+3 sudo service apache2 restart
+
+4 netstat -lnt # смотрю какие порты открыты
+tcp        0      0 127.0.0.1:8080          0.0.0.0:*               LISTEN  
+
+5 sudo apt install nginx
+
+6 sudo rm /etc/nginx/sites-enabled/default #Удалим​ конфиг nginx по-умолчанию
+#################################################################################
+
+7 sudo vim /etc/nginx/sites-enabled/front #Создадим​ конфиг для nginx как для frontend 
+# стандартный конфиг nginx для связки с apache 
+
+server {
+ listen 80;        # nginx слушает 80 порт
+
+root /var/www/html/; 
+ index index.php index.html index.htm;
+
+server_name _;
+
+location / {
+ try_files $uri $uri/ /index.php;
+ }
+
+location ~ \.php$ {                  
+ 
+ proxy_set_header X-Real-IP $remote_addr;
+ proxy_set_header X-Forwarded-For $remote_addr;
+ proxy_set_header Host $host;
+ proxy_pass http://127.0.0.1:8080; # весь php будет проксировать на apache
+
+}
+
+location ~ /\.ht {               # здесь htaccess запрещен 
+ deny all;
+ }
+}
+#####################################################################
+7.1 7 sudo vim /etc/nginx/sites-enabled/front #Создадим​ конфиг для nginx как для frontend 
+# стандартный конфиг nginx для связки с apache для !!!!! wordpress !!!!!!
+
+
+server {
+    listen       80;
+    server_name  _;
+    root   /var/www/html/;
+ 
+ 
+    # Proxy anything that isn't a file.
+    location / {
+        try_files $uri @apache;
+    }
+ 
+    # Proxy directories (This fixes the loop)
+    # This will kill any other indexes like index.html if they're not explicitly used in the URL.
+    location ~[^?]*/$ {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $host;
+        proxy_pass http://127.0.0.1:8080;
+    }
+ 
+    # Proxy any .php file.
+    location ~ \.php$ {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $host;
+        proxy_pass http://127.0.0.1:8080;  # директива porxy pass
+    }
+ 
+        # Proxy to apache, used by location / {...}
+    location @apache {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $host;
+        proxy_pass http://127.0.0.1:8080;
+    }
+ 
+    # this will prevent files like .htaccess .htpassword .secret etc from being served
+    # You can remove the log directives if you wish to
+    # log any attempts at a client trying to access a hidden file
+    location ~ /\. {
+        deny all;
+        access_log off;
+        log_not_found off;
+    }   
+}
+################################################################################
+8 nginx -t # проверка синтаксиса 
+8.1 sudo service nginx restart 
+systemctl restart nginx # так лучше 
+
+nginx это не только веб-сервер но и прокси сервер и в таких вот случаях можно использовать особенность nginx
+Также nginx можно использовать в роли балансировщика 
