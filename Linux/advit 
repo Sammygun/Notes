@@ -1,0 +1,992 @@
+
+https://drive.google.com/drive/folders/1Kxgl06DzDS3goFJTNJzdbQ_Z_l8dkH2A
+материалы курса
+
+https://ss64.com/  # справочник по командам
+
+https://putty.org.ru/articles/unix-linux-ref.html
+# справочник по командам
+
+virual box потыкал че-то перезагурзил мышкой два раза на образ системы нажал и запустилась
+
+C:\Windows\system32>dism.exe/Online/Disable-Feature: Microsoft-Hyper-V-All
+возможно помогла команда отсюда главное правильно ввести
+
+ubuntu создал отдельную папку при создании образа путь другой
+.Linux для Начинающих - Процессы и Память
+
+top смотрим юзера, нагрузку процессора
+shift p нагрузка процессора самая топовая
+shift m топовая нагрузка памяти
+q выйти с приложения
+
+ps aux | grep bash  - найти все процессы bash от всех пользователей
+
+
+
+
+VIRTUAL BOX
+ctrl правый отключает автозахват
+ctrl + f на весь экран
+на ВЕСЬ экран устройства = в самом внизу подключить образ диска дополнений  гостевой ос введешь свой пароль для устанвке в терминале
+
+alt + f2 введение суперпользователя
+
+
+crtl + j это с новой строки
+shft + @ это кавычки """"
+решетка shift 3 #
+одинарные кавычки просто кнопка @
+| shift + решетка
+* shift + 8
+& shift + 7
+кавычки просто  латиницей ё кнопка `````
+shift + ё ~
+
+# shift + 3
+: shift + возле L
+pycharm масштабирование текста view = toolbar = setings=font=
+изменение переменных правой кнопкой маши refactor = rename вводишь и все
+или Shift + F6
+
+ctrl + Tab переключение между вкладками
+
+$ shift + 4
+
+locate – показывает где файл
+
+
+
+New course!!!!! new command
+___________________________________________________________________________________
+Itacademy !!!!!
+sudo -i суперюзер как root, alt + F2 centos
+ip addr  -------This command shows all network interfaces in virtual machine
+For example: 1: eth1: , 2: enp0s3 – this is network interface number and its name. 
+
+less o
+ssh = удаленный доступ по сети к серверу с помощью клиентской программы
+копировать файлы
+ пробрасовать порты
+
+чтобы подключиться ssh
+1) ip address 192.168.10.10
+2)username root, val user
+3)port 22 default !!!!
+
+ssh localhost   - подключаемся
+ctrl + D или quit
+
+
+ man - помощь по внешним командам
+ info - расширенная помощь по некоторым командам
+(texinfo format)
+ find /usr/share/doc/ - файлы документации поставляемые
+вместе с приложением (примеры конфигов, README)
+ -h, –help option - встроенная в приложение справка
+ help - встроенная помощь по внутренним командам bash
+(также man bash)
+
+man
+ up, down - scroll one line
+ q - exit
+ /pattern - search pattern
+ n - next text pattern
+ N - repeat search in back direction
+ h - help
+________________
+ nslookup localhost # выведит внутренний ip 127.0.0.1 он стандартный
+
+sudo ifconfig
+IP-адрес каждого интерфейса отображается после слов inet addr.
+lo - это внутренний интерфейс с IP-адресом 127.0.0.1, 
+eth0 - это проводной интерфейс, а wlan0 - интерфейс Wi-Fi. 
+
+
+ sudo ifconfig | grep "inet addr"  # Выведит только inet
+
+
+ ip addr show -------- более новая команда поддержтвается много где
+
+ip a  Проверить командой наличие IP
+sudo ifup enp0s3
+ip a
+
+hostname -I тоже можгл глянуть только 10.0.2.15 в virtual box
+10.0.2.15 это и есть мой ip
+______________________________________________________
+https://the.earth.li/~sgtatham/putty/latest/x86/putty.exe
+скачал
+1)в насторойках virtual box ввел 127.0.0.1  потом 5555 потом 10.0.2.15 потом порт гостя 22 в таком порядке
+потом в террминале ввел команды ниже
+
+2)Если пропустили установку SSH сервера во время установки Ubuntu
+sudo apt install openssh-server
+sudo systemctl start sshd.service
+sudo systemctl status sshd.service
+3)https://the.earth.li/~sgtatham/putty/latest/x86/putty.exe качаю пути
+4) открываю в host name ввожу 127.0.0.1 порт 5555
+5)https://winscp.net/eng/download.php качаю данный файлы
+6) имя хоста 127.0.0.1 порт 5555
+имя польз. = sam , пароль = sam3030034
+7) winscp позволяет копировать фал созданные на серевре linux  в windows или на твой комьютер
+helloworld копирую себе на компутер
+
+
+
+
+ifconfig.me или eth0.me:  #смотрим свой ip
+37.215.40.190
+
+$ wget -qO- eth0.me  # так можно смотреть в теримнаде
+$ wget -qO- ipinfo.io/ip
+$ wget -qO- ipecho.net/plain
+$ wget -qO- icanhazip.com
+$ wget -qO- ipecho.net
+$ wget -qO- ident.me
+$ wget -qO- myip.gelma.net
+
+192.168.x.x
+
+https://ru.wikihow.com/%D1%83%D0%B7%D0%BD%D0%B0%D1%82%D1%8C-%D0%B2%D0%BD%D1%83%D1%82%D1%80%D0%B5%D0%BD%D0%BD%D0%B8%D0%B9-IP-%D0%B0%D0%B4%D1%80%D0%B5%D1%81-%D0%B2-Ubuntu
+!!!! очень интересная статья!!!!
+___________________________________________________________________________________
+it ac less 1
+1.man помощь по командам
+2.info     расширенная помощь по некоторым командам
+3.find /usr/share/doc/ файлы доки идущие вместе с приложением (примеры конфигов)
+4.ls --help
+5.help if
+
+man man
+ up, down - scroll one line вверх
+ q - exit выход
+ /pattern - search pattern (просто /page как пример и подсвечивает слово без отступов) 
+ n - next text pattern  (n просто щелкаю по найденным словам)
+ N - repeat search in back direction (N большое это назад)
+ h - help  (помощь)
+
+man grep к примеру снизу идет описание
+ NAME    краткое название
+ SYNOPSIS все аргументы которые умеет принимать
+ DESCRIPTION    более подробное описание команд
+ EXAMPLES   примеры
+ SEE ALSO    какле отношение имеет к системе
+
+whatis -l -w '*'  смотрим все команды
+_____________________________________________
+урок 2
+
+../ предыдущая директория
+../../ две предыдущих директории
+/ /  полный путь
+
+pwd #имя текущей директории
+ls   # список файлов в директории
+cd смена текущей директории
+
+cd /usr/bin/    указваю путь
+
+файловая система древовидной структуры
+корневой каталог root file system
+монтирование процесс отображения содержимого устройства в указанной директории файловой системы
+
+
+mount   монтировать
+umount  размонтировать
+mount  просто  выведит уже список монтированых файловых систем
+findmnt  получит вывод смонтированных блочных устройств в виде дерева
+____________________________________
+Disk management tools
+fdisk
+parted
+kpartx
+dd
+losetup
+mkfs
+fsck
+mount
+umount
+df
+halt,poweroff, reboot
+shutdown now
+shutdown -h now
+shutdown -h 20:00
+shutdown -c 
+shutdown -r now
+shutdown +15 "Upgrading hardware, downtime should be minimal"
+
+
+Просмотр текстовых файлов
+cat - вывести 
+more - вывести разбив на страницы
+less - more на стреоидах с прокруткой поиском
+
+
+vimtutor встройенный vim учебник
+
+export LANG='ru_RU.UTF-8' - на русском языке
+
+Клавиши Tab
+напоминает имени команды и аршументов
+файловый менеджер
+ускоритель ввода
+
+
+history
+ctrl P, ctrl-n навигация по истории 
+дальняя
+$!10 - по номеру команды 
+ctrl -r поиск в истории по фрагменту
+alt-. последний аргумент предыдущей команды
+
+работаем с блоками текста
+ctrl-w, alt-backspace удалить слово 
+alt-d удалить слово под курсором
+
+Перемещение
+alt -f слово вправо
+alt-b слово влево
+ctrl-a перейти в начало 
+ctrl-e перейти в конец
+
+
+управление терминалом
+ctrl-s заморозка терминала
+ctrl-q разморозка терминала
+shift page up, shift page down  прокрутка терминал
+ctrl - l Очистка терминала
+
+Alias  можно создавать сокращения команд
+alias просмотр сокращений
+alias <name>=''netstat -Ipnt | grep 127.0.0.1''
+unalias <cmd> - удаление сокрашений
+
+_____________________________________________________________________________
+
+Linux для Начинающих - Работа с Терминалом
+Терминал windows 
+cd /
+cd mnt  а тут если директория открыта уже где есть данная папка
+cd /var   - где бы  небыл попаду в данную папку
+cd c
+mkdir name
+cd name перемещаюсь туда
+htop программа загружается
+shift ё Равно ~
+
+
+LINUX ESSENTIALS
+man – помощь
+man -k time (k keywords man- manual) поиск по буквам словам
+man mkdir вся информация по команде
+q Выход
+/system поиск по системе
+info uptime аналог man
+whatis uptime тоже аналог man
+
+whereis uptime где находится команда
+locate name где находится файл
+
+
+
+
+info – тоже помощь
+uptime  - время с последнего включения, кол-юзеров в учетке!!!!
+uname  - какая система
+uname -a более подробная
+
+lscpu – данные процессора
+whatis – показывает что делает комманда
+whereis – показывает где файл
+locate – показывает где файл
+
+ls -R Dir5 покажет какие папке находятся в папке (R recursive)
+ls -Rla Dir5 тоже самое только длинный список покажет можно и без а
+ls   - показать что в этой директории
+ls -l дату создания более подробно!!!!
+ls –la –R  /    - показать все на компутере
+ls -l Folder1 смотрю что в данной папке есть в данной директории
+ls -l /home смотрим папку что в ней находится из любой директории
+
+ps - показать все процессы которые происходит!!
+Ctrl+Z  - отправить процесс на background (загоняю процесс на background)
+fg Это fourground вернуть с background обратно на экран
+Ctrl+C – прекратить процесс вообще (прекратить процесс)
+sudo команда - Super user do потом вводишь пароль привелегия команде
+
+
+Навигация по файлам и директориям
+В линуксе все дикториях а не в дисках
+cd  - сменить директорию
+cd .. вернуться обратно назад на один шаг
+cd ../.. вернуться на два щага назад
+cd / вернуться обратно в директориюкорневую
+cd просто возврат в саму директорию
+cd /etc и ты в своей директории
+
+ls – вывести содержимое директории
+ls -l (Длинный список long)
+ls -la (Тоже самое только all даже скрытое)
+ls -a все файлы и скрытые файлы
+ls hello в самой папке можно посмотреть папку что в ней находится если она есть в этой директории
+
+pwd – вывести путь где мы сейчас
+~    - сокращение нашей Home директории
+/    - коренная директория Linux
+..    - директория которая выше 
+.     - директория где мы сейчас
+
+
+5.Linux для Начинающих - Работа с Файлами
+
+cat readme.txt прочитать что внутри файла не заходя в него
+more readme.txt в больших файлах более удобней читать (q выйти enter ниже смотреть)
+less readme.txt в нем самом можно нажать /Привет и оно будет искать это слово в тексте q выйти
+
+touch readme.txt создаю файл txt
+touch readme.txt когда уже фйл создан ты просто его обновляешь дату создания просто трогаешь
+touch – создать файл или обновить время
+
+cp  - скопировать файл
+cp linux.txt ~/Docements/Dir1 просто копирую файл туда прямо
+cp python.txt*.* Dir1 все схожие файлы с этим названием копируются в ту директорию
+cp python.txt -v hello (view увидеть) копируется в папку hello
+cp python?.txt -v hello все файлы с данным текстом номерации
+cp -R folder1 folder2
+  cp -r folder1 folder2 # копируем по жесткому всю папку и сразу же создаем folder2 папку без r не сработает
+
+mv – перенести файл или переименовать
+mv python.txt .python.txt я этот файл скраваю прячу правда винда видет его и переименовал также
+mv Dir4 Dir5 переименовываю папку
+mv rock.txt .. перенести на верх
+ls -la только тогда я вижу данный файл
+
+rm – стереть файл
+rm * все удалить в папке
+rm Dir2/* все в папке удалить
+rm -r Folder? все Folder удаляем
+
+
+
+6.Linux для Начинающих - Работа с Директориями
+
+mkdir – создать директорию
+mkdir Dir3 создаю директорию
+mkdir Dir3/Dir5 создаю директорию уже в созданной директории # может не сработать
+mkdir -p Dir5/Dir7 создаю директорию в директории !!!(p parent родитель)
+
+rmdir – стереть пустую директорию
+rmdir Dir4 если пустая директория то удалит еекь -
+cp     - копировать директорию
+cp -R Dir5 Dir6 - копирую все что в Dir5 в Dir6
+
+
+mv  - переименовать или перенести директорию
+mv Dir4 Dir5 переименовываю папку
+
+rm mytar* - стираем все с таким названием
+rm –R   – стереть не пустую директорию со всем что внутри
+rm -R Dir4 - стерет папке и  все что есть в данной папке
+rm -R Dir* - стерет все что имеет название Dir все директории
+rm -R / замочить весь Linux Только команда sudo должна
+sudo rm –R  /   - замочить систему Linux
+sudo rm –R  / --no-preserve-root попросит дописать
+sudo суперюзер
+
+7.Linux для Начинающих - Создание Линков
+
+Создание символичных линков и дубликатов.
+
+ln   - создать дубликат файла 
+ln –s   - создать symbolic линк на файл или директорию типа Shortcut
+ln -s /home/denis/Documents/Dir4 MylinktoDir4 MylinktoDir4 ссылка на папку
+ln file.txt fileduplicate.txt создаю копию файла
+
+
+8.Linux для Начинающих - Команды: find, cut, sort, wc
+
+find  - найти файл
+find /mnt -name ".txt" (поиск по имени по директории)
+find / -name "readme.txt" поиск по имени в самом начале
+wc  - вывести количество строк, слов, байт последовательность помни как тут
+wc linux-history.txt выдаст колисчество строк и т.д.
+wc -l linux-history.txt выдаст колисчество строк  l строки
+wc -w linux-history.txt количество слов 
+        
+
+cut – вывести определенное поле из текста
+cut linux.txt выедит кучу всего
+cut -d ">" -f 3 files.com (d делиметр, f это фиелд поле files.com)
+cut -d ">" -f 3 files.com | sort             Отсортирует
+cut -d ">" -f 3 files.com | wc посчитает строки слова байты
+cut -d ">" -f 3 files.com | wc | sort    Отсортирует  и посчитает строки слова байты        
+
+sort – вывести отсортированный текст
+sort numbers.txt сортирут по цифрам или по алфавиту если текст
+sort -n numbers.txt будет сортировать по цифрам
+
+
+
+9.Linux для Начинающих - Комманда grep и Регулярные Выражения
+
+grep  - поиск определенного слова в файле и вывод строк с этим словом
+grep linux ./*    Linux слово . это в текущей директории * во всех файлах
+grep -i linux ./*    i игнорироваить key esentive То есть с большой буквы или с маленькой будет искать везде
+grep .gov mydatfile.doc  - ищу слова с окончанием .gov в mydatfile.txt как правило это почта
+grep denis mydatafile.doc ищу denis в данном файле
+grep denis /etc/shadow ищу denis в данной директории
+можно искать пароли также
+grep [A-Za-z].gov mydatafile.doc то что в скобках алфавит с большой буквой и с маленькой поиск A-Za-z
+найдет почты с буквами перед .gov
+grep -E "@[A-Za-z]*.gov" mydatafile.doc  выведит все слова с собачкой
+grep -E "[A-Za-z]*@[A-Za-z]*.gov" mydatafile.doc
+grep -E "[A-Za-z\.]*@[A-Za-z]*.gov" mydatafile.doc    Добавляем точку в поиске.
+grep -E "[A-Za-z\.]*@[A-Za-z]*.gov" mydatafile.doc | wc счиатем строки слова и байты
+grep -E "(kgb.gov|intel.com)" mydatafile.doc исчим или это или то
+
+
+Регулярные Выражения:
+[A-Z]*  - любое слово из больших букв
+[0-9]*   - сколько угодно подряд стоящих цифр    
+[A-Za-z]*@[A-Za-z]*.com   – простое выражение емайлов с окончанием .com
+www\.[a-z]*\.com  - любой вэб адресс  с окончанием .com
+
+
+10.Linux для Начинающих - Перенаправление вывода ввода
+
+
+/dev/null   - устройство находящиеся в ж#$е
+
+sort names.txt > names_sorted.txt  мы отсортируем данный текст и создадим новый файл уже отсортированный
+sort -n names.txt > names_sorted.txt даже если есть этот файл он будет перезаписан или создан заново
+sort names.txt >> names_sorted.txt  отсуртируем имена  и добавим их уже созданный текстовый файл не удалив там ничего
+
+sort names.txt > names.txt в первую очередб Linux создает файл а потом уже работает тут все обнулиться а потом будет сортирова
+cat names_sorted.txt смотрю что внутри файла
+sort names.txt >> names.txt но если так сделать то просто добавит в конце тот же текст но отсартированый
+
+ls -l пролистать список
+
+grep denis /etc/*  denis ищу в etc выдает ошибки и может найти текст
+grep denis /etc/* 2> errors.txt           - берет все без ошибок оставляет а с ошибкой  ( 2 этот поток с ошибками) где были ошибки мы их помещаем файл
+ 
+grep denis /etc/* > good.txt 2> nogood.txt   -сортируем то что без ошибок в good.txt то что с ошибками nogood.txt
+перенаправление потока текста отдельно без ошибок с ошибками
+grep denis /etc/* > good.txt   чисто все хоришие сохраняем 
+
+grep denis /etc/* &> good.txt   - & umpersnt и или сразу два потока и хороший и с ошибками
+
+2>> будем добавлять в файл с ошибками новые ошибки
+
+Хорший результат 
+> - новый файл перезапись старый
+>> добавить в новый файл или старый
+
+Результаты с ошибками
+2> новый файл перезаписать старый
+2>> добавить в новый файл или старый
+&>  - и плохое и хорошие в файл
+ 
+
+11.Linux для Начинающих - Архивирование и Сжатие tar, gzip, bzip2, xz, zip
+
+tar cf   ( tar объединяет несколько файлов в один файл чтобы легче было копировать его (tape) cf create file)
+f всегда последний
+tar cf mytar.tar Folder1  (создаем архив mytar.tar и запихиваем арихивирируем туда папку Folder1)
+tar cvf mytar.tar Folder1 - (v показывает что он делает показывает как файлы копируются)
+
+
+tar tf mytar.tar - смотрим что внутри архива t    f file    
+
+tar xvf mytar.tar - разархивируем mytar.tar  x extract v verbow сморим в процессе  f file
+
+
+
+tar cf  mytar.tar  Folder1   - заархивировать Folder1
+tar xf mytar.tar  - разархивировать архив x extract
+
+gzip mytar2.tar        скомпрессоравали файл делает только отделно для данного файла станет mytar2.tar.gz уменьшит его объем
+tar cvzf myGZIP.gz Folder1 - c create v verbow(посмотреть) z - zip f file запихать аналог верхней команды
+
+gunzip mytar2.tar.gz расскомпрессурует его обратно станет mytar2.tar
+
+
+
+bzip2 mytar2.tar    компрессирует в два раза лучше чем gzip mytar2.tar.bz2 файл станет
+tar cjf myBZIP2.bz2 Folder1 аналог верхней команды
+
+bunzip2 mytar2.tar  Разкомпрессуем обратно
+
+
+xz mytar2.tar компрессируем  mytar2.tar.xz станет лучший BZIP
+tar cJf myXZ.xz Folder1 аналог верхней укорочена
+unxz mytar2.tar.xz разкомпрессируем
+
+но помни в начале ты должен сделать tar а можно и сразу как указано снизу
+
+tar cvf myTAR.tar Folder1  Заархивирирум Folder1 В myTAR.tar
+tar cvzf myGZIP.gz Folder1 - c create v verbow(посмотреть) z - zip f file запихать этот файл в Folder1
+tar tf myGZIP.gz   tf -test file посмотреть что внутри есть
+
+tar cjf myBZIP2.bz2 Folder1  одновременно tar bzip2
+
+tar cJf myXZ.xz Folder1     одновременно tar xz
+
+
+tar xvf myBZIP2.bz2   x extract v verbow f file распаковываем наш Folder1
+ 
+tar xf myBZIP2.bz2    можно и без verbow сразу сделать
+
+zip -r myZIP.zip Folder1  в myZIP файл закидываю Folder1    r recursively
+unzip myZIP.zip распаковывеам из myZip.zip Folder1
+
+rm -r Folder1/
+
+
+gzip     / bzip2     / xz      – скомпрессировать файл каждый файл отдельно
+gunzip /  bunzip2 / unxz  – раскомпресировать файл
+
+tar cvzf myBZIP2.bz2  Folder1    – сжать Folder1
+tar xvf  myBZIP2.bz2                  - распаковать архив
+tar tf myBZIP2.bz2    - посмотреть что внутри архива
+
+zip –r myZIP.zip Folder1   - Запаковать Folder1 в ZIP
+unzip myZIP.zip                - Распаковать файл myZIP.zip
+
+
+
+12.Linux для Начинающих - Процессы и Память
+top смотрим юзера, нагрузку процессора
+shift p нагрузка процессора самая топовая
+shift m топовая нагрузка памяти
+q выйти с приложения
+
+free показвает память    в байтах оперативная
+free -h     h human показвает в гигабайтах
+
+ps процессы на компьютере
+ps -u   все процессы юзеров
+ps -u sam конкретного юзера
+ps aux  all user процессора всех смотрим можно ps -ax процессоры просто все посмотреть без юзера
+ps aux | grep denis  когда много строчек може отфильтровать конкретные
+
+все логи находятся в папке var/log
+dmesg Лог файл в память компа пока он включен лог линукса ядра
+dmesg | grep sba   - Все строчики по диску sba для troubleshooting 
+
+
+top – как Task Manager в Windows
+free  - показать состояние памяти в байтах
+free –h  - показать состояние памяти в MB, GB
+ps          -  показать мои процессы 
+ps aux  - показать все процессы от всех пользователей
+ps aux | grep bash  - найти все процессы bash от всех пользователей
+
+cd mnt  а тут если директория открыта уже где есть данная папка
+cd /var   - где бы  небыл попаду в данную папку
+
+
+13.Linux для Начинающих - Редактирование Файлов
+gedit редактор аналог notepad
+sudo apt install gedit
+nano  редактор если нету графического интерфейса
+
+
+
+vi или vim  - самы старый и дурацкий редактор
+i могу писать 
+
+
+pico  - новый редактов
+nano – самый новый редактор
+
+gedit – как и Notepad в Windows, работает только  если есть графический интерфейс
+
+
+
+
+14.Linux для Начинающих - Типы аккаунтов и важные файлы
+два вида акаунт админ или юзер
+sudo super user do
+cd /home  - все юзеры
+cd kolya захожу в чужую учетку
+cat /etc/passwd  посмотреть все системные аккаунты внизу мой аккаунт
+паролей тут нету
+cat /etc/shadow тут хранятся все пароли аккаунтов тут зашифрованы пароли
+whoami   who am i кто я укажет какой ползователь сейчас под чей учеткой
+su vasya  switch user меняю учетку попросит пароль васи вести
+exit  -просто так вводишь и выходишь с чужой учетки
+id   - просто воодишь показвает все твои данные, все твои группы 27 sudo это главное вижу что превелигированный пользователь
+id vasya  - смотрю группы пользователя
+last -последние действия которые были сделаны, последние логины
+who - показать кто сейчас в системе
+w показывает кто сейча в системе и что делает
+
+
+
+
+
+sudo  - запустить комманду используя Super User права
+su   - сменить текушего пользователя
+
+/etc/passwd    - тут хранятся все аккаунты
+/etc/shadow   - тут хранятся все пароли аккаунтов
+/etc/group    - тут хранятся все группы
+
+whoami  - показать имя текущего пользователя
+id   - показать к каким группам принадлежит пользователь
+who – показать кто сейчас в системе
+w   - показать кто сейчас в системе и что делает
+last – показать последние логины
+
+
+15.Linux для Начинающих - Пользователи и Группы
+
+ls -l /home  смотрим количество юзеров
+
+sudo useradd -m user1   -- создаем m home директорию для user1, cоздаем user1
+ls -l /home увидим user1
+cat /etc/passwd - Увидим внизу данную учетку
+sudo passwd user1 создаем пароль данной учетке или изменяем его
+cd /etc/skel/  скелет создается для каждого нового юзера в данной директории можно создать папки и при создании нового юзера будут тоже новые папки
+sudo userdel user1  -- удаляем юзера просто но его директории не трогаем
+sudo userdel -r user1 --удаляем юзера и его директорию 
+
+sudo groupadd Programmers  --- создаем группу программистов
+cat /etc/group  смотрим в самом  конце группы
+sudo groupdel Programmers  --- удаляем группу прогарммистов
+cat /etc/group там в самом внизу  данной группу не будет
+
+id vasya  --данные о учетке
+
+sudo usermod -aG Marketing vasya  ---  mod modification a append добавить G -group
+id vasya - Там будет группа видна
+sudo usermod aG sudo vasya --- Делаем так Super user do суперпользователя из Васи
+sudo deluser vasya Marketing ---- удаляю васю из группы  помни userdel удалить user,  del user удалить из группы
+id vasya ----Без маркетинга
+
+useradd  -m vasya   - создать юзера vasya с домашней  директорией
+userdel –r vasya     - стереть юзера vasya с его домашней  директорией
+/etc/skel    -  это шаблон домашней директории
+passwd vasya   - изменить пароль для юзера vasya
+
+groupadd Programmers  - создать группу Programmers
+groupdel Programmers  - стереть группу Programmers
+
+usermod –aG Programmers vasya  - добавить юзера vasya в группу Programmers
+deluser vasya Programmers  - удалить юзера vasya  из групы Programmers
+
+
+
+16.Linux для Начинающих - Права Доступа и владения файлами и директориями
+-rw-rw-r -- 1 denis denis 6 nov 22 22:00 denis.txt     - первый минус это файл rw(read читать write менять файл) rw группы r (others)  другие группы 1 сколько linkov denis владелец файла, denis группа кто имеет доступ к данной группе
+drwxrwxr -x 2 denis denis 4096 nov 22 22:15 zzz       - d директория если L link
+sudo chown petya zzz/        chown change owner на petya файла zzz
+sudo chgrp Programmers vasya.txt   -chgrp change groupe  теперь к данному файлу будут иметь все доступ кто состоит в этой группе
+
+chmod o+x denis.txt  -others Добавляем x exzicute(write)denis.txt
+chmod g-w denis.txt - group убираем w write записывать писать
+-rw-r-r -- 1 denis denis 6 nov 22 22:00 denis.txt будет без w
+chmod g+w denis.txt - group добавляем w write записывать писать
+chmod o-w denis.txt - group others добавляем w write записывать писать 
+chmod ugo=r denis.txt user group others = read все юзеры могут только читать
+
+r = 4
+w = 2
+x = 1
+
+rwx - 7 (4+2+1)  777 rwx rwx rwx
+rw-  - 6 (4+2+0)
+r-x - 5 (4+0+1)
+r-- 4 (4 +0+0)
+-wx -3 (0+2+1)
+--x -1 (0+0+1)  611 rw x x
+--- 0 (0+0+0)
+
+
+chmod 777 denis.txt -read write
+-rwx-rwx-rwx -- 1 denis denis 6 nov 22 22:00 denis.txt  rw user rw groups rw others
+chmod 711 denis.txt  user полные права группе только excute
+-rwx-x-x -- 1 denis denis 6 nov 22 22:00 denis.txt  rwx user полные права x exzicute  x exzicute
+chmod g+x zzz/ директории groupe добавляем exzicute
+rwx read write exzicute
+всегда смотри какой доступ есть у тебя к файлам
+
+sudo chmod o+t MySHARE     others могут удалять файлы в директории могут удалять только юзеры или суперюзер
+создаем директории где могут только создатели файлов удаллять данные файлы
+sudo chmod o-t MySHARE убираем t и теперь все могут удалять
+sudo chmod 1777 MySHARE  ------ добавляем t тоже самое что в самой строке включить stickybit
+sudo chmod 1777 MySHARE  ------ отключить Sticky bit теперь все могут удалять файлы
+
+chown – изменить владельца файла / директории
+chgrp – изменить группу файла / директории
+сhmod – изменить права доступа на файл / директорию
+
+chmod  ugo+x  myfile.txt   довавить X всем
+сhmod  g-rw   myfile.txt   убрать RW у группы
+chmod  o=rw   myfile.txt   установить RW всем остальным
+ u = user
+ g = group
+ o = other
+ a = ugo
+
+
+chmod  777   myfile.txt   установить RWX всем
+chmod  741   myfile.txt  установить:   RWX   владельцу, R - -    группе,  - - X   всем остальным
+r = 4
+w = 2
+x = 1
+
+chmod  1777 myDir    включить StickyBit
+chmod 0777 myDir    выключить StickyBit
+
+
+
+17.Linux для Начинающих - Сетевые комманды
+
+ifconfig          - показать мой IP адресс
+ping        - протестировать коннекшен к адрессу бесконечно будет ctr с прервать можно писать и так www.ya.ru
+
+ping -c 4 8.8.8.8     с count 4 раза  8.8.8.8 dns google
+host www.microsoft.com адрес microsoft можно посмотреть
+dig www.ebay.com там будет 92.123.200.35 этого ip адресс
+netstat какие порты открыты закрыты
+
+sudo ufw allow 22 открываю порт 22 
+ssh Mylinux  подключаюсь к своему linux ssh secure shel conection 
+sudo apt-get install openssh-server     устанавливаю приложение для того чтобы  мог конектиться к другим серверам и т.д.
+ssh secure shel conection чтобы можно было подключиться через данное подключение
+ssh установка подключения с другим компьютером
+
+
+ifconfig          - показать мой IP адресс
+ip addr show  - показать мой IP адресс
+
+route      - показать адресс раутера Gateway
+ip route show  - аналог команды выше
+
+ping        - протестировать коннекшен к адрессу
+host       - дать IP адресс вэб сайта
+dig         - дать IP адресс вэб сайта
+netstat  – выдать сетевые подключения компьютера
+
+
+
+
+18.Linux для Начинающих - Скачивание и Установка программ
+wget http://adv400.tripod.com/v1.jpg качаю картинку напрямую
+sudo apt-get install chromium-bsu  скачиваю игру и устанавливает с репозитория типо playmarket
+whereis chromium-bsu  ищим файл скаченный с интернета
+chromium-bsu  Запускаем игру или заходим в папку
+/usr/games/chromium-bsu если не запускается как описано выше заходим так
+sudo apt-get remove chromium-bsu   --удаляем игру пишем название package chromium-bsu
+cat /etc/apt/sources.list  список репозиторий
+
+wget http://adv400.tripod.com/app.dep скачал установощный файл все файлы для ubuntu .deb заканчиваются
+ls -l    ---потом нахожу где он
+sudo dpkg -i app.deb    ------deep package i install название приложения
+app   - просто запускаем его
+sudo dpkg -r app     r remove уже без окончания .deb просто app
+
+reboot now ------перезагрузить сейчас
+shutdown   ----- отключить 
+
+wget    - скачать файл из интернета
+
+Ubuntu/Debian/Kali/Mint Linux:           все packages .deb
+~~~~~~~~~~~~~~~~~~~~~
+apt-get install     - скачать и установить программу
+apt-get remove   - удалить программу
+dpkg –i                - установить программу из файла .deb
+dpkg –r                - удалить программу
+
+RedHat/CenOS Linux:               все packages .rpm
+~~~~~~~~~~~~~~
+sudo yum install          - скачать и установить программу
+sudo yum remove         - удалить программу
+sudo rpm –i                  - установить программу из файла .rpm
+sudo rpm –e                 - удалить программу
+
+
+19.Linux для Начинающих - Скрипты Linux Bash, Часть-1
+nano myscript1.sh        .sh  формат скрипта
+#! /bin/bash   указываем что будет использоваться bash
+echo "Hello word"
+echo "hi"
+ls
+xterm &    загружаю терминал & чтобы сразу грузилось
+ls -l
+echo "Done"   в общем даю список команд данному скрипту выхожу и сохраняю
+ls -l
+rw -rw -r 1 denis denis myscript1.sh    - нам надо первому rw Добавить x для загрузки но можно и так
+bash mycript1.sh   запускаю скрипт 
+sudo chmod a+x myscript1.sh   добавляю all всем юзерам и группам x extentional myscript1.ssh 
+rwx -rwx -rwx 1 denis denis myscript1.ssh  даю x права
+./myscript1.sh  теперь можно просто так запустить
+
+nano Myscripts.sh
+#! /bin/bash
+num1=50
+num2=45
+summa=$((num1+num2))
+echo "$num1 + $num2 = $summa"
+выхожу и сохраняю
+sudo chmod a+x  Myscript1.sh Добавляю x 
+ls -l
+-rwxrwxrwx 1 sam sam    86 Jul 29 09:07 Myscripts.sh  
+./Myscripts.sh
+50 + 45 = 95
+
+./myscript.sh  Vasya  Petya  Kolya
+
+$0 при этом равен  ./myscript.sh
+$1 при этом равен Vasya
+$2 при этом равен Petya
+$3 при этом равен Kolya
+
+myOS=`uname –u`   - запускает uname –u и сохраняет  результат в переменную myOS
+
+Сохранить ввод пользователя в переменную name:
+read –p “Please enter your name: “ name
+
+кавычки просто  латиницей ё кнопка ````` 
+
+
+20.Linux для Начинающих - Скрипты Linux Bash, Часть-2
+
+nano myscript3.sh
+
+#1/bin/bash
+
+if [ "$1" == "Vasya" ]; then
+        echo "Privet $1"
+elif [ "$1"  == "Trupm"]; then
+        echo "Hello $1"
+else echo "Zdarova $1"
+fi                    конец
+
+echo "Please enter something: "
+read x
+read -p "Enter something:" x     введи что-то
+
+x=$2
+echo "Starting CASE selection..."
+case $x in
+        1) echo "Thisi is one";; начало если один то
+[2-9]) echo "Two -Nine";;     если с двух до девяти то
+"Petya") echo "Privet $x";;    если Petya то
+        *) echo "Parameter Unknown, sorry!"
+esac                        конец
+
+sudo chmod a+x  Myscript1.sh Добавляю x 
+ls -l
+./myscript3.sh  Vasya
+
+
+nano Myscript4.sh
+#1/bin/bash
+COUNTER=0
+while [ $COUNTER -lt 10]; do
+    echo "Current counte is $COUNTER"
+    COUNTER=$(($COUNTER+1))
+    # let COUNTER=COUNTER+1
+    # let COUNTER+=1
+done
+
+for myfile in `ls *.txt`; do    (мой в списке с форатом txt прочитай мой файл)  в списке всё с форматом txt прочитаь что внутри
+    cat $myfile
+done
+
+for x in {1..10}; do    выведит X = 1 и так до X = 10
+    echo " X = $x"
+done
+
+for (( i=1; i<=10; i++)); do будет выводить Nomer I = 1 До Nomer I = 10 пока и не станет меньше либо равно 10
+    echo "Nomer I = $i"
+
+
+sudo chmod a+x Myscript4.sh 
+ls -l
+./myscript4.sh
+
+
+nano Myscript5.sh
+#1/bin/bash
+
+summa=0
+
+myFunction()
+{
+    echo "This is text from Functiona!!"
+    echo "Num1= $1"
+    echo "Num2= $2"
+    summa=$(($1+$2))
+
+}
+
+
+myFunction 50 10   $1 параметр функции, 50 параметр 2$, 10 параметр $3  
+echo "Summa = $summa     пишет сумму
+
+
+
+sudo chmod a+x Myscript5.sh 
+ls -l
+./Myscript5.sh
+
+
+СКРИПТЫ ЭТО КРУТО ПОЗВОЛЯЕТ АВТОМАТИЗИРОВАТЬ ПРОЦЕССЫ
+
+
+Использование связки
+IF-ELIF-ELSE-FI
+
+Использование CASE
+
+Циклы FOR с коммандой Linux
+Циклы FOR с цифровым промежутке
+Циклы FOR как в С, C++, Java
+Циклы WHILE
+---
+ssh
+1) ifconfig
+192.168.0.103  netmask 255.255.255.0
+2)ping 192.168.0.103 # проверка соединения
+3)ssh работает через порт 22 но он по умолчанию заблокирован
+4)service ssh status # статус просто смотрю но не найдет его
+5)sudo apt-get install openssh-server # установка и активируется сразу же
+6) service ssh start # но если где-то неактивен то пиши так
+7)ssh 192.168.0.103 # подключаюсь ip Kali linux, потом yes
+но не подключится так как там скорее всего не будет юзера
+8) ssh petya@192.168.0.103 # юзер петя на том компе и попросит его пароль на том компе
+9)uname -a # смотрим что показывает kali linux
+10)на kali можно написать w # и увидим подключенного юзера
+11) закрыть подключение exit 
+Windows putty
+192.168.0.1.131  # ip указывай
+port 22 # обязательно 
+Yes , username: vasya
+      password 1234 # пароль васи его с ubuntu
+12)mobaXterm session ssh 
+ip 192.168.0.1.13
+username vasya 
+port 22
+connect
+и введи пароль
+можно поделить на два терминала или 4 экрана
+
+
+Итого
+Linux для Не Начинающих - SSH подключение к удаленному Linux с Linux и Windows
+
+service ssh status   - статус SSH сервиса
+service ssh start   - запустить SSH сервис
+apt-get install openssh-server   - установить SSH
+
+ssh vasya@192.168.10.130   - подключится к компу (192.168.10.130) как пользователь (vasya)
+
+Для подключения с Windows используйте это:
+PuTTY: http://www.chiark.greenend.org.uk/~sg...
+MobXterm: http://mobaxterm.mobatek.net/download...
+
